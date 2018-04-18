@@ -65,7 +65,7 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 
 
 		if(isShakingPhone()) {
-			//Gdx.input.vibrate(200);
+			Gdx.input.vibrate(200);
 			//Gdx.app.getInput().vibrate(200);
 			lastPaint = System.currentTimeMillis();
 			r = 1;
@@ -94,6 +94,7 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 	private long lastPaint = System.currentTimeMillis();
 
 	private static final int SHAKE_THRESHOLD = 900;
+	private static final long SHAKE_TIMEOUT = 100;
 
 	private long lastUpdate = System.currentTimeMillis();
 	private float last_x = 0;
@@ -103,7 +104,7 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 	private boolean isShakingPhone() {
 		long curTime = System.currentTimeMillis();
 		// only allow one update every 100ms.
-		if ((curTime - lastUpdate) > 100) {
+		if ((curTime - lastUpdate) > SHAKE_TIMEOUT) {
 			long diffTime = (curTime - lastUpdate);
 			lastUpdate = curTime;
 
