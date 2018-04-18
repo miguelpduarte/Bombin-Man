@@ -25,12 +25,13 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 	float r = 0;
 	float g = 0;
 	float b = 0;
-	private NetworkManager networkManager;
+	//private NetworkManager networkManager;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		/*
 		try {
 			networkManager = new NetworkManager("192.168.1.17", 9021);
 		} catch (ConnectException e) {
@@ -38,6 +39,7 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	@Override
@@ -47,17 +49,37 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 		batch.begin();
 		batch.end();
 
+		/*
 		if(Gdx.input.justTouched()) {
 			r = 1;
 			g = 1;
 			b = 1;
-			networkManager.sendOutput();
+			//networkManager.sendOutput();
 		} else {
 			r = 0;
 			g = 0;
 			b = 0;
 		}
+		*/
 
+
+
+		if(isShakingPhone()) {
+			//Gdx.input.vibrate(200);
+			//Gdx.app.getInput().vibrate(200);
+			lastPaint = System.currentTimeMillis();
+			r = 1;
+			g = 0;
+			b = 0;
+		} else {
+			if(System.currentTimeMillis() - lastPaint > 500) {
+				r = 0;
+				g = 1;
+				b = 0;
+			}
+		}
+
+		/*
 		if(Gdx.input.isKeyJustPressed(Input.Keys.VOLUME_DOWN)) {
 			try {
 				networkManager.readInput();
@@ -66,8 +88,43 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 				e.printStackTrace();
 			}
 		}
+		*/
 	}
-	
+
+	private long lastPaint = System.currentTimeMillis();
+
+	private static final int SHAKE_THRESHOLD = 900;
+
+	private long lastUpdate = System.currentTimeMillis();
+	private float last_x = 0;
+	private float last_y = 0;
+	private float last_z = 0;
+
+	private boolean isShakingPhone() {
+		long curTime = System.currentTimeMillis();
+		// only allow one update every 100ms.
+		if ((curTime - lastUpdate) > 100) {
+			long diffTime = (curTime - lastUpdate);
+			lastUpdate = curTime;
+
+			float x = Gdx.input.getAccelerometerX();
+			float y = Gdx.input.getAccelerometerY();
+			float z = Gdx.input.getAccelerometerZ();
+
+			float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
+
+			if (speed > SHAKE_THRESHOLD) {
+				System.out.println("shake detected w/ speed: " + speed);
+				//Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+				return true;
+			}
+			last_x = x;
+			last_y = y;
+			last_z = z;
+		}
+		return false;
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
