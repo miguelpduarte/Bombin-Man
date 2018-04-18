@@ -1,13 +1,18 @@
 package com.xlpoolsion.client.networking;
 
+import com.xlpoolsion.common.Message;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 
 public class NetworkManager {
+    private ObjectOutputStream obj_out;
     private Socket socket;
     //private String myIP = "172.30.2.190";
     //Port 9021
@@ -22,6 +27,7 @@ public class NetworkManager {
             System.out.println("I am connekt!");
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            obj_out = new ObjectOutputStream(socket.getOutputStream());
         } else {
             System.out.println("I am not connekt :(");
             throw new ConnectException();
@@ -30,6 +36,12 @@ public class NetworkManager {
 
     public void sendOutput() {
         out.println("Sending info");
+    }
+
+    public void sendDefMessage() throws IOException {
+        Message msg = new Message(5, 6.9f, "wow what a message!");
+
+        obj_out.writeObject(msg);
     }
 
     public void readInput() throws IOException {

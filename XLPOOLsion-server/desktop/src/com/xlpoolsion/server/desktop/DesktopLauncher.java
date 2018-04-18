@@ -1,8 +1,8 @@
-package com.xpoolsion.server.desktop;
+package com.xlpoolsion.server.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.xpoolsion.server.XPOOLsionServer;
+import com.xlpoolsion.server.XPOOLsionServer;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

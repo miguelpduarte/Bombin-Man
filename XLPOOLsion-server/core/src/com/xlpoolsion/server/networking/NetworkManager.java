@@ -1,9 +1,8 @@
-package com.xpoolsion.server.networking;
+package com.xlpoolsion.server.networking;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import com.xlpoolsion.common.Message;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -13,6 +12,7 @@ public class NetworkManager {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private ObjectInputStream obj_in;
 
 
     public NetworkManager(int port) throws IOException {
@@ -26,6 +26,7 @@ public class NetworkManager {
         System.out.println("I think i am accept");
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        obj_in = new ObjectInputStream(clientSocket.getInputStream());
     }
 
     public void sendOutput() throws IOException {
@@ -35,17 +36,15 @@ public class NetworkManager {
         out.println("Sending server info");
     }
 
-    public void readInput() throws IOException {
+    public void readInput() throws ClassNotFoundException, IOException {
         if(clientSocket == null) {
             return;
         }
-        String fromClient;
 
-        while ((fromClient = in.readLine()) != null) {
-            System.out.println("Client said: " + fromClient);
-            if (fromClient.equals("Bye."))
-                break;
-        }
+        Message msg = (Message) obj_in.readObject();
+
+        System.out.printf("Server received message:\naFloat: %f\nanInt: %d\nString: %s\n",
+                msg.getaFloat(), msg.getAnInt(), msg.getString());
     }
 
     public void closeServer() {

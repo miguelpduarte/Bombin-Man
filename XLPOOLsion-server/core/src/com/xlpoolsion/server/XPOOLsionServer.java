@@ -1,4 +1,4 @@
-package com.xpoolsion.server;
+package com.xlpoolsion.server;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.xpoolsion.server.networking.NetworkManager;
+import com.xlpoolsion.server.networking.NetworkManager;
 
 import java.io.IOException;
 
@@ -38,6 +38,8 @@ public class XPOOLsionServer extends ApplicationAdapter {
 			networkManager.readInput();
 		} catch (IOException e) {
 			System.out.println("Server read error");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
