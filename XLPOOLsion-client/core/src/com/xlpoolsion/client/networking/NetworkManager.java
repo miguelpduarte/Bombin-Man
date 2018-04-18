@@ -38,9 +38,7 @@ public class NetworkManager {
         out.println("Sending info");
     }
 
-    public void sendDefMessage() throws IOException {
-        Message msg = new Message(5, 6.9f, "wow what a message!");
-
+    public void sendMessage(Message msg) throws IOException {
         obj_out.writeObject(msg);
     }
 

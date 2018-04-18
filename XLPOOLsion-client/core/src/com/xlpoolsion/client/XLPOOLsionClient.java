@@ -2,6 +2,7 @@ package com.xlpoolsion.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.xlpoolsion.client.networking.NetworkManager;
+import com.xlpoolsion.common.Message;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -89,7 +91,7 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 			g = 0;
 			b = 0;
 			try {
-				networkManager.sendDefMessage();
+				networkManager.sendMessage(new Message(5, 6.9f, "wow what a message!"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -100,11 +102,6 @@ public class XLPOOLsionClient extends ApplicationAdapter {
 				b = 0;
 			}
 		}
-
-
-		/*if(Gdx.input.isKeyJustPressed(Input.Keys.VOLUME_DOWN)) {
-
-		}*/
 	}
 
 	private long lastPaint = System.currentTimeMillis();

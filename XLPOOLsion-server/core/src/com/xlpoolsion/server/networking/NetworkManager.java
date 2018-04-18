@@ -78,6 +78,14 @@ public class NetworkManager {
             out.close();
         }
 
+        if(obj_in != null) {
+            try {
+                obj_in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
             clientSocket.close();
         } catch (IOException e) {
