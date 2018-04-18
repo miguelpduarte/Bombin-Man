@@ -55,11 +55,7 @@ public class ControlsView extends ScreenAdapter {
         rootTable.row();
         rootTable.add(touchpad).left();
 
-        rootTable.center();
-
-        //Too small table? Scale it
-        //rootTable.scaleBy(10.0f);
-        rootTable.setScale(15.0f);
+        //rootTable.center();
 
         rootTable.setFillParent(true);
         stage.addActor(rootTable);
