@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.PlayerModel;
@@ -17,7 +16,6 @@ public class GameView extends ScreenAdapter {
 
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
-    private Camera camera;
 
     //To be moved elsewhere
     private PlayerView playerView;
@@ -32,9 +30,7 @@ public class GameView extends ScreenAdapter {
         playerModel = new PlayerModel();
         playerView = new PlayerView(xlpooLsionServer);
 
-        camera = new OrthographicCamera();
-
-        viewport = new FitViewport(800, 480, camera);
+        viewport = new FitViewport(800, 480);
     }
 
     private void loadAssets() {

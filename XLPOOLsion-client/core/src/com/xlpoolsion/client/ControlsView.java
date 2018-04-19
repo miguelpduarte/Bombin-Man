@@ -4,13 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.xlpoolsion.client.networking.NetworkManager;
 import com.xlpoolsion.common.Message;
@@ -23,6 +29,7 @@ public class ControlsView extends ScreenAdapter {
     private Table rootTable;
     private Stage stage;
 
+    private Skin skin;
     private Label infoLbl;
 
     private Label ipLabel;
@@ -40,28 +47,30 @@ public class ControlsView extends ScreenAdapter {
 
         createGUIItems();
 
-        stage = new Stage(new ScreenViewport(), xlpooLsionClient.getBatch());
+        stage = new Stage(new ExtendViewport(400, 250), xlpooLsionClient.getBatch());
         Gdx.input.setInputProcessor(stage);
 
         rootTable = new Table();
-        rootTable.add(ipLabel);
-        rootTable.add(ipField);
-        rootTable.add(connectButton).height(connectButton.getMaxHeight()).right();
+        rootTable.setFillParent(true);
+        stage.addActor(rootTable);
+
+        //////
+        rootTable.add(ipLabel).left();
+        rootTable.add(ipField).left();
+        rootTable.add(connectButton).height(connectButton.getMaxHeight()).padLeft(5f);
         rootTable.row();
         rootTable.add(portLabel);
         rootTable.add(portField);
         rootTable.row();
-        //rootTable.add(infoLbl);
-        rootTable.row();
-        rootTable.add(touchpad).left();
+        //rootTable.add(infoLbl)
 
-        //rootTable.center();
+        rootTable.pack();
 
-        rootTable.setFillParent(true);
-        stage.addActor(rootTable);
+        touchpad.setPosition(750/4, 600);
+        stage.addActor(touchpad);
 
         //Debug lines
-        rootTable.setDebug(true);
+        //rootTable.setDebug(true);
 
         /*
         try {
@@ -75,39 +84,25 @@ public class ControlsView extends ScreenAdapter {
     }
 
     private void createGUIItems() {
-        Label.LabelStyle simpleLblStyle = new Label.LabelStyle();
-        simpleLblStyle.fontColor = Color.WHITE;
-        //Using default font atm
-        simpleLblStyle.font = new BitmapFont();
+        skinInit();
 
-        infoLbl = new Label("Init text", simpleLblStyle);
-        infoLbl.setFontScale(4.0f);
-        //infoLbl.setPosition(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2, 0);
-        infoLbl.setPosition(300, 300, 0);
+        infoLbl = new Label("Init text", skin);
+        //infoLbl.setFontScale(4.0f);
 
-        ipLabel = new Label("IP:", simpleLblStyle);
+        ipLabel = new Label("IP:", skin);
 
-        TextField.TextFieldStyle tfStyle = new TextField.TextFieldStyle();
-        tfStyle.font = new BitmapFont();
-        tfStyle.fontColor = Color.WHITE;
-        tfStyle.focusedFontColor = Color.RED;
+        ipField = new TextField("", skin);
+        portLabel = new Label("Port:", skin);
+        portField = new TextField("", skin);
 
-        ipField = new TextField("", tfStyle);
-        portLabel = new Label("Port:", simpleLblStyle);
-        portField = new TextField("", tfStyle);
-
-        TextButton.TextButtonStyle tbStyle = new TextButton.TextButtonStyle();
-        tbStyle.font = new BitmapFont();
-        tbStyle.fontColor = Color.WHITE;
-        tbStyle.downFontColor = Color.GREEN;
-        tbStyle.checkedFontColor = Color.BLUE;
-        tbStyle.disabledFontColor = Color.GRAY;
-
-        connectButton = new TextButton("Connect!", tbStyle);
+        connectButton = new TextButton("Connect!", skin);
 
         Touchpad.TouchpadStyle tpadStyle = new Touchpad.TouchpadStyle();
+        tpadStyle.background = skin.newDrawable("white", Color.YELLOW);
+        tpadStyle.knob = skin.newDrawable("white", Color.GOLD);
         touchpad = new Touchpad(4.0f, tpadStyle);
 
+        /*
         ipLabel.setFontScale(3.0f);
         ipField.setScale(3.0f);
         portLabel.setFontScale(3.0f);
@@ -115,15 +110,60 @@ public class ControlsView extends ScreenAdapter {
         connectButton.setScale(3.0f);
 
         touchpad.setScale(3.0f);
+        */
+    }
+
+    private void skinInit() {
+        // A skin can be loaded via JSON or defined programmatically, either is fine. Using a skin is optional but strongly
+        // recommended solely for the convenience of getting a texture, region, etc as a drawable, tinted drawable, etc.
+        skin = new Skin();
+
+        // Generate a 1x1 white texture and store it in the skin named "white".
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        skin.add("white", new Texture(pixmap));
+
+        // Store the default libgdx font under the name "default".
+        skin.add("default", new BitmapFont());
+
+        // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = skin.newDrawable("white", Color.ORANGE);
+        textButtonStyle.down = skin.newDrawable("white", Color.CORAL);
+        textButtonStyle.checked = skin.newDrawable("white", Color.MAGENTA);
+        textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+        textButtonStyle.font = skin.getFont("default");
+        skin.add("default", textButtonStyle);
+
+        TextField.TextFieldStyle tfStyle = new TextField.TextFieldStyle();
+        tfStyle.font = skin.getFont("default");
+        tfStyle.fontColor = Color.WHITE;
+        tfStyle.focusedFontColor = Color.RED;
+        tfStyle.background = skin.newDrawable("white", Color.GRAY);
+        skin.add("default", tfStyle);
+
+        Label.LabelStyle simpleLblStyle = new Label.LabelStyle();
+        simpleLblStyle.fontColor = Color.WHITE;
+        simpleLblStyle.font = skin.getFont("default");
+        skin.add("default", simpleLblStyle);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
+        Gdx.gl.glClearColor(0.6f, 0.6f, 0.6f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        xlpooLsionClient.getBatch().begin();
+        touchpad.draw(xlpooLsionClient.getBatch(), 1.0f);
+        xlpooLsionClient.getBatch().end();
         stage.act(delta);
         stage.draw();
+
+
+        if(Gdx.input.isTouched()) {
+            touchpad.setPosition(Gdx.input.getX(), Gdx.input.getY());
+        }
 
         if(isShakingPhone()) {
             Gdx.input.vibrate(250);
