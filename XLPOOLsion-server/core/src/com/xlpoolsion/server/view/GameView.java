@@ -3,9 +3,7 @@ package com.xlpoolsion.server.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -30,7 +28,7 @@ public class GameView extends ScreenAdapter {
         playerModel = new PlayerModel();
         playerView = new PlayerView(xlpooLsionServer);
 
-        viewport = new FitViewport(800, 480);
+        viewport = new FitViewport(400, 240);
     }
 
     private void loadAssets() {

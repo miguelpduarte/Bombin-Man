@@ -3,8 +3,8 @@ package com.xlpoolsion.server.model;
 public class PlayerModel {
     private static final float PLAYER_SPEED = 2.5f;
 
-    private int x = 0;
-    private int y = 0;
+    private float x = 0;
+    private float y = 0;
     private boolean moving = false;
 
     public boolean isMoving() {
@@ -15,19 +15,19 @@ public class PlayerModel {
         this.moving = moving;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 
@@ -74,9 +74,5 @@ public class PlayerModel {
 
     public Orientation getCurrentOrientation() {
         return currentOrientation;
-    }
-
-    public void setCurrentOrientation(Orientation currentOrientation) {
-        this.currentOrientation = currentOrientation;
     }
 }
