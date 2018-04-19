@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class NetworkManager {
     private ServerSocket svSocket;
-    private String myIP = "172.30.2.190";
+    //private String myIP = "172.30.2.190";
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
