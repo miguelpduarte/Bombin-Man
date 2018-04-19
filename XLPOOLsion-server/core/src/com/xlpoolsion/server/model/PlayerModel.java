@@ -1,7 +1,7 @@
 package com.xlpoolsion.server.model;
 
 public class PlayerModel {
-    private static final float PLAYER_SPEED = 2.5f;
+    private static final float PLAYER_SPEED = 2.2f;
 
     private float x = 0;
     private float y = 0;

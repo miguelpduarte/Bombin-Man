@@ -10,10 +10,9 @@ import com.xlpoolsion.server.model.PlayerModel;
 
 public class PlayerView {
 
-    private static final float FRAME_TIME = 0.12f;
+    private static final float FRAME_TIME = 0.13f;
 
     private Sprite sprite;
-    //To change to respective animations
     private Animation<TextureRegion> upAnim;
     private Animation<TextureRegion> rightAnim;
     private Animation<TextureRegion> downAnim;
