@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.PlayerModel;
@@ -28,9 +29,6 @@ public class GameView extends ScreenAdapter {
 
         loadAssets();
 
-        test_img = new Texture(Gdx.files.internal("badlogic.jpg"));
-
-        //TODO: Move?
         playerModel = new PlayerModel();
         playerView = new PlayerView(xlpooLsionServer);
 
@@ -46,7 +44,7 @@ public class GameView extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        handleInputs();
+        handleInputs(delta);
 
         Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -58,20 +56,29 @@ public class GameView extends ScreenAdapter {
         xlpooLsionServer.getBatch().end();
     }
 
-    private void handleInputs() {
+    private void handleInputs(float delta) {
         //TODO: Pass through controller instead of direct access to model
+        //TODO: Find out what is making the player move faster in the left direction
 
-        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-            playerModel.setCurrentOrientation(PlayerModel.Orientation.UP);
-        } else if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            playerModel.setCurrentOrientation(PlayerModel.Orientation.RIGHT);
-        } else if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-            playerModel.setCurrentOrientation(PlayerModel.Orientation.DOWN);
-        } else if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            playerModel.setCurrentOrientation(PlayerModel.Orientation.LEFT);
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            playerModel.moveUp();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            playerModel.moveRight();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            playerModel.moveDown();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            playerModel.moveLeft();
+        } else {
+            playerModel.stop();
         }
 
-        if(Gdx.input.isTouched()) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            playerModel.setMoving(true);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            playerModel.setMoving(false);
+        }
+
+        if (Gdx.input.isTouched()) {
             playerModel.setX(Gdx.input.getX());
             playerModel.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
         }

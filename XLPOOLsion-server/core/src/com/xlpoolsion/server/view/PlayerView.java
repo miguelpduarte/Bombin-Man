@@ -10,7 +10,7 @@ import com.xlpoolsion.server.model.PlayerModel;
 
 public class PlayerView {
 
-    private static final float FRAME_TIME = 0.15f;
+    private static final float FRAME_TIME = 0.12f;
 
     private Sprite sprite;
     //To change to respective animations
@@ -21,27 +21,16 @@ public class PlayerView {
 
     private float stateTime = 0;
 
-
-    TextureRegion regionUp;
-    TextureRegion regionRight;
-    TextureRegion regionDown;
-    TextureRegion regionLeft;
-
     public PlayerView(XLPOOLsionServer xlpooLsionServer) {
         Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite.png");
         TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 32);
 
-        regionUp = fullregion[0][0];
-        regionRight = fullregion[1][0];
-        regionDown = fullregion[2][0];
-        regionLeft = fullregion[3][0];
-
         upAnim = createUpAnimation(fullregion);
         rightAnim = createRightAnimation(fullregion);
-        //downAnim;
+        downAnim = createDownAnimation(fullregion);
         leftAnim = createLeftAnimation(fullregion);
 
-        sprite = new Sprite(regionDown);
+        sprite = new Sprite(downAnim.getKeyFrame(stateTime, true));
     }
 
     private Animation<TextureRegion> createUpAnimation(TextureRegion[][] fullregion) {
@@ -58,6 +47,13 @@ public class PlayerView {
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
+    private Animation<TextureRegion> createDownAnimation(TextureRegion[][] fullregion) {
+        TextureRegion[] frames = new TextureRegion[3];
+        System.arraycopy(fullregion[2], 0, frames, 0, 3);
+
+        return new Animation<TextureRegion>(FRAME_TIME, frames);
+    }
+
     private Animation<TextureRegion> createLeftAnimation(TextureRegion[][] fullregion) {
         TextureRegion[] frames = new TextureRegion[3];
         System.arraycopy(fullregion[3], 0, frames, 0, 3);
@@ -68,26 +64,48 @@ public class PlayerView {
     public void draw(float delta, SpriteBatch batch, PlayerModel playerModel) {
         stateTime += delta;
 
-        switch (playerModel.getCurrentOrientation()) {
-            case UP:
-                //sprite.setRegion(regionUp);
-                sprite.setRegion(upAnim.getKeyFrame(stateTime, true));
-                break;
-            case RIGHT:
-                //sprite.setRegion(regionRight);
-                sprite.setRegion(rightAnim.getKeyFrame(stateTime, true));
-                break;
-            case DOWN:
-                sprite.setRegion(regionDown);
-                break;
-            case LEFT:
-                //sprite.setRegion(regionLeft);
-                sprite.setRegion(leftAnim.getKeyFrame(stateTime, true));
-                break;
+        if(playerModel.isMoving()) {
+            setMovingAnimationFrame(playerModel.getCurrentOrientation());
+        } else {
+            setStillAnimationFrame(playerModel.getCurrentOrientation());
         }
 
         sprite.setPosition(playerModel.getX(), playerModel.getY());
 
         sprite.draw(batch);
+    }
+
+    private void setStillAnimationFrame(PlayerModel.Orientation currentOrientation) {
+        switch (currentOrientation) {
+            case UP:
+                sprite.setRegion(upAnim.getKeyFrame(0f));
+                break;
+            case RIGHT:
+                sprite.setRegion(rightAnim.getKeyFrame(0f));
+                break;
+            case DOWN:
+                sprite.setRegion(downAnim.getKeyFrame(0f));
+                break;
+            case LEFT:
+                sprite.setRegion(leftAnim.getKeyFrame(0f));
+                break;
+        }
+    }
+
+    private void setMovingAnimationFrame(PlayerModel.Orientation currentOrientation) {
+        switch (currentOrientation) {
+            case UP:
+                sprite.setRegion(upAnim.getKeyFrame(stateTime, true));
+                break;
+            case RIGHT:
+                sprite.setRegion(rightAnim.getKeyFrame(stateTime, true));
+                break;
+            case DOWN:
+                sprite.setRegion(downAnim.getKeyFrame(stateTime, true));
+                break;
+            case LEFT:
+                sprite.setRegion(leftAnim.getKeyFrame(stateTime, true));
+                break;
+        }
     }
 }
