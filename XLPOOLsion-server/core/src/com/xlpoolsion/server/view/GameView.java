@@ -8,9 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
+import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.PlayerModel;
 
 public class GameView extends ScreenAdapter {
+
+    private static final float PIXEL_TO_METER = 0.08f;
 
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
@@ -55,15 +58,15 @@ public class GameView extends ScreenAdapter {
         //TODO: Find out what is making the player move faster in the left direction
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            playerModel.moveUp();
+            GameController.getInstance().movePlayerUp(delta);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            playerModel.moveRight();
+            GameController.getInstance().movePlayerRight(delta);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            playerModel.moveDown();
+            GameController.getInstance().movePlayerDown(delta);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            playerModel.moveLeft();
+            GameController.getInstance().movePlayerLeft(delta);
         } else {
-            playerModel.stop();
+            GameController.getInstance().stopPlayer(delta);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {

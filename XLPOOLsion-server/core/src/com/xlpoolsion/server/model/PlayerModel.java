@@ -1,11 +1,16 @@
 package com.xlpoolsion.server.model;
 
 public class PlayerModel {
-    private static final float PLAYER_SPEED = 2.2f;
 
     private float x = 0;
     private float y = 0;
     private boolean moving = false;
+    private Orientation currentOrientation = Orientation.DOWN;
+    private float current_speed = 2.2f;
+
+    public float getCurrentSpeed() {
+        return current_speed;
+    }
 
     public boolean isMoving() {
         return moving;
@@ -31,42 +36,17 @@ public class PlayerModel {
         this.y = y;
     }
 
+    public void setPosition(float x, float y) {
+        setX(x);
+        setY(y);
+    }
+
     public enum Orientation {
         UP,
         RIGHT,
         DOWN,
         LEFT
     }
-
-    public void moveUp() {
-        this.y += PLAYER_SPEED;
-        this.moving = true;
-        this.currentOrientation = Orientation.UP;
-    }
-
-    public void moveRight() {
-        this.x += PLAYER_SPEED;
-        this.moving = true;
-        this.currentOrientation = Orientation.RIGHT;
-    }
-
-    public void moveLeft() {
-        this.x -= PLAYER_SPEED;
-        this.moving = true;
-        this.currentOrientation = Orientation.LEFT;
-    }
-
-    public void moveDown() {
-        this.y -= PLAYER_SPEED;
-        this.moving = true;
-        this.currentOrientation = Orientation.DOWN;
-    }
-
-    public void stop() {
-        this.moving = false;
-    }
-
-    private Orientation currentOrientation = Orientation.DOWN;
 
     public PlayerModel() {
 
