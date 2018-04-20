@@ -20,6 +20,6 @@ public class GameModel {
     }
 
     public void update(float delta) {
-        System.out.println("I am Game Model and am updating with delta " + delta);
+        //System.out.println("I am Game Model and am updating with delta " + delta);
     }
 }

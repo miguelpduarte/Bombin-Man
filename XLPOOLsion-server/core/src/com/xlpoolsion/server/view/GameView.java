@@ -9,18 +9,18 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
+import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.PlayerModel;
 
 public class GameView extends ScreenAdapter {
 
-    private static final float PIXEL_TO_METER = 0.08f;
+    public static final float PIXEL_TO_METER = 0.08f;
 
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
 
     //To be moved elsewhere
     private PlayerView playerView;
-    private PlayerModel playerModel;
     private Texture test_img;
 
     public GameView(XLPOOLsionServer xlpooLsionServer) {
@@ -28,7 +28,6 @@ public class GameView extends ScreenAdapter {
 
         loadAssets();
 
-        playerModel = new PlayerModel();
         playerView = new PlayerView(xlpooLsionServer);
 
         viewport = new FitViewport(400, 240);
@@ -43,20 +42,26 @@ public class GameView extends ScreenAdapter {
     public void render(float delta) {
         handleInputs(delta);
 
+        GameController.getInstance().update(delta);
+
         Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         xlpooLsionServer.getBatch().setProjectionMatrix(viewport.getCamera().combined);
 
         xlpooLsionServer.getBatch().begin();
-        playerView.draw(delta, xlpooLsionServer.getBatch(), playerModel);
+        drawEntities();
         xlpooLsionServer.getBatch().end();
     }
 
-    private void handleInputs(float delta) {
-        //TODO: Pass through controller instead of direct access to model
-        //TODO: Find out what is making the player move faster in the left direction
+    private void drawEntities() {
+        //TODO: ViewFactory? Sounded nice
+        PlayerModel playerModel = GameModel.getInstance().getPlayer();
+        playerView.update(playerModel);
+        playerView.draw(xlpooLsionServer.getBatch());
+    }
 
+    private void handleInputs(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             GameController.getInstance().movePlayerUp(delta);
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -67,17 +72,6 @@ public class GameView extends ScreenAdapter {
             GameController.getInstance().movePlayerLeft(delta);
         } else {
             GameController.getInstance().stopPlayer(delta);
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            playerModel.setMoving(true);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            playerModel.setMoving(false);
-        }
-
-        if (Gdx.input.isTouched()) {
-            playerModel.setX(Gdx.input.getX());
-            playerModel.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
         }
     }
 

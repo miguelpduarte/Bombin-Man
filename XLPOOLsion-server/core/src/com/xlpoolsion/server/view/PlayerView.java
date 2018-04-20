@@ -1,5 +1,6 @@
 package com.xlpoolsion.server.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.PlayerModel;
+
+import static com.xlpoolsion.server.view.GameView.PIXEL_TO_METER;
 
 public class PlayerView {
 
@@ -19,6 +22,9 @@ public class PlayerView {
     private Animation<TextureRegion> leftAnim;
 
     private float stateTime = 0;
+
+    private boolean isMoving = false;
+    private PlayerModel.Orientation orientation;
 
     public PlayerView(XLPOOLsionServer xlpooLsionServer) {
         Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite.png");
@@ -60,22 +66,26 @@ public class PlayerView {
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
-    public void draw(float delta, SpriteBatch batch, PlayerModel playerModel) {
-        stateTime += delta;
+    public void update(PlayerModel playerModel) {
+        sprite.setCenter(playerModel.getX() / PIXEL_TO_METER, playerModel.getY() / PIXEL_TO_METER);
+        isMoving = playerModel.isMoving();
+        orientation = playerModel.getCurrentOrientation();
+    }
 
-        if(playerModel.isMoving()) {
-            setMovingAnimationFrame(playerModel.getCurrentOrientation());
+    public void draw(SpriteBatch batch) {
+        stateTime += Gdx.graphics.getDeltaTime();
+
+        if(isMoving) {
+            setMovingAnimationFrame();
         } else {
-            setStillAnimationFrame(playerModel.getCurrentOrientation());
+            setStillAnimationFrame();
         }
-
-        sprite.setPosition(playerModel.getX(), playerModel.getY());
 
         sprite.draw(batch);
     }
 
-    private void setStillAnimationFrame(PlayerModel.Orientation currentOrientation) {
-        switch (currentOrientation) {
+    private void setStillAnimationFrame() {
+        switch (orientation) {
             case UP:
                 sprite.setRegion(upAnim.getKeyFrame(0f));
                 break;
@@ -91,8 +101,8 @@ public class PlayerView {
         }
     }
 
-    private void setMovingAnimationFrame(PlayerModel.Orientation currentOrientation) {
-        switch (currentOrientation) {
+    private void setMovingAnimationFrame() {
+        switch (orientation) {
             case UP:
                 sprite.setRegion(upAnim.getKeyFrame(stateTime, true));
                 break;

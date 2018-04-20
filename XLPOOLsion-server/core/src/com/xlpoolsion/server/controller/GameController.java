@@ -72,22 +72,31 @@ public class GameController implements ContactListener {
 
     public void movePlayerUp(float delta) {
         player.moveUp();
+        ((PlayerModel) player.getUserData()).setMoving(true);
+        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.UP);
     }
 
     public void movePlayerDown(float delta) {
         player.moveDown();
+        ((PlayerModel) player.getUserData()).setMoving(true);
+        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.DOWN);
     }
 
     public void movePlayerLeft(float delta) {
         player.moveLeft();
+        ((PlayerModel) player.getUserData()).setMoving(true);
+        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.LEFT);
     }
 
     public void movePlayerRight(float delta) {
         player.moveRight();
+        ((PlayerModel) player.getUserData()).setMoving(true);
+        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.RIGHT);
     }
 
     public void stopPlayer(float delta) {
         player.stop();
+        ((PlayerModel) player.getUserData()).setMoving(false);
     }
 
     @Override
