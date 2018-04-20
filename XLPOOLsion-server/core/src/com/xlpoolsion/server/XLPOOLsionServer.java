@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xlpoolsion.server.view.GameView;
+import com.xlpoolsion.server.view.LobbyView;
 
 public class XLPOOLsionServer extends Game {
 	SpriteBatch batch;
@@ -17,7 +18,7 @@ public class XLPOOLsionServer extends Game {
 	}
 
 	private void initView() {
-		setScreen(new GameView(this));
+		setScreen(new LobbyView(this));
 	}
 
 	public SpriteBatch getBatch() {

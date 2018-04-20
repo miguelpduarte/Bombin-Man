@@ -1,27 +1,25 @@
 package com.xlpoolsion.common;
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    private int anInt;
-    private float aFloat;
-    private String string;
-
-    public Message(int anInt, float aFloat, String string) {
-        this.anInt = anInt;
-        this.aFloat = aFloat;
-        this.string = string;
+    public enum MessageType {
+        CONTROLLER_SHAKE,
+        PLAYER_MOVE,
+        TEST_MESSAGE
     }
 
-    public int getAnInt() {
-        return anInt;
+    public final MessageType messageType;
+    public final Vector2 move_direction;
+
+    public Message(MessageType messageType, Vector2 move_direction) {
+        this.messageType = messageType;
+        this.move_direction = move_direction;
     }
 
-    public float getaFloat() {
-        return aFloat;
-    }
-
-    public String getString() {
-        return string;
+    public Message(MessageType messageType) {
+        this(messageType, null);
     }
 }

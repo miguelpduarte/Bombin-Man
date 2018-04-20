@@ -13,9 +13,15 @@ import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.view.entities.PlayerView;
 
-public class GameView extends ScreenAdapter {
+import static com.xlpoolsion.server.controller.GameController.GAME_WIDTH;
 
+public class GameView extends ScreenAdapter {
+    //Adjust according to the player height in the future
     public static final float PIXEL_TO_METER = 0.08f;
+
+    //The ingame viewport is supposed to show the full game + some space for the HUD/UI
+    private static final float VIEWPORT_WIDTH = GAME_WIDTH * 1.1f;
+    private static final float VIEWPORT_WIDTH_PX = VIEWPORT_WIDTH / PIXEL_TO_METER;
 
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
@@ -30,7 +36,8 @@ public class GameView extends ScreenAdapter {
 
         playerView = new PlayerView(xlpooLsionServer);
 
-        viewport = new FitViewport(400, 240);
+        //Creating a viewport with consistent aspect ratio
+        viewport = new FitViewport(VIEWPORT_WIDTH_PX, VIEWPORT_WIDTH_PX * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
     }
 
     private void loadAssets() {

@@ -16,12 +16,12 @@ public class GameController implements ContactListener {
     /**
      * The map width in meters.
      */
-    public static final int GAME_WIDTH = 100;
+    public static final float GAME_WIDTH = 50;
 
     /**
      * The map height in meters.
      */
-    public static final int GAME_HEIGHT = 100;
+    public static final float GAME_HEIGHT = 50;
 
     private GameController() {
         instance = this;
