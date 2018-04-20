@@ -1,5 +1,7 @@
 package com.xlpoolsion.server.model;
 
+import com.xlpoolsion.server.model.entities.PlayerModel;
+
 public class GameModel {
     private static GameModel instance = null;
     private PlayerModel player;

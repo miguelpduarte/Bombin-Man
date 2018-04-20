@@ -1,4 +1,4 @@
-package com.xlpoolsion.server.view;
+package com.xlpoolsion.server.view.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,15 +7,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xlpoolsion.server.XLPOOLsionServer;
-import com.xlpoolsion.server.model.PlayerModel;
+import com.xlpoolsion.server.model.entities.EntityModel;
+import com.xlpoolsion.server.model.entities.PlayerModel;
 
 import static com.xlpoolsion.server.view.GameView.PIXEL_TO_METER;
 
-public class PlayerView {
+public class PlayerView extends EntityView {
 
     private static final float FRAME_TIME = 0.13f;
 
-    private Sprite sprite;
     private Animation<TextureRegion> upAnim;
     private Animation<TextureRegion> rightAnim;
     private Animation<TextureRegion> downAnim;
@@ -27,6 +27,16 @@ public class PlayerView {
     private PlayerModel.Orientation orientation;
 
     public PlayerView(XLPOOLsionServer xlpooLsionServer) {
+        super(xlpooLsionServer);
+    }
+
+    @Override
+    protected Sprite createSprite(XLPOOLsionServer xlpooLsionServer) {
+        createAnimations(xlpooLsionServer);
+        return new Sprite(downAnim.getKeyFrame(stateTime, true));
+    }
+
+    private void createAnimations(XLPOOLsionServer xlpooLsionServer) {
         Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite.png");
         TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 32);
 
@@ -34,8 +44,6 @@ public class PlayerView {
         rightAnim = createRightAnimation(fullregion);
         downAnim = createDownAnimation(fullregion);
         leftAnim = createLeftAnimation(fullregion);
-
-        sprite = new Sprite(downAnim.getKeyFrame(stateTime, true));
     }
 
     private Animation<TextureRegion> createUpAnimation(TextureRegion[][] fullregion) {
@@ -66,12 +74,14 @@ public class PlayerView {
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
-    public void update(PlayerModel playerModel) {
-        sprite.setCenter(playerModel.getX() / PIXEL_TO_METER, playerModel.getY() / PIXEL_TO_METER);
-        isMoving = playerModel.isMoving();
-        orientation = playerModel.getCurrentOrientation();
+    @Override
+    public void update(EntityModel model) {
+        super.update(model);
+        isMoving = ((PlayerModel) model).isMoving();
+        orientation = ((PlayerModel) model).getCurrentOrientation();
     }
 
+    @Override
     public void draw(SpriteBatch batch) {
         stateTime += Gdx.graphics.getDeltaTime();
 

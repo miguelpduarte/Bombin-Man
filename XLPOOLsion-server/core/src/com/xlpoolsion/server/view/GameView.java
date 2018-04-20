@@ -10,7 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.GameModel;
-import com.xlpoolsion.server.model.PlayerModel;
+import com.xlpoolsion.server.model.entities.PlayerModel;
+import com.xlpoolsion.server.view.entities.PlayerView;
 
 public class GameView extends ScreenAdapter {
 
@@ -19,9 +20,8 @@ public class GameView extends ScreenAdapter {
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
 
-    //To be moved elsewhere
+    //Replaced by viewfactory?
     private PlayerView playerView;
-    private Texture test_img;
 
     public GameView(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;

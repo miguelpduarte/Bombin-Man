@@ -3,8 +3,9 @@ package com.xlpoolsion.server.controller;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.GameModel;
-import com.xlpoolsion.server.model.PlayerModel;
+import com.xlpoolsion.server.model.entities.PlayerModel;
 
 public class GameController implements ContactListener {
     private static GameController instance = null;
@@ -63,9 +64,8 @@ public class GameController implements ContactListener {
         world.getBodies(bodies);
 
         for (Body body : bodies) {
-            //TODO: Use EntityModel or similar instead of PlayerModel
             //verifyBounds(body);
-            ((PlayerModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
+            ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             //((PlayerModel) body.getUserData()).setRotation(body.getAngle());
         }
     }

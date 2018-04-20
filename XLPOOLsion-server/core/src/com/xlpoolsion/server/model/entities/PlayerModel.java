@@ -1,9 +1,6 @@
-package com.xlpoolsion.server.model;
+package com.xlpoolsion.server.model.entities;
 
-public class PlayerModel {
-
-    private float x = 0;
-    private float y = 0;
+public class PlayerModel extends EntityModel {
     private boolean moving = false;
     private Orientation currentOrientation = Orientation.DOWN;
     private float current_speed = 3.58f;
@@ -20,21 +17,8 @@ public class PlayerModel {
         this.moving = moving;
     }
 
-    public float getX() {
-        return x;
-    }
-
     public void setOrientation(Orientation currentOrientation) {
         this.currentOrientation = currentOrientation;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setPosition(float x, float y) {
-        this.x = x;
-        this.y = y;
     }
 
     public enum Orientation {
