@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.xlpoolsion.client.networking.Connection;
 import com.xlpoolsion.client.networking.NetworkRouter;
 import com.xlpoolsion.common.Message;
@@ -37,15 +38,23 @@ public class ControlsView extends ScreenAdapter {
     private TextButton connectButton;
 
     private Touchpad touchpad;
+    private Texture img;
 
     public ControlsView(XLPOOLsionClient xlpooLsionClient) {
         this.xlpooLsionClient = xlpooLsionClient;
 
+        this.xlpooLsionClient.getAssetManager().load("badlogic.jpg", Texture.class);
+        this.xlpooLsionClient.getAssetManager().finishLoading();
+
+        img = this.xlpooLsionClient.getAssetManager().get("badlogic.jpg");
+
         createGUIItems();
+        touchpad.setPosition(400, 400);
 
-        stage = new Stage(new ExtendViewport(400, 250), xlpooLsionClient.getBatch());
-        Gdx.input.setInputProcessor(stage);
+        //stage = new Stage(new ScreenViewport(), xlpooLsionClient.getBatch());
+        //Gdx.input.setInputProcessor(stage);
 
+        /*
         rootTable = new Table();
         //rootTable.setFillParent(true);
         //stage.addActor(rootTable);
@@ -61,18 +70,18 @@ public class ControlsView extends ScreenAdapter {
         //rootTable.add(infoLbl)
 
         rootTable.pack();
-
-        touchpad.setPosition(750/4, 600);
-        stage.addActor(touchpad);
+        */
 
         //Debug lines
         //rootTable.setDebug(true);
 
+        /*
         try {
-            NetworkRouter.getInstance().setConnection(new Connection("localhost", 9876));
+            NetworkRouter.getInstance().setConnection(new Connection("192.168.1.8", 9876));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 
     private void createGUIItems() {
@@ -146,20 +155,22 @@ public class ControlsView extends ScreenAdapter {
         Gdx.gl.glClearColor(0.6f, 0.6f, 0.6f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        /*
         xlpooLsionClient.getBatch().begin();
+        touchpad.toFront();
         touchpad.draw(xlpooLsionClient.getBatch(), 1.0f);
+        xlpooLsionClient.getBatch().draw(img, 600, 150);
         xlpooLsionClient.getBatch().end();
-        */
 
+        /*
         stage.act(delta);
         stage.draw();
+        */
 
 
 
         if(Gdx.input.isTouched()) {
-            //touchpad.setPosition(Gdx.input.getX(), Gdx.input.getY());
-            NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.TEST_MESSAGE));
+            touchpad.setPosition(Gdx.input.getX(), Gdx.input.getY());
+            //NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.TEST_MESSAGE));
         }
 
         if(isShakingPhone()) {
@@ -185,13 +196,11 @@ public class ControlsView extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
-        stage.getViewport().update(width, height, true);
+        //stage.getViewport().update(width, height, true);
     }
 
     @Override
     public void dispose() {
-        super.dispose();
-        stage.dispose();
+        //stage.dispose();
     }
 }

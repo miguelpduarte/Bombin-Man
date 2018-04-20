@@ -3,6 +3,7 @@ package com.xlpoolsion.client.networking;
 import com.xlpoolsion.common.Message;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -39,10 +40,26 @@ public class Connection {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                System.out.println("Starting to poll for messages");
+
                 while(true) {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     Message msg = null;
                     try {
                         msg = (Message) obj_in.readObject();
+                    } catch(EOFException e) {
+                        System.out.println("Got an EOF, sleeping a bit");
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        continue;
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {

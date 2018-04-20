@@ -27,7 +27,9 @@ public class NetworkRouter {
     }
 
     public void sendToServer(Message msg) {
+        System.out.println("Sending message of type " + msg.messageType);
         if(connection == null) {
+            System.out.println("Not connected");
             return;
         }
 
