@@ -2,6 +2,7 @@ package com.xlpoolsion.server.networking;
 
 import com.xlpoolsion.common.Message;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -35,9 +36,22 @@ public class ClientManager {
             @Override
             public void run() {
                 while(true) {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     Message msg = null;
                     try {
                         msg = (Message) obj_in.readObject();
+                    } catch (EOFException e) {
+                        System.out.println("EOF found, sleeping some more");
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        continue;
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
