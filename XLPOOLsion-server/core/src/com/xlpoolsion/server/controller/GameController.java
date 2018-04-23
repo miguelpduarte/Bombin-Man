@@ -3,6 +3,9 @@ package com.xlpoolsion.server.controller;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.xlpoolsion.server.controller.entities.BombBody;
+import com.xlpoolsion.server.controller.entities.PlayerBody;
+import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
@@ -66,7 +69,7 @@ public class GameController implements ContactListener {
         for (Body body : bodies) {
             //verifyBounds(body);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
-            //((PlayerModel) body.getUserData()).setRotation(body.getAngle());
+            ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
     }
 
@@ -99,6 +102,13 @@ public class GameController implements ContactListener {
         ((PlayerModel) player.getUserData()).setMoving(false);
     }
 
+    public void addBomb() {
+        //TODO: Time and bomb limit verifications
+        BombModel bomb = GameModel.getInstance().createBomb();
+        //No need to do anything with the declared body, as it is stored in the world
+        BombBody body = new BombBody(world, bomb);
+    }
+
     @Override
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
@@ -110,6 +120,14 @@ public class GameController implements ContactListener {
 
         if (bodyB.getUserData() instanceof PlayerModel) {
             System.out.println("Body B is player and collision ocurred");
+        }
+
+        if (bodyA.getUserData() instanceof BombModel) {
+            System.out.println("Body A is Bomb and collision ocurred");
+        }
+
+        if (bodyB.getUserData() instanceof BombModel) {
+            System.out.println("Body B is Bomb and collision ocurred");
         }
     }
 
@@ -126,5 +144,16 @@ public class GameController implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    public void removeFlagged() {
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for (Body body : bodies) {
+            if (((EntityModel)body.getUserData()).isFlaggedForRemoval()) {
+                GameModel.getInstance().remove((EntityModel) body.getUserData());
+                world.destroyBody(body);
+            }
+        }
     }
 }

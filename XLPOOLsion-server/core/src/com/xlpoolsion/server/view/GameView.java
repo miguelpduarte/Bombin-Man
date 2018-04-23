@@ -10,8 +10,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.GameModel;
+import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
+import com.xlpoolsion.server.view.entities.BombView;
 import com.xlpoolsion.server.view.entities.PlayerView;
+
+import java.util.List;
 
 import static com.xlpoolsion.server.controller.GameController.GAME_WIDTH;
 
@@ -26,8 +30,9 @@ public class GameView extends ScreenAdapter {
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
 
-    //Replaced by viewfactory?
+    //Replace by viewfactory?
     private PlayerView playerView;
+    private BombView bombView;
 
     public GameView(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;
@@ -35,18 +40,25 @@ public class GameView extends ScreenAdapter {
         loadAssets();
 
         playerView = new PlayerView(xlpooLsionServer);
+        bombView = new BombView(xlpooLsionServer);
 
         //Creating a viewport with consistent aspect ratio
         viewport = new FitViewport(VIEWPORT_WIDTH_PX, VIEWPORT_WIDTH_PX * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
     }
 
     private void loadAssets() {
+        this.xlpooLsionServer.getAssetManager().load("badlogic.jpg", Texture.class);
         this.xlpooLsionServer.getAssetManager().load("Bomberman_sprite.png", Texture.class);
+        this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f01.png", Texture.class);
+        this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f02.png", Texture.class);
+        this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f03.png", Texture.class);
         this.xlpooLsionServer.getAssetManager().finishLoading();
     }
 
     @Override
     public void render(float delta) {
+        GameController.getInstance().removeFlagged();
+
         handleInputs(delta);
 
         GameController.getInstance().update(delta);
@@ -66,6 +78,12 @@ public class GameView extends ScreenAdapter {
         PlayerModel playerModel = GameModel.getInstance().getPlayer();
         playerView.update(playerModel);
         playerView.draw(xlpooLsionServer.getBatch());
+
+        List<BombModel> bombs = GameModel.getInstance().getBombs();
+        for(BombModel bomb : bombs) {
+            bombView.update(bomb);
+            bombView.draw(xlpooLsionServer.getBatch());
+        }
     }
 
     private void handleInputs(float delta) {
@@ -79,6 +97,10 @@ public class GameView extends ScreenAdapter {
             GameController.getInstance().movePlayerLeft(delta);
         } else {
             GameController.getInstance().stopPlayer(delta);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            GameController.getInstance().addBomb();
         }
     }
 
