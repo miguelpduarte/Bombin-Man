@@ -14,7 +14,7 @@ public class PlayerBody extends EntityBody {
         //Creating fixtures
         float density = 0.0f;
         float friction = 0.0f;
-        float restitution = 5.0f;
+        float restitution = 0.0f;
 
         PolygonShape polyShape = new PolygonShape();
         polyShape.setAsBox(PlayerModel.WIDTH / 2, PlayerModel.HEIGHT / 2);
