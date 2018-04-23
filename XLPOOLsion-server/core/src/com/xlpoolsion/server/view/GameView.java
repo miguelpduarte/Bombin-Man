@@ -42,6 +42,7 @@ public class GameView extends ScreenAdapter {
         playerView = new PlayerView(xlpooLsionServer);
         bombView = new BombView(xlpooLsionServer);
 
+        //TODO: Check how to change this in order to have a higher resolution shown
         //Creating a viewport with consistent aspect ratio
         viewport = new FitViewport(VIEWPORT_WIDTH_PX, VIEWPORT_WIDTH_PX * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
     }
@@ -75,15 +76,17 @@ public class GameView extends ScreenAdapter {
 
     private void drawEntities() {
         //TODO: ViewFactory? Sounded nice
-        PlayerModel playerModel = GameModel.getInstance().getPlayer();
-        playerView.update(playerModel);
-        playerView.draw(xlpooLsionServer.getBatch());
 
         List<BombModel> bombs = GameModel.getInstance().getBombs();
         for(BombModel bomb : bombs) {
             bombView.update(bomb);
             bombView.draw(xlpooLsionServer.getBatch());
         }
+
+        //Drawing player in end so that he stays on top
+        PlayerModel playerModel = GameModel.getInstance().getPlayer();
+        playerView.update(playerModel);
+        playerView.draw(xlpooLsionServer.getBatch());
     }
 
     private void handleInputs(float delta) {

@@ -5,9 +5,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.controller.entities.BombBody;
 import com.xlpoolsion.server.controller.entities.PlayerBody;
+import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.EntityModel;
-import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
 public class GameController implements ContactListener {
@@ -33,7 +33,6 @@ public class GameController implements ContactListener {
         //Creating bodies
         player = new PlayerBody(world, GameModel.getInstance().getPlayer());
 
-        //
         world.setContactListener(this);
     }
 
@@ -113,27 +112,32 @@ public class GameController implements ContactListener {
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
-
-        if (bodyA.getUserData() instanceof PlayerModel) {
-            System.out.println("Body A is player and collision ocurred");
-        }
-
-        if (bodyB.getUserData() instanceof PlayerModel) {
-            System.out.println("Body B is player and collision ocurred");
-        }
-
-        if (bodyA.getUserData() instanceof BombModel) {
-            System.out.println("Body A is Bomb and collision ocurred");
-        }
-
-        if (bodyB.getUserData() instanceof BombModel) {
-            System.out.println("Body B is Bomb and collision ocurred");
-        }
     }
 
     @Override
     public void endContact(Contact contact) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
 
+        if (bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof  BombModel && ((BombModel)bodyB.getUserData()).isWalkable()) {
+            enableBombCollisions(bodyB);
+        }
+
+        if (bodyB.getUserData() instanceof PlayerModel && bodyA.getUserData() instanceof  BombModel && ((BombModel)bodyA.getUserData()).isWalkable()) {
+            enableBombCollisions(bodyA);
+        }
+    }
+
+    /**
+     * Enables collisions of a bomb body
+     * @param bodyB Body of bomb to enable collisions for
+     */
+    private void enableBombCollisions(Body bodyB) {
+        ((BombModel)bodyB.getUserData()).setWalkable(false);
+        Array<Fixture> fixtures = bodyB.getFixtureList();
+        for(Fixture fixture : fixtures) {
+            fixture.setSensor(false);
+        }
     }
 
     @Override

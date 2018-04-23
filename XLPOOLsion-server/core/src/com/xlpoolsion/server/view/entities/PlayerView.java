@@ -16,6 +16,9 @@ public class PlayerView extends EntityView {
 
     private static final float FRAME_TIME = 0.13f;
 
+    public static final float WIDTH = 32;
+    public static final float HEIGHT = 64;
+
     private Animation<TextureRegion> upAnim;
     private Animation<TextureRegion> rightAnim;
     private Animation<TextureRegion> downAnim;
@@ -91,6 +94,7 @@ public class PlayerView extends EntityView {
             setStillAnimationFrame();
         }
 
+        sprite.setSize(WIDTH, HEIGHT);
         sprite.draw(batch);
     }
 

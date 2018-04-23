@@ -10,6 +10,9 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 public class BombView extends EntityView {
     private static final float FRAME_TIME = 0.13f;
 
+    public static final float WIDTH = 32;
+    public static final float HEIGHT = 32;
+
     private Animation<Texture> explodingAnimation;
     private float stateTime = 0f;
 
@@ -37,6 +40,7 @@ public class BombView extends EntityView {
 
         sprite.setRegion(explodingAnimation.getKeyFrame(stateTime, true));
 
+        sprite.setSize(WIDTH, HEIGHT);
         sprite.draw(batch);
     }
 }

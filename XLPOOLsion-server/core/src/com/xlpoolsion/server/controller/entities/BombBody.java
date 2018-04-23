@@ -1,12 +1,11 @@
 package com.xlpoolsion.server.controller.entities;
 
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.xlpoolsion.server.model.entities.BombModel;
 
 public class BombBody extends EntityBody {
+    private Fixture mainFixture;
+
     public BombBody(World world, BombModel model) {
         super(world, model, BodyDef.BodyType.StaticBody);
 
@@ -25,8 +24,16 @@ public class BombBody extends EntityBody {
         fixtureDef.restitution = restitution;
         fixtureDef.isSensor = true;
 
-        body.createFixture(fixtureDef);
+        mainFixture = body.createFixture(fixtureDef);
 
         polyShape.dispose();
+    }
+
+    /**
+     * Toggles the main fixture between being a sensor or not, useful for avoiding collisions until the player walks off
+     * @param isSensor If the main fixture is a sensor or not
+     */
+    public void setSensor(boolean isSensor) {
+        mainFixture.setSensor(isSensor);
     }
 }

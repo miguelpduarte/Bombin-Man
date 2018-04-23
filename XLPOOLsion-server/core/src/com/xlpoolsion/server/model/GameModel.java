@@ -48,8 +48,8 @@ public class GameModel {
         //System.out.println("I am Game Model and am updating with delta " + delta);
         for(BombModel bomb : bombs) {
             if(bomb.decreaseTimeToExplosion(delta)) {
-                System.out.println("Boom, bomb exploded");
                 bomb.setFlaggedForRemoval(true);
+                //TODO: Create explosion here
             }
         }
     }
@@ -57,7 +57,6 @@ public class GameModel {
     public void remove(EntityModel model) {
         if(model instanceof BombModel) {
             bombs.remove(model);
-            System.out.println("Removed a bomb");
         }
     }
 
@@ -68,6 +67,7 @@ public class GameModel {
     public BombModel createBomb() {
         BombModel bomb = bombPool.obtain();
 
+        bomb.setWalkable(true);
         bomb.setFlaggedForRemoval(false);
         bomb.setPosition(this.player.getX(), this.player.getY());
         bomb.setRotation(this.player.getRotation());

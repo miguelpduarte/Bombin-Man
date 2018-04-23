@@ -1,14 +1,16 @@
 package com.xlpoolsion.server.model.entities;
 
+import com.xlpoolsion.server.view.entities.PlayerView;
+
 import static com.xlpoolsion.server.view.GameView.PIXEL_TO_METER;
 
 public class PlayerModel extends EntityModel {
-    public static final float WIDTH = 16 * PIXEL_TO_METER;
-    public static final float HEIGHT = 32 * PIXEL_TO_METER;
+    public static final float WIDTH = PlayerView.WIDTH * PIXEL_TO_METER;
+    public static final float HEIGHT = PlayerView.HEIGHT * PIXEL_TO_METER;
 
     private boolean moving = false;
     private Orientation currentOrientation = Orientation.DOWN;
-    private float current_speed = 3.58f;
+    private float current_speed = 4.4f;//3.58f;
 
     public PlayerModel(float x, float y, float rotation) {
         super(x, y, rotation);
