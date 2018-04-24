@@ -53,6 +53,7 @@ public class GameView extends ScreenAdapter {
         this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f01.png", Texture.class);
         this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f02.png", Texture.class);
         this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f03.png", Texture.class);
+        this.xlpooLsionServer.getAssetManager().load("explosion.png", Texture.class);
         this.xlpooLsionServer.getAssetManager().finishLoading();
     }
 

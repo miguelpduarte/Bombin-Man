@@ -8,9 +8,10 @@ public class PlayerModel extends EntityModel {
     public static final float WIDTH = PlayerView.WIDTH * PIXEL_TO_METER;
     public static final float HEIGHT = PlayerView.HEIGHT * PIXEL_TO_METER;
 
+    private boolean kickPowerup = false;
     private boolean moving = false;
     private Orientation currentOrientation = Orientation.DOWN;
-    private float current_speed = 4.4f;//3.58f;
+    private float current_speed = 4.4f;
 
     public PlayerModel(float x, float y, float rotation) {
         super(x, y, rotation);
@@ -41,5 +42,13 @@ public class PlayerModel extends EntityModel {
 
     public Orientation getCurrentOrientation() {
         return currentOrientation;
+    }
+
+    public boolean hasKickPowerup() {
+        return kickPowerup;
+    }
+
+    public void setKickPowerup(boolean kickPowerup) {
+        this.kickPowerup = kickPowerup;
     }
 }
