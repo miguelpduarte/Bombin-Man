@@ -56,6 +56,7 @@ public class GameModel {
     public void remove(EntityModel model) {
         if(model instanceof BombModel) {
             bombs.remove(model);
+            bombPool.free((BombModel) model);
         }
     }
 
