@@ -36,7 +36,9 @@ public class PlayerView extends EntityView {
     @Override
     protected Sprite createSprite(XLPOOLsionServer xlpooLsionServer) {
         createAnimations(xlpooLsionServer);
-        return new Sprite(downAnim.getKeyFrame(stateTime, true));
+        Sprite temp_sprite = new Sprite(downAnim.getKeyFrame(stateTime, true));
+        temp_sprite.setSize(WIDTH, HEIGHT);
+        return temp_sprite;
     }
 
     private void createAnimations(XLPOOLsionServer xlpooLsionServer) {
@@ -94,7 +96,6 @@ public class PlayerView extends EntityView {
             setStillAnimationFrame();
         }
 
-        sprite.setSize(WIDTH, HEIGHT);
         sprite.draw(batch);
     }
 

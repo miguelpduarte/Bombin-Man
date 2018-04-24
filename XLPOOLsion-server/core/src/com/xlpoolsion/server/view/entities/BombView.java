@@ -23,7 +23,10 @@ public class BombView extends EntityView {
     @Override
     protected Sprite createSprite(XLPOOLsionServer xlpooLsionServer) {
         explodingAnimation = createExplodingAnimation(xlpooLsionServer);
-        return new Sprite(explodingAnimation.getKeyFrame(0f));
+
+        Sprite temp_sprite = new Sprite(explodingAnimation.getKeyFrame(0f));
+        temp_sprite.setSize(WIDTH, HEIGHT);
+        return temp_sprite;
     }
 
     private Animation<Texture> createExplodingAnimation(XLPOOLsionServer xlpooLsionServer) {
@@ -39,8 +42,6 @@ public class BombView extends EntityView {
         stateTime += Gdx.graphics.getDeltaTime();
 
         sprite.setRegion(explodingAnimation.getKeyFrame(stateTime, true));
-
-        sprite.setSize(WIDTH, HEIGHT);
         sprite.draw(batch);
     }
 }
