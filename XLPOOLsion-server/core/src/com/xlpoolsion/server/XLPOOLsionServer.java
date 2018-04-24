@@ -18,7 +18,7 @@ public class XLPOOLsionServer extends Game {
 	}
 
 	private void initView() {
-		setScreen(new LobbyView(this));
+		setScreen(new GameView(this));
 	}
 
 	public SpriteBatch getBatch() {

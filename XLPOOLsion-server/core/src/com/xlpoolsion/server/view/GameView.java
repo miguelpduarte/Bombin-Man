@@ -75,7 +75,7 @@ public class GameView extends ScreenAdapter {
     }
 
     private void drawEntities() {
-        //TODO: ViewFactory? Sounded nice
+        //TODO: ViewFactory?
 
         List<BombModel> bombs = GameModel.getInstance().getBombs();
         for(BombModel bomb : bombs) {

@@ -4,13 +4,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.controller.entities.BombBody;
+import com.xlpoolsion.server.controller.entities.CollisionController;
 import com.xlpoolsion.server.controller.entities.PlayerBody;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
-public class GameController implements ContactListener {
+public class GameController {
     private static GameController instance = null;
 
     private final World world;
@@ -32,7 +33,7 @@ public class GameController implements ContactListener {
         //Creating bodies
         player = new PlayerBody(world, GameModel.getInstance().getPlayer());
 
-        world.setContactListener(this);
+        world.setContactListener(CollisionController.getInstance());
     }
 
     public static GameController getInstance() {
@@ -105,48 +106,6 @@ public class GameController implements ContactListener {
         BombModel bomb = GameModel.getInstance().createBomb();
         //No need to do anything with the declared body, as it is stored in the world
         BombBody body = new BombBody(world, bomb);
-    }
-
-    @Override
-    public void beginContact(Contact contact) {
-        Body bodyA = contact.getFixtureA().getBody();
-        Body bodyB = contact.getFixtureB().getBody();
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-        Body bodyA = contact.getFixtureA().getBody();
-        Body bodyB = contact.getFixtureB().getBody();
-
-        if (bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof  BombModel && ((BombModel)bodyB.getUserData()).isWalkable()) {
-            enableBombCollisions(bodyB);
-        }
-
-        if (bodyB.getUserData() instanceof PlayerModel && bodyA.getUserData() instanceof  BombModel && ((BombModel)bodyA.getUserData()).isWalkable()) {
-            enableBombCollisions(bodyA);
-        }
-    }
-
-    /**
-     * Enables collisions of a bomb body
-     * @param bodyB Body of bomb to enable collisions for
-     */
-    private void enableBombCollisions(Body bodyB) {
-        ((BombModel)bodyB.getUserData()).setWalkable(false);
-        Array<Fixture> fixtures = bodyB.getFixtureList();
-        for(Fixture fixture : fixtures) {
-            fixture.setSensor(false);
-        }
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 
     public void removeFlagged() {

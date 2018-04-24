@@ -7,7 +7,7 @@ import static com.xlpoolsion.server.view.GameView.PIXEL_TO_METER;
 public class BombModel extends EntityModel {
     public static final float WIDTH = BombView.WIDTH * PIXEL_TO_METER;
     public static final float HEIGHT = BombView.HEIGHT * PIXEL_TO_METER;
-    public static final float EXPLOSION_DELAY = 3.0f;
+    public static final float EXPLOSION_DELAY = 15.0f;
 
     private float time_to_explosion;
 
