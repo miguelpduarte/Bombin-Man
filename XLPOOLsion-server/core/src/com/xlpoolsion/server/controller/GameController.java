@@ -27,7 +27,6 @@ public class GameController implements ContactListener {
     public static final float GAME_HEIGHT = 50;
 
     private GameController() {
-        instance = this;
         world = new World(new Vector2(0, 0), true);
 
         //Creating bodies

@@ -24,7 +24,6 @@ public class PlayerBody extends EntityBody {
         fixtureDef.density = density;
         fixtureDef.friction = friction;
         fixtureDef.restitution = restitution;
-        //fixtureDef.isSensor = true;
 
         body.createFixture(fixtureDef);
 

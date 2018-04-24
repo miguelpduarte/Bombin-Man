@@ -45,7 +45,6 @@ public class GameModel {
     }
 
     public void update(float delta) {
-        //System.out.println("I am Game Model and am updating with delta " + delta);
         for(BombModel bomb : bombs) {
             if(bomb.decreaseTimeToExplosion(delta)) {
                 bomb.setFlaggedForRemoval(true);

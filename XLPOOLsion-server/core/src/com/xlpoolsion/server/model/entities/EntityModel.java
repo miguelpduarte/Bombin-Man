@@ -13,7 +13,6 @@ public class EntityModel {
         this.rotation = rotation;
     }
 
-
     public float getRotation() {
         return rotation;
     }
