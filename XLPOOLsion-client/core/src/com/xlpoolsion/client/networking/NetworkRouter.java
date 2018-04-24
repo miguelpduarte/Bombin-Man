@@ -35,4 +35,11 @@ public class NetworkRouter {
 
         connection.sendMessage(msg);
     }
+
+    public void endConnection() {
+        if(connection != null) {
+            connection.close();
+            connection = null;
+        }
+    }
 }

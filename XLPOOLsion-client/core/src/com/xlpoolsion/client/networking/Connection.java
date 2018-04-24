@@ -19,15 +19,28 @@ public class Connection {
     //private String myIP = "172.30.2.190";
     //Port 9021
 
+    private Thread messageListeningThread;
+
     public Connection(String ip, int port) throws IOException {
         socket = new Socket(ip, port);
+
         if(socket.isConnected()) {
             System.out.println("I am connekt!");
-            obj_in = new ObjectInputStream(socket.getInputStream());
-            obj_out = new ObjectOutputStream(socket.getOutputStream());
         } else {
             System.out.println("I am not connekt :(");
-            throw new ConnectException();
+        }
+
+        try {
+            obj_in = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            System.out.println("Obj in stream creation exception");
+            e.printStackTrace();
+        }
+        try {
+            obj_out = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            System.out.println("Obj out stream creation exception");
+            e.printStackTrace();
         }
 
         pollForMessages();
@@ -37,12 +50,12 @@ public class Connection {
      * Polls the server for messages in separate thread (read is blocking)
      */
     private void pollForMessages() {
-        new Thread(new Runnable() {
+        messageListeningThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Starting to poll for messages");
 
-                while(true) {
+                while (true) {
                     try {
                         Thread.sleep(300);
                     } catch (InterruptedException e) {
@@ -52,7 +65,7 @@ public class Connection {
                     Message msg = null;
                     try {
                         msg = (Message) obj_in.readObject();
-                    } catch(EOFException e) {
+                    } catch (EOFException e) {
                         System.out.println("Got an EOF, sleeping a bit");
                         try {
                             Thread.sleep(200);
@@ -66,12 +79,14 @@ public class Connection {
                         e.printStackTrace();
                     }
 
-                    System.out.println("Client received message");
+                    System.out.println("Client received message of type: " + msg.messageType);
 
                     NetworkRouter.getInstance().forwardMessage(msg);
                 }
             }
-        }).start();
+        });
+
+        messageListeningThread.start();
     }
 
     public void sendMessage(Message msg) {
@@ -83,6 +98,12 @@ public class Connection {
     }
 
     public void close() {
+        try {
+            messageListeningThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         try {
             socket.close();
         } catch (IOException e) {

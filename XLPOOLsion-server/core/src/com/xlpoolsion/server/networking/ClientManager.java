@@ -12,6 +12,7 @@ public class ClientManager {
     private final Socket socket;
     private ObjectInputStream obj_in;
     private ObjectOutputStream obj_out;
+    private Thread messagePollingThread;
 
     public ClientManager(Socket socket) {
         this.socket = socket;
@@ -21,8 +22,8 @@ public class ClientManager {
 
     private void createStreams() {
         try {
-            obj_in = new ObjectInputStream(socket.getInputStream());
             obj_out = new ObjectOutputStream(socket.getOutputStream());
+            obj_in = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +33,7 @@ public class ClientManager {
      * Starts polling for client messages in separate thread (read is blocking)
      */
     private void pollForMessages() {
-        new Thread(new Runnable() {
+        messagePollingThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
@@ -44,6 +45,10 @@ public class ClientManager {
                     Message msg = null;
                     try {
                         msg = (Message) obj_in.readObject();
+                        if(msg == null) {
+                            System.out.println("Message was null, continuing");
+                            continue;
+                        }
                     } catch (EOFException e) {
                         System.out.println("EOF found, sleeping some more");
                         try {
@@ -63,7 +68,9 @@ public class ClientManager {
                     NetworkRouter.getInstance().forwardMessage(msg);
                 }
             }
-        }).start();
+        });
+
+        messagePollingThread.start();
     }
 
     public void sendMessage(Message msg) {
@@ -75,6 +82,12 @@ public class ClientManager {
     }
 
     public void closeConnection() {
+        try {
+            messagePollingThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         try {
             obj_in.close();
             obj_out.close();

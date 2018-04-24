@@ -33,4 +33,9 @@ public class NetworkRouter {
 
         server.sendToAll(msg);
     }
+
+    public void closeServer() {
+        server.closeServer();
+        server = null;
+    }
 }

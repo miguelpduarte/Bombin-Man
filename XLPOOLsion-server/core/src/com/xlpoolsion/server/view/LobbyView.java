@@ -27,6 +27,7 @@ public class LobbyView extends ScreenAdapter {
         try {
             NetworkRouter.getInstance().setServer(new MultithreadedServer());
         } catch (IOException e) {
+            System.out.println("OMG WHAT A SERVER CREATION EXCEPTION");
             e.printStackTrace();
         }
     }
@@ -47,5 +48,6 @@ public class LobbyView extends ScreenAdapter {
 
     @Override
     public void dispose() {
+
     }
 }

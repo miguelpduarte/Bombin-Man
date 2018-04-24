@@ -11,6 +11,7 @@ public class MultithreadedServer {
     private static final int PORT = 9876;
     private ServerSocket svSocket;
     private ArrayList<ClientManager> clientManagers = new ArrayList<ClientManager>();
+    private Thread connectionListeningThread;
 
     public MultithreadedServer() throws IOException {
         svSocket = new ServerSocket(PORT);
@@ -23,7 +24,7 @@ public class MultithreadedServer {
     private void startListening() {
         System.out.println("I will now listen for connections");
 
-        new Thread(new Runnable() {
+        connectionListeningThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true) {
@@ -31,6 +32,7 @@ public class MultithreadedServer {
                     try {
                         System.out.println("Waiting to accept connection");
                         Socket socket = svSocket.accept();
+                        System.out.println("Created socket: " + socket.getInetAddress().getHostAddress());
                         clientManagers.add(new ClientManager(socket));
                         System.out.println("Connection added! Now at " + clientManagers.size() + " connections!");
                     } catch (IOException e) {
@@ -38,7 +40,9 @@ public class MultithreadedServer {
                     }
                 }
             }
-        }).start();
+        });
+
+        connectionListeningThread.start();
     }
 
     public void sendToAll(Message msg) {
@@ -51,6 +55,12 @@ public class MultithreadedServer {
     public void closeServer() {
         for (ClientManager clientManager : clientManagers) {
             clientManager.closeConnection();
+        }
+
+        try {
+            connectionListeningThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         try {
