@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.xlpoolsion.server.XLPOOLsionServer;
 
 public class ExplosionView extends EntityView {
+    public static final float WIDTH = 32;
+    public static final float HEIGHT = 32;
+
     public ExplosionView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);
     }
@@ -12,6 +15,8 @@ public class ExplosionView extends EntityView {
     @Override
     protected Sprite createSprite(XLPOOLsionServer xlpooLsionServer) {
         Texture img = xlpooLsionServer.getAssetManager().get("explosion.png");
-        return new Sprite(img);
+        Sprite temp_sprite = new Sprite(img);
+        temp_sprite.setSize(WIDTH, HEIGHT);
+        return temp_sprite;
     }
 }

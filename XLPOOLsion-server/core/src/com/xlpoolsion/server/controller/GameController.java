@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.controller.entities.BombBody;
-import com.xlpoolsion.server.controller.entities.CollisionController;
 import com.xlpoolsion.server.controller.entities.PlayerBody;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.BombModel;
@@ -117,5 +116,13 @@ public class GameController {
                 world.destroyBody(body);
             }
         }
+    }
+
+    /**
+     * Just for debug purposes (Debug Camera)
+     * @return
+     */
+    public World getWorld() {
+        return world;
     }
 }

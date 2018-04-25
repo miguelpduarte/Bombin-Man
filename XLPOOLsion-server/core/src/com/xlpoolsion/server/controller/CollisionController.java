@@ -1,15 +1,13 @@
-package com.xlpoolsion.server.controller.entities;
+package com.xlpoolsion.server.controller;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
-import com.sun.org.apache.bcel.internal.generic.PUSH;
 import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
 public class CollisionController implements ContactListener {
     private static CollisionController instance = null;
 
-    private static final float PUSH_SPEED = 80f;
+    private static final float PUSH_SPEED = 20f;
 
     private CollisionController() {
     }

@@ -69,7 +69,8 @@ public class GameModel {
 
         bomb.setWalkable(true);
         bomb.setFlaggedForRemoval(false);
-        bomb.setPosition(this.player.getX(), this.player.getY());
+        //So that the bomb is created at the feet of the player instead at his head
+        bomb.setPosition(this.player.getX(), this.player.getY() - (PlayerModel.HEIGHT / 2) * 0.4f);
         bomb.setRotation(this.player.getRotation());
         bomb.setTimeToExplosion(BombModel.EXPLOSION_DELAY);
 

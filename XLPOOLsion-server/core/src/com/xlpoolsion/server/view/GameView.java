@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
@@ -20,6 +22,22 @@ import java.util.List;
 import static com.xlpoolsion.server.controller.GameController.GAME_WIDTH;
 
 public class GameView extends ScreenAdapter {
+    /**
+     * Used to debug the position of the physics fixtures
+     */
+    private static final boolean DEBUG_PHYSICS = false;
+
+    /**
+     * A renderer used to debug the physical fixtures.
+     */
+    private Box2DDebugRenderer debugRenderer;
+
+    /**
+     * The transformation matrix used to transform meters into
+     * pixels in order to show fixtures in their correct places.
+     */
+    private Matrix4 debugCamera;
+
     //Adjust according to the player height in the future
     public static final float PIXEL_TO_METER = 0.08f;
 
@@ -45,6 +63,12 @@ public class GameView extends ScreenAdapter {
         //TODO: Check how to change this in order to have a higher resolution shown
         //Creating a viewport with consistent aspect ratio
         viewport = new FitViewport(VIEWPORT_WIDTH_PX, VIEWPORT_WIDTH_PX * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
+
+        if (DEBUG_PHYSICS) {
+            debugRenderer = new Box2DDebugRenderer();
+            debugCamera = viewport.getCamera().combined.cpy();
+            debugCamera.scl(1 / PIXEL_TO_METER);
+        }
     }
 
     private void loadAssets() {
@@ -73,6 +97,12 @@ public class GameView extends ScreenAdapter {
         xlpooLsionServer.getBatch().begin();
         drawEntities();
         xlpooLsionServer.getBatch().end();
+
+        if (DEBUG_PHYSICS) {
+            debugCamera = viewport.getCamera().combined.cpy();
+            debugCamera.scl(1 / PIXEL_TO_METER);
+            debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
+        }
     }
 
     private void drawEntities() {
