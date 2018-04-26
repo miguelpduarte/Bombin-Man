@@ -104,9 +104,9 @@ public class GameController {
         ((PlayerModel) player.getUserData()).setMoving(false);
     }
 
-    public void addBomb() {
+    public void addBomb(PlayerModel owner_player) {
         //TODO: Time and bomb limit verifications
-        BombModel bomb = GameModel.getInstance().createBomb();
+        BombModel bomb = GameModel.getInstance().createBomb(owner_player);
         //No need to do anything with the declared body, as it is stored in the world
         BombBody body = new BombBody(world, bomb);
     }

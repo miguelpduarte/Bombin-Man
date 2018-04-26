@@ -90,8 +90,9 @@ public class GameModel {
     /**
      * Creates a bomb at the player coordinates
      * @return The created BombModel
+     * @param owner_player
      */
-    public BombModel createBomb() {
+    public BombModel createBomb(PlayerModel owner_player) {
         BombModel bomb = bombPool.obtain();
 
         bomb.setWalkable(true);
@@ -100,6 +101,7 @@ public class GameModel {
         bomb.setPosition(this.player.getX(), this.player.getY() - (PlayerModel.HEIGHT / 2) * 0.4f);
         bomb.setRotation(this.player.getRotation());
         bomb.setTimeToExplosion(BombModel.EXPLOSION_DELAY);
+        bomb.setOwner(owner_player);
 
         bombs.add(bomb);
         return bomb;
@@ -112,26 +114,26 @@ public class GameModel {
     public List<ExplosionModel> createExplosions(BombModel bomb) {
         ArrayList<ExplosionModel> temp_explosions = new ArrayList<ExplosionModel>();
 
-        //TODO: Associate with specific Player using BombModel later on, now using global constant
+        final int explosion_radius = bomb.getOwner().getExplosionRadius();
 
         //Creating Center
         Vector2 origin = new Vector2(bomb.getX(), bomb.getY());
         temp_explosions.add(createSingleExplosion(origin));
 
         //Creating Up
-        List<ExplosionModel> upExplosions = createExplosionHelper(origin, new Vector2(0, ExplosionModel.HEIGHT), PlayerModel.EXPLOSION_RADIUS);
+        List<ExplosionModel> upExplosions = createExplosionHelper(origin, new Vector2(0, ExplosionModel.HEIGHT), explosion_radius);
         temp_explosions.addAll(upExplosions);
 
         //Creating Down
-        List<ExplosionModel> downExplosions = createExplosionHelper(origin, new Vector2(0, -ExplosionModel.HEIGHT), PlayerModel.EXPLOSION_RADIUS);
+        List<ExplosionModel> downExplosions = createExplosionHelper(origin, new Vector2(0, -ExplosionModel.HEIGHT), explosion_radius);
         temp_explosions.addAll(downExplosions);
 
         //Creating Left
-        List<ExplosionModel> leftExplosions = createExplosionHelper(origin, new Vector2(-ExplosionModel.WIDTH, 0), PlayerModel.EXPLOSION_RADIUS);
+        List<ExplosionModel> leftExplosions = createExplosionHelper(origin, new Vector2(-ExplosionModel.WIDTH, 0), explosion_radius);
         temp_explosions.addAll(leftExplosions);
 
         //Creating Right
-        List<ExplosionModel> rightExplosions = createExplosionHelper(origin, new Vector2(ExplosionModel.WIDTH, 0), PlayerModel.EXPLOSION_RADIUS);
+        List<ExplosionModel> rightExplosions = createExplosionHelper(origin, new Vector2(ExplosionModel.WIDTH, 0), explosion_radius);
         temp_explosions.addAll(rightExplosions);
 
         explosions.addAll(temp_explosions);
@@ -141,7 +143,7 @@ public class GameModel {
     private List<ExplosionModel> createExplosionHelper(Vector2 origin, Vector2 shift, int explosionRadius) {
         ArrayList<ExplosionModel> explosions = new ArrayList<ExplosionModel>();
 
-        for(int i = 1; i < explosionRadius; ++i) {
+        for(int i = 1; i <= explosionRadius; ++i) {
             Vector2 tempvec = new Vector2(origin);
             explosions.add(createSingleExplosion(tempvec.mulAdd(shift, i)));
         }

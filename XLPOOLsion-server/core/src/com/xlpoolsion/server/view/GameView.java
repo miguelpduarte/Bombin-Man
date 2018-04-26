@@ -144,7 +144,8 @@ public class GameView extends ScreenAdapter {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            GameController.getInstance().addBomb();
+            //Change to specific player when networking is done
+            GameController.getInstance().addBomb(GameModel.getInstance().getPlayer());
         }
     }
 

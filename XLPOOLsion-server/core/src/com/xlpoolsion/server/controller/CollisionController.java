@@ -7,7 +7,7 @@ import com.xlpoolsion.server.model.entities.PlayerModel;
 public class CollisionController implements ContactListener {
     private static CollisionController instance = null;
 
-    private static final float PUSH_SPEED = 20f;
+    private static final float PUSH_SPEED = 10f;
 
     private CollisionController() {
     }
@@ -25,6 +25,12 @@ public class CollisionController implements ContactListener {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
+        if(bodyA.getUserData() instanceof  BombModel && bodyB.getUserData() instanceof BombModel) {
+            stopBomb(bodyA);
+            stopBomb(bodyB);
+            return;
+        }
+
         if(bodyA.getUserData() instanceof BombModel && !((BombModel) bodyA.getUserData()).isWalkable()
                 && bodyB.getUserData() instanceof PlayerModel) {
             if(((PlayerModel) bodyB.getUserData()).hasKickPowerup()) {
@@ -32,7 +38,7 @@ public class CollisionController implements ContactListener {
             } else {
                 stopBomb(bodyA);
             }
-
+            return;
         }
 
         if (bodyB.getUserData() instanceof BombModel && !((BombModel) bodyB.getUserData()).isWalkable()

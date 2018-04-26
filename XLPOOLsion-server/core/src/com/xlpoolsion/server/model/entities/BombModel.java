@@ -9,8 +9,9 @@ public class BombModel extends EntityModel {
     public static final float HEIGHT = BombView.HEIGHT * PIXEL_TO_METER;
     public static final float EXPLOSION_DELAY = 3.0f;
 
-    private float time_to_explosion;
+    private PlayerModel owner_player;
 
+    private float time_to_explosion;
     private boolean walkable = true;
 
     public BombModel(float x, float y, float rotation) {
@@ -32,5 +33,13 @@ public class BombModel extends EntityModel {
 
     public void setWalkable(boolean walkable) {
         this.walkable = walkable;
+    }
+
+    public void setOwner(PlayerModel owner) {
+        this.owner_player = owner;
+    }
+
+    public PlayerModel getOwner() {
+        return owner_player;
     }
 }
