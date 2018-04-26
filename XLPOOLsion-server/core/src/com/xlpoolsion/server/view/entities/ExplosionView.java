@@ -25,6 +25,10 @@ public class ExplosionView extends EntityView {
     @Override
     public void update(EntityModel model) {
         super.update(model);
-        sprite.setAlpha(/*0.2f + */ ((ExplosionModel) model).getTimeToDecay() / ExplosionModel.EXPLOSION_DECAY_TIME);
+        if(((ExplosionModel) model).getTimeToDecay() < 0) {
+            sprite.setAlpha(0f);
+        } else {
+            sprite.setAlpha(/*0.2f + */ ((ExplosionModel) model).getTimeToDecay() / ExplosionModel.EXPLOSION_DECAY_TIME);
+        }
     }
 }
