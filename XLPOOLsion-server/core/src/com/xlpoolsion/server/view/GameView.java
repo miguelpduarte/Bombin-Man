@@ -13,8 +13,10 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.BombModel;
+import com.xlpoolsion.server.model.entities.ExplosionModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.view.entities.BombView;
+import com.xlpoolsion.server.view.entities.ExplosionView;
 import com.xlpoolsion.server.view.entities.PlayerView;
 
 import java.util.List;
@@ -51,6 +53,7 @@ public class GameView extends ScreenAdapter {
     //Replace by viewfactory?
     private PlayerView playerView;
     private BombView bombView;
+    private ExplosionView explosionView;
 
     public GameView(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;
@@ -59,6 +62,7 @@ public class GameView extends ScreenAdapter {
 
         playerView = new PlayerView(xlpooLsionServer);
         bombView = new BombView(xlpooLsionServer);
+        explosionView = new ExplosionView(xlpooLsionServer);
 
         //TODO: Check how to change this in order to have a higher resolution shown
         //Creating a viewport with consistent aspect ratio
@@ -112,6 +116,12 @@ public class GameView extends ScreenAdapter {
         for(BombModel bomb : bombs) {
             bombView.update(bomb);
             bombView.draw(xlpooLsionServer.getBatch());
+        }
+
+        List<ExplosionModel> explosions = GameModel.getInstance().getExplosions();
+        for(ExplosionModel explosion : explosions) {
+            explosionView.update(explosion);
+            explosionView.draw(xlpooLsionServer.getBatch());
         }
 
         //Drawing player in end so that he stays on top

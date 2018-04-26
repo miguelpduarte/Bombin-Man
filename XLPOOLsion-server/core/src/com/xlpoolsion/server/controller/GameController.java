@@ -4,11 +4,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.controller.entities.BombBody;
+import com.xlpoolsion.server.controller.entities.ExplosionBody;
 import com.xlpoolsion.server.controller.entities.PlayerBody;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.EntityModel;
+import com.xlpoolsion.server.model.entities.ExplosionModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
+
+import java.util.List;
 
 public class GameController {
     private static GameController instance = null;
@@ -105,6 +109,13 @@ public class GameController {
         BombModel bomb = GameModel.getInstance().createBomb();
         //No need to do anything with the declared body, as it is stored in the world
         BombBody body = new BombBody(world, bomb);
+    }
+
+    public void createExplosions(BombModel bomb) {
+        List<ExplosionModel> explosions = GameModel.getInstance().createExplosions(bomb);
+        for(ExplosionModel explosion : explosions) {
+            new ExplosionBody(world, explosion);
+        }
     }
 
     public void removeFlagged() {

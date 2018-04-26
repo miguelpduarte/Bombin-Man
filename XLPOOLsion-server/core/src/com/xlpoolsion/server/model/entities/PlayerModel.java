@@ -8,6 +8,9 @@ public class PlayerModel extends EntityModel {
     public static final float WIDTH = PlayerView.WIDTH * PIXEL_TO_METER;
     public static final float HEIGHT = PlayerView.HEIGHT * PIXEL_TO_METER;
 
+    //Temporary, to change to gets because it will be mutable via powerups
+    public static final int EXPLOSION_RADIUS = 3;
+
     private boolean kickPowerup = true;
     private boolean moving = false;
     private Orientation currentOrientation = Orientation.DOWN;
