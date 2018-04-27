@@ -54,7 +54,7 @@ public class ControlsView extends StageView {
         tpadStyle.background = trd1;
         tpadStyle.knob = trd2;
         touchpad = new Touchpad(2.0f, tpadStyle);
-        touchpad.setPosition(stage.getWidth() * 0.15f, stage.getHeight() * 0.2f);
+        touchpad.setPosition(stage.getWidth() * 0.2f, stage.getHeight() * 0.35f, 1);
         touchpad.setVisible(true);
 
         stage.addActor(touchpad);
