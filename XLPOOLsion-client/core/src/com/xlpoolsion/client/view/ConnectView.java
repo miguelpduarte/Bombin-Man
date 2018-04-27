@@ -9,7 +9,8 @@ import com.xlpoolsion.client.XLPOOLsionClient;
 public class ConnectView extends StageView {
     public ConnectView(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
-        super.setPortrait();
+        //TODO: Fix the rotation coordinates...
+        //super.setPortrait();
 
         loadAssets();
         createElements();
@@ -30,7 +31,7 @@ public class ConnectView extends StageView {
 
         Button but = new Button(buttonStyle);
 
-        but.setPosition(50, 50);
+        but.setPosition(stage.getViewport().getScreenWidth() * 0.9f, stage.getViewport().getScreenHeight() * 0.9f, 1);
         stage.addActor(but);
     }
 }
