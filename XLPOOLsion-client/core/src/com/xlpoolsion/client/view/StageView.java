@@ -39,4 +39,8 @@ public class StageView extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
     }
+
+    public void setPortrait() {
+        stage.getCamera().rotate(270, 0, 0, 1);
+    }
 }
