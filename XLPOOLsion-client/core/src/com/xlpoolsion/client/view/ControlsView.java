@@ -2,23 +2,18 @@ package com.xlpoolsion.client.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.xlpoolsion.client.XLPOOLsionClient;
-import com.xlpoolsion.client.networking.Connection;
 import com.xlpoolsion.client.networking.NetworkRouter;
-import com.xlpoolsion.common.Message;
-
-import java.io.IOException;
 
 public class ControlsView extends StageView {
     private Skin skin;
@@ -28,6 +23,7 @@ public class ControlsView extends StageView {
     public ControlsView(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
 
+        loadAssets();
         createGUIItems();
 
         /*
@@ -39,18 +35,27 @@ public class ControlsView extends StageView {
         */
     }
 
+    private void loadAssets() {
+        xlpooLsionClient.getAssetManager().load("joystick_bomb_200px.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("joystick_player_face_100px.png", Texture.class);
+        xlpooLsionClient.getAssetManager().finishLoading();
+    }
+
     private void createGUIItems() {
-        skinInit();
+        //skinInit();
 
         createTouchpad();
     }
 
     private void createTouchpad() {
         Touchpad.TouchpadStyle tpadStyle = new Touchpad.TouchpadStyle();
-        tpadStyle.background = skin.newDrawable("white", Color.YELLOW);
-        tpadStyle.knob = skin.newDrawable("white", Color.GOLD);
-        touchpad = new Touchpad(4.0f, tpadStyle);
-        touchpad.setPosition(stage.getWidth()/2, stage.getHeight()/2);
+        TextureRegionDrawable trd1 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("joystick_bomb_200px.png")));
+        TextureRegionDrawable trd2 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("joystick_player_face_100px.png")));
+        tpadStyle.background = trd1;
+        tpadStyle.knob = trd2;
+        touchpad = new Touchpad(2.0f, tpadStyle);
+        touchpad.setPosition(stage.getWidth() * 0.15f, stage.getHeight() * 0.2f);
+        touchpad.setVisible(true);
 
         stage.addActor(touchpad);
     }
@@ -89,6 +94,11 @@ public class ControlsView extends StageView {
         simpleLblStyle.fontColor = Color.WHITE;
         simpleLblStyle.font = skin.getFont("default");
         skin.add("default", simpleLblStyle);
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
     }
 
     /*
