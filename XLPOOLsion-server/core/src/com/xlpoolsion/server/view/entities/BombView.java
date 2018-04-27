@@ -5,15 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xlpoolsion.server.XLPOOLsionServer;
 
 public class BombView extends EntityView {
-    private static final float FRAME_TIME = 0.13f;
+    private static final float FRAME_TIME = 0.25f;
 
     public static final float WIDTH = 32;
     public static final float HEIGHT = 32;
 
-    private Animation<Texture> explodingAnimation;
+    private Animation<TextureRegion> explodingAnimation;
     private float stateTime = 0f;
 
     public BombView(XLPOOLsionServer xlpooLsionServer) {
@@ -29,12 +30,14 @@ public class BombView extends EntityView {
         return temp_sprite;
     }
 
-    private Animation<Texture> createExplodingAnimation(XLPOOLsionServer xlpooLsionServer) {
-        Texture texture1 = xlpooLsionServer.getAssetManager().get("bomb/Bomb_f01.png");
-        Texture texture2 = xlpooLsionServer.getAssetManager().get("bomb/Bomb_f02.png");
-        Texture texture3 = xlpooLsionServer.getAssetManager().get("bomb/Bomb_f03.png");
+    private Animation<TextureRegion> createExplodingAnimation(XLPOOLsionServer xlpooLsionServer) {
+        Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomb_sprite_transparent.png");
+        TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 16);
 
-        return new Animation<Texture>(FRAME_TIME, new Texture[] {texture1, texture2, texture3});
+        TextureRegion[] bomb_anim_frames =  new TextureRegion[4];
+        System.arraycopy(fullregion[0], 0, bomb_anim_frames, 0, 4);
+
+        return new Animation<TextureRegion>(FRAME_TIME, bomb_anim_frames);
     }
 
     @Override

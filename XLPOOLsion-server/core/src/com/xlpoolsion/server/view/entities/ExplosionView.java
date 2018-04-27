@@ -28,7 +28,7 @@ public class ExplosionView extends EntityView {
         if(((ExplosionModel) model).getTimeToDecay() < 0) {
             sprite.setAlpha(0f);
         } else {
-            sprite.setAlpha(/*0.2f + */ ((ExplosionModel) model).getTimeToDecay() / ExplosionModel.EXPLOSION_DECAY_TIME);
+            sprite.setAlpha(((ExplosionModel) model).getTimeToDecay() / ExplosionModel.EXPLOSION_DECAY_TIME);
         }
     }
 }
