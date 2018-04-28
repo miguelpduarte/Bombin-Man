@@ -8,13 +8,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class MultithreadedServer {
-    private static final int PORT = 9876;
     private ServerSocket svSocket;
     private ArrayList<ClientManager> clientManagers = new ArrayList<ClientManager>();
     private Thread connectionListeningThread;
 
     public MultithreadedServer() throws IOException {
-        svSocket = new ServerSocket(PORT);
+        System.out.println("Creating server in IP: " + NetworkInfo.getInstance().getServerIP() + " at port " + NetworkInfo.getInstance().getServerPort());
+        svSocket = new ServerSocket(NetworkInfo.getInstance().getServerPort());
         startListening();
     }
 
@@ -33,6 +33,7 @@ public class MultithreadedServer {
                         System.out.println("Waiting to accept connection");
                         Socket socket = svSocket.accept();
                         System.out.println("Created socket: " + socket.getInetAddress().getHostAddress());
+                        //TODO: Add restrictions here -> Same client cannot connect twice, limit max number of connections, etc
                         clientManagers.add(new ClientManager(socket));
                         System.out.println("Connection added! Now at " + clientManagers.size() + " connections!");
                     } catch (IOException e) {
