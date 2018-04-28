@@ -10,8 +10,6 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
-import static com.xlpoolsion.server.view.GameView.PIXEL_TO_METER;
-
 public class PlayerView extends EntityView {
 
     private static final float FRAME_TIME = 0.13f;

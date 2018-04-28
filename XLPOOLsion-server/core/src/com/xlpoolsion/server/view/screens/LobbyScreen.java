@@ -1,4 +1,4 @@
-package com.xlpoolsion.server.view;
+package com.xlpoolsion.server.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -12,11 +12,11 @@ import com.xlpoolsion.server.networking.NetworkRouter;
 
 import java.io.IOException;
 
-public class LobbyView extends ScreenAdapter {
+public class LobbyScreen extends ScreenAdapter {
     private final XLPOOLsionServer xlpooLsionServer;
     private final Texture img;
 
-    public LobbyView(XLPOOLsionServer xlpooLsionServer) {
+    public LobbyScreen(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;
 
         xlpooLsionServer.getAssetManager().load("badlogic.jpg", Texture.class);

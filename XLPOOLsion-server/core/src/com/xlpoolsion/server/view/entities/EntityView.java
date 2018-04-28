@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.entities.EntityModel;
 
-import static com.xlpoolsion.server.view.GameView.PIXEL_TO_METER;
+import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;
 
 public abstract class EntityView {
     protected Sprite sprite;

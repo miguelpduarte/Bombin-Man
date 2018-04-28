@@ -1,4 +1,4 @@
-package com.xlpoolsion.server.view;
+package com.xlpoolsion.server.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,7 +23,7 @@ import java.util.List;
 
 import static com.xlpoolsion.server.controller.GameController.GAME_WIDTH;
 
-public class GameView extends ScreenAdapter {
+public class GameScreen extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -55,7 +55,7 @@ public class GameView extends ScreenAdapter {
     private BombView bombView;
     private ExplosionView explosionView;
 
-    public GameView(XLPOOLsionServer xlpooLsionServer) {
+    public GameScreen(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;
 
         loadAssets();

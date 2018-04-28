@@ -2,7 +2,7 @@ package com.xlpoolsion.server.model.entities;
 
 import com.xlpoolsion.server.view.entities.PlayerView;
 
-import static com.xlpoolsion.server.view.GameView.PIXEL_TO_METER;
+import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;
 
 public class PlayerModel extends EntityModel {
     public static final float WIDTH = PlayerView.WIDTH * PIXEL_TO_METER;
