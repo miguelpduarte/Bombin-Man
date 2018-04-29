@@ -1,0 +1,36 @@
+%%Configs
+\documentclass[12pt,a4paper]{article}
+\pagenumbering{gobble}
+
+%%Packages
+\usepackage[margin=1in]{geometry}
+
+\title{\emph{{\Huge Design Patterns to use in XLPOOLsion}}}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\emph{\large The Design Patterns that are expected to be used in this project are the following:}
+
+\begin{itemize}
+\item MVC (Model View Controller)
+	\subitem Used in order to facilitate modularity by reducing dependency between the game's graphics, model and internal logic.
+\item Singleton
+	\subitem Used in several classes to ensure that they have only one instance at any given time (e.g. NetworkRouter, GameController and GameModel).
+\item Observer
+	\subitem CollisionController, in the Controller package, acts as a collision observer (aka listener) for collisions in the game world (This design pattern is implemented by LibGDX - to be more specific, Box2D).
+\item Object Pool
+	\subitem An object pool is being used for creation of Bomb and Explosion Models, because they are created and destroyed frequently, but do not usually last very long, thus reducing the overhead of object creation and destruction (In the future, it might also be used to create views so that they can have independent animation "stateTimes"). This was implemented with the aid of LibGDX's Pool container.
+\item Factory
+	\subitem To be used to simplify the creation of several elements of the game (Buttons, Textures, etc)
+\item Factory Method
+	\subitem To be used for the creation of Views from EntityModels, for example.
+\item State
+	\subitem Both client and server applications have their own inner state that changes with events.
+\item \textbf{\Huge AAAAAAAAAAAAAAAAAAA To decide if using: Flyweight associated to view factory}
+\end{itemize}
+
+\end{document}
