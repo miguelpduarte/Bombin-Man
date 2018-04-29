@@ -1,6 +1,18 @@
 # XLPOOLsion
 Second project developed in the LPOO course unit.
 
+# Architecture Design
+
+## Package and class diagram
+(Insert UML here)
+
+## Predicted server-client interactions
+(Insert here)
+
+## Expected Design Patterns
+![Link to PDF](other/latex-pdfs/design_patterns.pdf "Expected Design Patterns PDF")
+
+
 # GUI
 ## Listing of main functionalities:
 * Client:
