@@ -4,10 +4,9 @@ Second project developed in the LPOO course unit.
 # Architecture Design
 
 ## Package and class diagram
-![Link to PDF](other/UML/DesignUML.jpg "Package and Class UML")
 
 ## Predicted server-client interactions
-(Insert here)
+![Link to PDF](other/UML/DesignUML.jpg "Package and Class UML")
 
 ## Expected Design Patterns
 ![Link to PDF](other/latex-pdfs/design_patterns.pdf "Expected Design Patterns PDF")
