@@ -31,3 +31,7 @@ Second project developed in the LPOO course unit.
 
 ### Desktop Server Mockup
 ![Desktop Server Mockup](other/mockups/server/desktop_server_full_mockup.png?raw=true "Desktop Server Mockup")
+
+# Test Design
+## Expected test cases
+![Link to PDF](other/latex-pdfs/test_cases.pdf "Expected Test Cases PDF")
