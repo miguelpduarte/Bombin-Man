@@ -1,0 +1,40 @@
+%%Configs
+\documentclass[12pt,a4paper]{article}
+\pagenumbering{gobble}
+
+%%Packages
+\usepackage[margin=1in]{geometry}
+
+\title{\emph{{\Huge Test Cases to use in XLPOOLsion}}}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\emph{\large The Test Cases that are expected to be implemented in this project are the following:}
+
+\begin{itemize}
+\item Server-side Tests:
+	\begin{itemize}
+	\item Verify if the player moves in the correct directions
+	\item Verify if a Player can place a bomb in its current position
+	\item Verify if when a Player collides with an explosion he dies
+	\item Test if a box is destroyed if an explosion is in its boundaries
+	\item Verify if a Player without the BombKicking powerUp cannot move if he is colliding with a bomb
+	\item Verify if a Player with the BombKicking powerUp can kick the bomb if he collides with it
+	\item Test if the game ends if only 1 player is alive
+	\item Test if the bomb explodes after a certain time
+	\item Test if the bomb radius increases after collecting certain powerUps
+	\item Test if the limit of bombs is respected when attempting to place another bomb
+	\end{itemize}
+\item Client-side Tests:
+	\begin{itemize}
+	\item Check if the client was able to connect successfully
+	\item Check if all commands (Move Up, Down, Place Bomb) are sent to the server
+	\item Test state changes by spoofing the sending of specific messages to the client (without needing communication, by directly routing the messages)
+	\end{itemize}
+\end{itemize}
+
+\end{document}
