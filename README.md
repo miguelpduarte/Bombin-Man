@@ -6,7 +6,7 @@ Second project developed in the LPOO course unit.
 ## Package and class diagram
 
 ## Predicted server-client interactions
-![Link to PDF](other/UML/DesignUML.jpg "Package and Class UML")
+![Link to PDF](other/UML/DesignUML.jpg "Server-Client interactions UML")
 
 ## Expected Design Patterns
 ![Link to PDF](other/latex-pdfs/design_patterns.pdf "Expected Design Patterns PDF")
