@@ -4,7 +4,7 @@ Second project developed in the LPOO course unit.
 # Architecture Design
 
 ## Package and class diagram
-![Link to PDF](other/UML/UML V3 LPOO.jpg "Package and Class UML")
+![Link to PDF](other/UML/DesignUML.jpg "Package and Class UML")
 
 ## Predicted server-client interactions
 (Insert here)
