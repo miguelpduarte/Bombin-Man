@@ -9,8 +9,10 @@ import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;
 
 public abstract class EntityView {
     protected Sprite sprite;
+    protected XLPOOLsionServer xlpooLsionServer;
 
     public EntityView(XLPOOLsionServer xlpooLsionServer) {
+        this.xlpooLsionServer = xlpooLsionServer;
         sprite = createSprite(xlpooLsionServer);
     }
 

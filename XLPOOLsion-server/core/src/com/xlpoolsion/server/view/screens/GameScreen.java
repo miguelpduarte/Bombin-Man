@@ -76,16 +76,8 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void loadAssets() {
+        ///Moved to TextureManager
         //this.xlpooLsionServer.getAssetManager().load("badlogic.jpg", Texture.class);
-        this.xlpooLsionServer.getAssetManager().load("Bomberman_sprite.png", Texture.class);
-        this.xlpooLsionServer.getAssetManager().load("Bomb_sprite_transparent.png", Texture.class);
-        /*
-        this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f01.png", Texture.class);
-        this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f02.png", Texture.class);
-        this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f03.png", Texture.class);
-        */
-        this.xlpooLsionServer.getAssetManager().load("explosion.png", Texture.class);
-        this.xlpooLsionServer.getAssetManager().finishLoading();
     }
 
     @Override
