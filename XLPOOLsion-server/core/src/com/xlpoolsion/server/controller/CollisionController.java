@@ -52,7 +52,19 @@ public class CollisionController implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
 
+        if(bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof BombModel && !((PlayerModel) bodyA.getUserData()).hasKickPowerup()) {
+            contact.setEnabled(false);
+            bodyA.setLinearVelocity(0, 0);
+            bodyB.setLinearVelocity(0, 0);
+        }
+        if(bodyB.getUserData() instanceof PlayerModel && bodyA.getUserData() instanceof BombModel && !((PlayerModel) bodyB.getUserData()).hasKickPowerup()) {
+            contact.setEnabled(false);
+            bodyB.setLinearVelocity(0, 0);
+            bodyA.setLinearVelocity(0, 0);
+        }
     }
 
     @Override

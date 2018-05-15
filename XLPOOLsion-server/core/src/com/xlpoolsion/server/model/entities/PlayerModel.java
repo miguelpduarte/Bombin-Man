@@ -9,11 +9,12 @@ public class PlayerModel extends EntityModel {
     public static final float HEIGHT = PlayerView.HEIGHT * PIXEL_TO_METER;
 
     private boolean moving = false;
+    private boolean overBomb = false;
     private Orientation currentOrientation = Orientation.DOWN;
     private float current_speed = 4.4f;
 
     //Powerups
-    private boolean kickPowerup = true;
+    private boolean kickPowerup = false;
     private int explosion_radius = 3;
 
     public PlayerModel(float x, float y, float rotation) {
@@ -43,6 +44,14 @@ public class PlayerModel extends EntityModel {
     //TODO: Change to increment maybe so that powerups are used directly without get?
     public void setExplosionRadius(int explosion_radius) {
         this.explosion_radius = explosion_radius;
+    }
+
+    public boolean isOverBomb() {
+        return overBomb;
+    }
+
+    public void setOverBomb(boolean overBomb) {
+        this.overBomb = overBomb;
     }
 
     public enum Orientation {
