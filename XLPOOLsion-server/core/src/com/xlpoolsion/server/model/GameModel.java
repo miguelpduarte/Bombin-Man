@@ -35,16 +35,6 @@ public class GameModel {
         }
     };
 
-    /**
-     * A pool of bricks
-     */
-    Pool<BrickModel> brickPool = new Pool<BrickModel>() {
-        @Override
-        protected BrickModel newObject() {
-            return new BrickModel(0, 0, 0);
-        }
-    };
-
     private GameModel() {
         player = new PlayerModel(GameController.GAME_WIDTH / 2, GameController.GAME_HEIGHT / 2, 0);
         bombs = new ArrayList<BombModel>();
@@ -108,7 +98,7 @@ public class GameModel {
      * @return The created BrickModel
      */
     public BrickModel createBrick(int x, int y) {
-        BrickModel brick = brickPool.obtain();
+        BrickModel brick = new BrickModel(x, y, 0);
 
         brick.setFlaggedForRemoval(false);
         brick.setPosition(x,y);
@@ -127,6 +117,7 @@ public class GameModel {
 
         bomb.setWalkable(true);
         bomb.setFlaggedForRemoval(false);
+        bomb.setStopped(false);
         //So that the bomb is created at the feet of the player instead at his head
         bomb.setPosition(this.player.getX(), this.player.getY() - (PlayerModel.HEIGHT / 2) * 0.4f);
         bomb.setRotation(this.player.getRotation());
