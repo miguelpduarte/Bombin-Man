@@ -11,7 +11,7 @@ public class BombBody extends EntityBody {
         //Creating fixtures
         float density = 0.0f;
         float friction = 0.0f;
-        float restitution = 8.0f;
+        float restitution = 2.0f;
 
         PolygonShape polyShape = new PolygonShape();
         polyShape.setAsBox(BombModel.WIDTH / 2, BombModel.HEIGHT / 2);
