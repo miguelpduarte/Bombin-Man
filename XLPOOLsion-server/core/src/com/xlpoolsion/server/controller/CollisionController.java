@@ -1,5 +1,6 @@
 package com.xlpoolsion.server.controller;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.model.entities.BombModel;
@@ -57,13 +58,39 @@ public class CollisionController implements ContactListener {
 
         if(bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof BombModel && !((PlayerModel) bodyA.getUserData()).hasKickPowerup()) {
             contact.setEnabled(false);
-            bodyA.setLinearVelocity(0, 0);
-            bodyB.setLinearVelocity(0, 0);
+            stopPlayerIfMovingTowardsBomb(bodyA, bodyB);
         }
+
         if(bodyB.getUserData() instanceof PlayerModel && bodyA.getUserData() instanceof BombModel && !((PlayerModel) bodyB.getUserData()).hasKickPowerup()) {
             contact.setEnabled(false);
-            bodyB.setLinearVelocity(0, 0);
-            bodyA.setLinearVelocity(0, 0);
+            stopPlayerIfMovingTowardsBomb(bodyB, bodyA);
+        }
+    }
+
+    /**
+     * Stops a player (in the correct velocity component) if he is moving towards a bomb. For use when the player collides with a bomb but does not have the kick pickup.
+     * @param playerBody
+     * @param bombBody
+     */
+    private void stopPlayerIfMovingTowardsBomb(Body playerBody, Body bombBody) {
+        Vector2 playerVel = playerBody.getLinearVelocity();
+        Vector2 playerToBomb = bombBody.getPosition().sub(playerBody.getPosition());
+        //Converting to "directional" vector -> only largest direction in absolute matters
+        if(Math.abs(playerToBomb.x) > Math.abs(playerToBomb.y)) {
+            playerToBomb.y = 0;
+        } else {
+            playerToBomb.x = 0;
+        }
+
+
+        //System.out.println(new Vector2(0f, 4f).isCollinearOpposite(new Vector2(0, -2.19734f)));
+        System.out.println("pVel: " + playerVel);
+        System.out.println("pToBomb: " + playerToBomb);
+
+        if(playerVel.isCollinear(playerToBomb)) {
+            playerBody.setLinearVelocity(0, 0);
+        } else {
+            System.out.println("Did not stop");
         }
     }
 
