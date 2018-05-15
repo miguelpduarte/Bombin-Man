@@ -4,14 +4,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.controller.entities.BombBody;
+import com.xlpoolsion.server.controller.entities.BrickBody;
 import com.xlpoolsion.server.controller.entities.ExplosionBody;
 import com.xlpoolsion.server.controller.entities.PlayerBody;
 import com.xlpoolsion.server.model.GameModel;
-import com.xlpoolsion.server.model.entities.BombModel;
-import com.xlpoolsion.server.model.entities.EntityModel;
-import com.xlpoolsion.server.model.entities.ExplosionModel;
-import com.xlpoolsion.server.model.entities.PlayerModel;
+import com.xlpoolsion.server.model.entities.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
@@ -19,6 +18,7 @@ public class GameController {
 
     private final World world;
     private final PlayerBody player;
+    private ArrayList<BrickBody> brickWalls;
 
     /**
      * The map width in meters.
@@ -35,9 +35,11 @@ public class GameController {
 
         //Creating bodies
         player = new PlayerBody(world, GameModel.getInstance().getPlayer());
+        loadWalls();
 
         world.setContactListener(CollisionController.getInstance());
     }
+
 
     public static GameController getInstance() {
         if (instance == null) {
@@ -108,7 +110,7 @@ public class GameController {
         //TODO: Time and bomb limit verifications
         BombModel bomb = GameModel.getInstance().createBomb(owner_player);
         //No need to do anything with the declared body, as it is stored in the world
-        BombBody body = new BombBody(world, bomb);
+        new BombBody(world, bomb);
     }
 
     public void createExplosions(BombModel bomb) {
@@ -116,6 +118,12 @@ public class GameController {
         for(ExplosionModel explosion : explosions) {
             new ExplosionBody(world, explosion);
         }
+    }
+    private void loadWalls() {
+
+        BrickModel brick = GameModel.getInstance().createBrick(1,2);
+        new BrickBody(world, brick);
+
     }
 
     public void removeFlagged() {

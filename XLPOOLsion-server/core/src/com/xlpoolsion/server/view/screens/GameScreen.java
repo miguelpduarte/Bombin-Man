@@ -13,9 +13,11 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.BombModel;
+import com.xlpoolsion.server.model.entities.BrickModel;
 import com.xlpoolsion.server.model.entities.ExplosionModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.view.entities.BombView;
+import com.xlpoolsion.server.view.entities.BrickView;
 import com.xlpoolsion.server.view.entities.ExplosionView;
 import com.xlpoolsion.server.view.entities.PlayerView;
 
@@ -54,6 +56,8 @@ public class GameScreen extends ScreenAdapter {
     private PlayerView playerView;
     private BombView bombView;
     private ExplosionView explosionView;
+    private BrickView brickView;
+
 
     public GameScreen(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;
@@ -63,6 +67,7 @@ public class GameScreen extends ScreenAdapter {
         playerView = new PlayerView(xlpooLsionServer);
         bombView = new BombView(xlpooLsionServer);
         explosionView = new ExplosionView(xlpooLsionServer);
+        brickView = new BrickView(xlpooLsionServer);
 
         //TODO: Check how to change this in order to have a higher resolution shown
         //Creating a viewport with consistent aspect ratio
@@ -79,6 +84,7 @@ public class GameScreen extends ScreenAdapter {
         //this.xlpooLsionServer.getAssetManager().load("badlogic.jpg", Texture.class);
         this.xlpooLsionServer.getAssetManager().load("Bomberman_sprite.png", Texture.class);
         this.xlpooLsionServer.getAssetManager().load("Bomb_sprite_transparent.png", Texture.class);
+        this.xlpooLsionServer.getAssetManager().load("Wall.png", Texture.class);
         /*
         this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f01.png", Texture.class);
         this.xlpooLsionServer.getAssetManager().load("bomb/Bomb_f02.png", Texture.class);
@@ -125,6 +131,11 @@ public class GameScreen extends ScreenAdapter {
         for(ExplosionModel explosion : explosions) {
             explosionView.update(explosion);
             explosionView.draw(xlpooLsionServer.getBatch());
+        }
+        List<BrickModel> bricks = GameModel.getInstance().getBricks();
+        for(BrickModel brick : bricks) {
+            brickView.update(brick);
+            brickView.draw(xlpooLsionServer.getBatch());
         }
 
         //Drawing player in end so that he stays on top

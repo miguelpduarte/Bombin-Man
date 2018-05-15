@@ -2,6 +2,7 @@ package com.xlpoolsion.server.controller;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.xlpoolsion.server.model.entities.BombModel;
+import com.xlpoolsion.server.model.entities.BrickModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
 public class CollisionController implements ContactListener {
@@ -30,6 +31,7 @@ public class CollisionController implements ContactListener {
             stopBomb(bodyB);
             return;
         }
+
 
         if(bodyA.getUserData() instanceof BombModel && !((BombModel) bodyA.getUserData()).isWalkable()
                 && bodyB.getUserData() instanceof PlayerModel) {

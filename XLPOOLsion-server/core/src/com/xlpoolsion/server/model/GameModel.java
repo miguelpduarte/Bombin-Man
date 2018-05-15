@@ -3,10 +3,7 @@ package com.xlpoolsion.server.model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.xlpoolsion.server.controller.GameController;
-import com.xlpoolsion.server.model.entities.BombModel;
-import com.xlpoolsion.server.model.entities.EntityModel;
-import com.xlpoolsion.server.model.entities.ExplosionModel;
-import com.xlpoolsion.server.model.entities.PlayerModel;
+import com.xlpoolsion.server.model.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ public class GameModel {
     private PlayerModel player;
     private ArrayList<BombModel> bombs;
     private ArrayList<ExplosionModel> explosions;
+    private ArrayList<BrickModel> bricks;
 
     /**
      * A pool of bombs
@@ -37,14 +35,26 @@ public class GameModel {
         }
     };
 
+    /**
+     * A pool of bricks
+     */
+    Pool<BrickModel> brickPool = new Pool<BrickModel>() {
+        @Override
+        protected BrickModel newObject() {
+            return new BrickModel(0, 0, 0);
+        }
+    };
+
     private GameModel() {
-        player = new PlayerModel(GameController.GAME_WIDTH/2, GameController.GAME_HEIGHT/2, 0);
+        player = new PlayerModel(GameController.GAME_WIDTH / 2, GameController.GAME_HEIGHT / 2, 0);
         bombs = new ArrayList<BombModel>();
         explosions = new ArrayList<ExplosionModel>();
+        bricks = new ArrayList<BrickModel>();
     }
 
+
     public static GameModel getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new GameModel();
         }
         return instance;
@@ -62,35 +72,55 @@ public class GameModel {
         return explosions;
     }
 
+    public List<BrickModel> getBricks() {
+        return bricks;
+    }
+
     public void update(float delta) {
-        for(BombModel bomb : bombs) {
-            if(bomb.decreaseTimeToExplosion(delta)) {
+        for (BombModel bomb : bombs) {
+            if (bomb.decreaseTimeToExplosion(delta)) {
                 bomb.setFlaggedForRemoval(true);
                 GameController.getInstance().createExplosions(bomb);
             }
         }
 
-        for(ExplosionModel explosion : explosions) {
-            if(explosion.decreaseTimeToDecay(delta)) {
+        for (ExplosionModel explosion : explosions) {
+            if (explosion.decreaseTimeToDecay(delta)) {
                 explosion.setFlaggedForRemoval(true);
             }
         }
     }
 
     public void remove(EntityModel model) {
-        if(model instanceof BombModel) {
+        if (model instanceof BombModel) {
             bombs.remove(model);
             bombPool.free((BombModel) model);
-        } else if(model instanceof ExplosionModel) {
+        } else if (model instanceof ExplosionModel) {
             explosions.remove(model);
             explosionPool.free((ExplosionModel) model);
         }
     }
+    /**
+     * Creates a brick at the given coordinates
+     *
+     * @param x x Coordinate
+     * @param y y Coordinate
+     * @return The created BrickModel
+     */
+    public BrickModel createBrick(int x, int y) {
+        BrickModel brick = brickPool.obtain();
 
+        brick.setFlaggedForRemoval(false);
+        brick.setPosition(x,y);
+
+        bricks.add(brick);
+        return brick;
+    }
     /**
      * Creates a bomb at the player coordinates
-     * @return The created BombModel
+     *
      * @param owner_player
+     * @return The created BombModel
      */
     public BombModel createBomb(PlayerModel owner_player) {
         BombModel bomb = bombPool.obtain();
@@ -109,6 +139,7 @@ public class GameModel {
 
     /**
      * Creates an explosion at the bomb coordinates, with the associated player radius
+     *
      * @return The created ExplosionModels
      */
     public List<ExplosionModel> createExplosions(BombModel bomb) {
@@ -143,7 +174,7 @@ public class GameModel {
     private List<ExplosionModel> createExplosionHelper(Vector2 origin, Vector2 shift, int explosionRadius) {
         ArrayList<ExplosionModel> explosions = new ArrayList<ExplosionModel>();
 
-        for(int i = 1; i <= explosionRadius; ++i) {
+        for (int i = 1; i <= explosionRadius; ++i) {
             Vector2 tempvec = new Vector2(origin);
             explosions.add(createSingleExplosion(tempvec.mulAdd(shift, i)));
         }
