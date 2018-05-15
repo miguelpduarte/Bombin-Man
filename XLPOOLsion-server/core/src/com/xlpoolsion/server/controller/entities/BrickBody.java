@@ -17,7 +17,7 @@ public class BrickBody extends  EntityBody {
         //Creating fixtures
         float density = 0.0f;
         float friction = 0.0f;
-        float restitution = 8.0f;
+        float restitution = 0.0f;
 
         PolygonShape polyShape = new PolygonShape();
         polyShape.setAsBox(BrickModel.WIDTH / 2, BrickModel.HEIGHT / 2);
@@ -27,7 +27,6 @@ public class BrickBody extends  EntityBody {
         fixtureDef.density = density;
         fixtureDef.friction = friction;
         fixtureDef.restitution = restitution;
-        fixtureDef.isSensor = true;
 
         body.createFixture(fixtureDef);
 
