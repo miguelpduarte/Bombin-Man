@@ -74,6 +74,32 @@ public class CollisionController implements ContactListener {
      */
     private void stopPlayerIfMovingTowardsBomb(Body playerBody, Body bombBody) {
         Vector2 playerVel = playerBody.getLinearVelocity();
+
+        if(playerVel.isZero()) {
+            return;
+        }
+
+        Vector2 playerToBomb = bombBody.getPosition().sub(playerBody.getPosition());
+
+        System.out.println("Player: " + playerVel + "\nPlayerPos: " + playerBody.getPosition() + "\nBombPos: " + bombBody.getPosition() + "\nDiff: " + playerToBomb);
+
+        if(playerVel.y == 0) {
+            //Check collisions in X
+            System.out.println("Testing in X");
+            if(playerToBomb.x * playerVel.x > 0) {
+                playerBody.setLinearVelocity(0, playerBody.getLinearVelocity().y);
+                System.out.println("Ocurred");
+            }
+        } else if(playerVel.x == 0) {
+            //Check collisions in Y (second condition to not check when not moving)
+            System.out.println("Testing in Y");
+            if(playerToBomb.y * playerVel.y > 0) {
+                playerBody.setLinearVelocity(playerBody.getLinearVelocity().x, 0);
+                System.out.println("Ocurred");
+            }
+        }
+
+        /*
         Vector2 playerToBomb = bombBody.getPosition().sub(playerBody.getPosition());
         //Converting to "directional" vector -> only largest direction in absolute matters
         if(Math.abs(playerToBomb.x) > Math.abs(playerToBomb.y)) {
@@ -92,6 +118,7 @@ public class CollisionController implements ContactListener {
         } else {
             System.out.println("Did not stop");
         }
+        */
     }
 
     @Override
