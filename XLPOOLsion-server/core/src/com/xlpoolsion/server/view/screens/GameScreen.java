@@ -11,14 +11,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.GameModel;
-import com.xlpoolsion.server.model.entities.BombModel;
-import com.xlpoolsion.server.model.entities.BrickModel;
-import com.xlpoolsion.server.model.entities.ExplosionModel;
-import com.xlpoolsion.server.model.entities.PlayerModel;
-import com.xlpoolsion.server.view.entities.BombView;
-import com.xlpoolsion.server.view.entities.BrickView;
-import com.xlpoolsion.server.view.entities.ExplosionView;
-import com.xlpoolsion.server.view.entities.PlayerView;
+import com.xlpoolsion.server.model.entities.*;
+import com.xlpoolsion.server.view.entities.*;
 
 import java.util.List;
 
@@ -56,6 +50,7 @@ public class GameScreen extends ScreenAdapter {
     private BombView bombView;
     private ExplosionView explosionView;
     private BrickView brickView;
+    private BreakableBrickView breakableBrickView;
 
 
     public GameScreen(XLPOOLsionServer xlpooLsionServer) {
@@ -67,6 +62,7 @@ public class GameScreen extends ScreenAdapter {
         bombView = new BombView(xlpooLsionServer);
         explosionView = new ExplosionView(xlpooLsionServer);
         brickView = new BrickView(xlpooLsionServer);
+        breakableBrickView = new BreakableBrickView(xlpooLsionServer);
 
         //TODO: Check how to change this in order to have a higher resolution shown
         //Creating a viewport with consistent aspect ratio
@@ -127,6 +123,11 @@ public class GameScreen extends ScreenAdapter {
         for(BrickModel brick : bricks) {
             brickView.update(brick);
             brickView.draw(xlpooLsionServer.getBatch());
+        }
+        List<BreakableBrickModel> breakablebricks = GameModel.getInstance().getBreakableBricks();
+        for(BreakableBrickModel breakablebrick : breakablebricks) {
+            breakableBrickView.update(breakablebrick);
+            breakableBrickView.draw(xlpooLsionServer.getBatch());
         }
 
         //Drawing player in end so that he stays on top

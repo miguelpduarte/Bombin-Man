@@ -14,6 +14,7 @@ public class GameModel {
     private ArrayList<BombModel> bombs;
     private ArrayList<ExplosionModel> explosions;
     private ArrayList<BrickModel> bricks;
+    private ArrayList<BreakableBrickModel> breakableBricks;
 
     /**
      * A pool of bombs
@@ -40,6 +41,7 @@ public class GameModel {
         bombs = new ArrayList<BombModel>();
         explosions = new ArrayList<ExplosionModel>();
         bricks = new ArrayList<BrickModel>();
+        breakableBricks = new ArrayList<BreakableBrickModel>();
     }
 
 
@@ -62,6 +64,9 @@ public class GameModel {
         return explosions;
     }
 
+    public List<BreakableBrickModel> getBreakableBricks() {
+        return breakableBricks;
+    }
     public List<BrickModel> getBricks() {
         return bricks;
     }
@@ -105,6 +110,23 @@ public class GameModel {
 
         bricks.add(brick);
         return brick;
+    }
+
+    /**
+     * Creates a Breakable brick at the given coordinates
+     *
+     * @param x x Coordinate
+     * @param y y Coordinate
+     * @return The created BreakableBrickModel
+     */
+    public BreakableBrickModel createBreakableBrick(int x, int y) {
+        BreakableBrickModel breakablebrick = new BreakableBrickModel(x, y, 0);
+
+        breakablebrick.setFlaggedForRemoval(false);
+        breakablebrick.setPosition(x,y);
+
+        breakableBricks.add(breakablebrick);
+        return breakablebrick;
     }
     /**
      * Creates a bomb at the player coordinates

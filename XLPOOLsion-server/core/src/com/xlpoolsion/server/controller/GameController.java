@@ -1,17 +1,17 @@
 package com.xlpoolsion.server.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.xlpoolsion.server.controller.entities.BombBody;
-import com.xlpoolsion.server.controller.entities.BrickBody;
-import com.xlpoolsion.server.controller.entities.ExplosionBody;
-import com.xlpoolsion.server.controller.entities.PlayerBody;
+import com.xlpoolsion.server.controller.entities.*;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;
 
 public class GameController {
     private static GameController instance = null;
@@ -36,9 +36,11 @@ public class GameController {
         //Creating bodies
         player = new PlayerBody(world, GameModel.getInstance().getPlayer());
         loadWalls();
+        loadBreakableBricks();
 
         world.setContactListener(CollisionController.getInstance());
     }
+
 
 
     public static GameController getInstance() {
@@ -121,9 +123,24 @@ public class GameController {
     }
     private void loadWalls() {
 
-        BrickModel brick = GameModel.getInstance().createBrick(1,2);
-        new BrickBody(world, brick);
+        final int height =  Gdx.graphics.getHeight();
+        final int width =  Gdx.graphics.getWidth();
+        for(int i = (int) BrickModel.WIDTH; i < width; i+= 12){
+            for(int j = (int) BrickModel.HEIGHT; j < height; j+= 12){
+                BrickModel brick = GameModel.getInstance().createBrick(i,j);
+                new BrickBody(world, brick);
+            }
+        }
 
+    }
+
+    private void loadBreakableBricks() {
+        BreakableBrickModel breakablebrick = GameModel.getInstance().createBreakableBrick(5, 2);
+        new BreakableBrickBody(world, breakablebrick);
+        breakablebrick = GameModel.getInstance().createBreakableBrick(8, 2);
+        new BreakableBrickBody(world, breakablebrick);
+        breakablebrick = GameModel.getInstance().createBreakableBrick(11, 2);
+        new BreakableBrickBody(world, breakablebrick);
     }
 
     public void removeFlagged() {
