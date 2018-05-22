@@ -1,5 +1,6 @@
 package com.xlpoolsion.server.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.xlpoolsion.server.controller.GameController;
@@ -51,6 +52,13 @@ public class GameModel {
         }
         return instance;
     }
+
+    public static final float GRID_START_X = BrickModel.WIDTH;
+    public static final float GRID_START_Y = BrickModel.WIDTH;
+    public static final float GRID_END_X = Gdx.graphics.getWidth();
+    public static final float GRID_END_Y = Gdx.graphics.getHeight();
+    public static final float GRID_PADDING_X = BrickModel.WIDTH;
+    public static final float GRID_PADDING_Y = BrickModel.HEIGHT;
 
     public PlayerModel getPlayer() {
         return player;
@@ -142,13 +150,24 @@ public class GameModel {
         bomb.setWalkable(true);
         bomb.setFlaggedForRemoval(false);
         //So that the bomb is created at the feet of the player instead at his head
-        bomb.setPosition(this.player.getX(), this.player.getY() - (PlayerModel.HEIGHT / 2) * 0.4f);
-        bomb.setRotation(this.player.getRotation());
+        Vector2 bombPos  = snapBombToGrid(owner_player.getX() + PlayerModel.WIDTH/2, owner_player.getY() - (PlayerModel.HEIGHT / 2) * 0.4f + PlayerModel.HEIGHT/4);
+        bomb.setPosition(bombPos.x, bombPos.y);
+        bomb.setRotation(owner_player.getRotation());
         bomb.setTimeToExplosion(BombModel.EXPLOSION_DELAY);
         bomb.setOwner(owner_player);
 
         bombs.add(bomb);
         return bomb;
+    }
+
+    private Vector2 snapBombToGrid(float x, float y) {
+        System.out.println("x: " + x + " y: " + y);
+        System.out.println("X: " + (int)(x / (GRID_END_X - GRID_START_X)) * GRID_PADDING_X + ", Y: " + (int)(y / (GRID_END_Y - GRID_START_Y)) * GRID_PADDING_Y);
+
+        int x_k = (int) ((x - GRID_START_X)/GRID_PADDING_X);
+        int y_k = (int) ((y - GRID_START_Y)/GRID_PADDING_Y);
+
+        return new Vector2(GRID_START_X + x_k * GRID_PADDING_X,GRID_START_Y+ y_k * GRID_PADDING_Y);
     }
 
     /**
