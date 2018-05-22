@@ -14,7 +14,6 @@ public class PlayerModel extends EntityModel {
     private float current_speed = 4.4f;
 
     //Powerups
-    private boolean kickPowerup = false;
     private int explosion_radius = 3;
 
     public PlayerModel(float x, float y, float rotation) {
@@ -63,13 +62,5 @@ public class PlayerModel extends EntityModel {
 
     public Orientation getCurrentOrientation() {
         return currentOrientation;
-    }
-
-    public boolean hasKickPowerup() {
-        return kickPowerup;
-    }
-
-    public void setKickPowerup(boolean kickPowerup) {
-        this.kickPowerup = kickPowerup;
     }
 }

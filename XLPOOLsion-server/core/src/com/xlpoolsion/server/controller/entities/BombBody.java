@@ -6,12 +6,12 @@ import com.xlpoolsion.server.model.entities.BombModel;
 public class BombBody extends EntityBody {
 
     public BombBody(World world, BombModel model) {
-        super(world, model, BodyDef.BodyType.DynamicBody);
+        super(world, model, BodyDef.BodyType.StaticBody);
 
         //Creating fixtures
         float density = 0.0f;
         float friction = 0.0f;
-        float restitution = 2.0f;
+        float restitution = 0.0f;
 
         PolygonShape polyShape = new PolygonShape();
         polyShape.setAsBox(BombModel.WIDTH / 2, BombModel.HEIGHT / 2);
