@@ -124,24 +124,45 @@ public class GameController {
     }
     private void loadWalls() {
 
-        final int height =  Gdx.graphics.getHeight();
-        final int width =  Gdx.graphics.getWidth();
-        for(int i = (int) BrickModel.WIDTH; i < width; i+= 12){
-            for(int j = (int) BrickModel.HEIGHT; j < height; j+= 12){
-                BrickModel brick = GameModel.getInstance().createBrick(i,j);
+        final float height =  Gdx.graphics.getHeight();
+        final float width =  Gdx.graphics.getWidth();
+
+        final float startX = BrickModel.WIDTH;
+        final float startY = BrickModel.HEIGHT;
+
+        for(int i = 0; startY + i*BrickModel.HEIGHT < height; i += 4) {
+            for(int j = 0; startX + j*BrickModel.WIDTH < width; j += 6) {
+                BrickModel brick = GameModel.getInstance().createBrick(startX + j*BrickModel.WIDTH, startY + i*BrickModel.HEIGHT);
                 new BrickBody(world, brick);
             }
         }
-
     }
 
     private void loadBreakableBricks() {
-        BreakableBrickModel breakablebrick = GameModel.getInstance().createBreakableBrick(5, 2);
-        new BreakableBrickBody(world, breakablebrick);
-        breakablebrick = GameModel.getInstance().createBreakableBrick(8, 2);
-        new BreakableBrickBody(world, breakablebrick);
-        breakablebrick = GameModel.getInstance().createBreakableBrick(11, 2);
-        new BreakableBrickBody(world, breakablebrick);
+        final float height = Gdx.graphics.getHeight();
+        final float width = Gdx.graphics.getWidth();
+
+        final float startX = BreakableBrickModel.WIDTH;
+        final float startY = BreakableBrickModel.HEIGHT;
+
+        for(int i = 0; startY + i*BreakableBrickModel.HEIGHT < height; ++i) {
+            for(int j = 0; startX + j*BreakableBrickModel.WIDTH < width; ++j) {
+                if (i % 4 == 0) {
+                    //Linha em que tem fixos
+                    //Desenhar a nao por um a cada 4, começando a nao por
+                    if(j % 6 != 0) {
+                        BreakableBrickModel breakablebrick = GameModel.getInstance().createBreakableBrick(startX + j*BreakableBrickModel.WIDTH, startY + i*BreakableBrickModel.HEIGHT);
+                        new BreakableBrickBody(world, breakablebrick);
+                    }
+                } else {
+                    //Linha sem fixos, desenhar espaçado
+                    if(j % 6 == 0) {
+                        BreakableBrickModel breakablebrick = GameModel.getInstance().createBreakableBrick(startX + j*BreakableBrickModel.WIDTH, startY + i*BreakableBrickModel.HEIGHT);
+                        new BreakableBrickBody(world, breakablebrick);
+                    }
+                }
+            }
+        }
     }
 
     public void removeFlagged() {

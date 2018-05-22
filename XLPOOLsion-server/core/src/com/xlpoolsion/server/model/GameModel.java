@@ -102,7 +102,7 @@ public class GameModel {
      * @param y y Coordinate
      * @return The created BrickModel
      */
-    public BrickModel createBrick(int x, int y) {
+    public BrickModel createBrick(float x, float y) {
         BrickModel brick = new BrickModel(x, y, 0);
 
         brick.setFlaggedForRemoval(false);
@@ -119,7 +119,7 @@ public class GameModel {
      * @param y y Coordinate
      * @return The created BreakableBrickModel
      */
-    public BreakableBrickModel createBreakableBrick(int x, int y) {
+    public BreakableBrickModel createBreakableBrick(float x, float y) {
         BreakableBrickModel breakablebrick = new BreakableBrickModel(x, y, 0);
 
         breakablebrick.setFlaggedForRemoval(false);
