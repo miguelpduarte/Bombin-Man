@@ -93,6 +93,8 @@ public class GameModel {
         } else if (model instanceof ExplosionModel) {
             explosions.remove(model);
             explosionPool.free((ExplosionModel) model);
+        } else if (model instanceof BreakableBrickModel) {
+            breakableBricks.remove(model);
         }
     }
     /**

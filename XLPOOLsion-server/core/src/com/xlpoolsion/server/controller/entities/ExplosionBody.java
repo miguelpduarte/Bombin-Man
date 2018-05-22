@@ -9,7 +9,7 @@ import com.xlpoolsion.server.model.entities.ExplosionModel;
 
 public class ExplosionBody extends EntityBody {
     public ExplosionBody(World world, EntityModel model) {
-        super(world, model, BodyDef.BodyType.StaticBody);
+        super(world, model, BodyDef.BodyType.DynamicBody);
 
         //Creating fixtures
         float density = 0.0f;
@@ -29,5 +29,8 @@ public class ExplosionBody extends EntityBody {
         body.createFixture(fixtureDef);
 
         polyShape.dispose();
+
+        //Pretend this isn't here :(
+        body.setLinearVelocity(Float.MIN_VALUE, 0f);
     }
 }
