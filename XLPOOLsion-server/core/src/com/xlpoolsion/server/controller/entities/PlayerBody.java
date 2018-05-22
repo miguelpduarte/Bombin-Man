@@ -33,23 +33,26 @@ public class PlayerBody extends EntityBody {
     }
 
     public void moveUp() {
-        body.setLinearVelocity(0, ((PlayerModel) body.getUserData()).getCurrentSpeed());
+        body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed());
     }
 
     public void moveDown() {
-        body.setLinearVelocity(0, -((PlayerModel) body.getUserData()).getCurrentSpeed());
+        body.setLinearVelocity(body.getLinearVelocity().x, -((PlayerModel) body.getUserData()).getCurrentSpeed());
     }
 
     public void moveLeft() {
-        body.setLinearVelocity(-((PlayerModel) body.getUserData()).getCurrentSpeed(), 0);
+        body.setLinearVelocity(-((PlayerModel) body.getUserData()).getCurrentSpeed(), body.getLinearVelocity().y);
     }
 
     public void moveRight() {
-        body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed(), 0);
+        body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed(), body.getLinearVelocity().y);
     }
 
-    public void stop() {
-        body.setLinearVelocity(0, 0);
+    public void stopX() {
+        body.setLinearVelocity(0, body.getLinearVelocity().y);
     }
 
+    public void stopY() {
+        body.setLinearVelocity(body.getLinearVelocity().x, 0);
+    }
 }

@@ -137,17 +137,35 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void handleInputs(float delta) {
+
+        boolean startedMovingX = false;
+        boolean startedMovingY = false;
+
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             GameController.getInstance().movePlayerUp(delta);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            GameController.getInstance().movePlayerRight(delta);
+            startedMovingY = true;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             GameController.getInstance().movePlayerDown(delta);
+            startedMovingY = true;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            GameController.getInstance().movePlayerRight(delta);
+            startedMovingX = true;
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             GameController.getInstance().movePlayerLeft(delta);
-        } else {
-            GameController.getInstance().stopPlayer(delta);
+            startedMovingX = true;
         }
+
+        if(!startedMovingX) {
+            GameController.getInstance().stopPlayerX(delta);
+        }
+
+        if(!startedMovingY) {
+            GameController.getInstance().stopPlayerY(delta);
+        }
+
+        GameController.getInstance().setPlayerStopped(startedMovingX || startedMovingY);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             //Change to specific player when networking is done

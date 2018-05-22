@@ -11,8 +11,6 @@ import com.xlpoolsion.server.model.entities.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;
-
 public class GameController {
     private static GameController instance = null;
 
@@ -81,31 +79,34 @@ public class GameController {
 
     public void movePlayerUp(float delta) {
         player.moveUp();
-        ((PlayerModel) player.getUserData()).setMoving(true);
         ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.UP);
     }
 
     public void movePlayerDown(float delta) {
         player.moveDown();
-        ((PlayerModel) player.getUserData()).setMoving(true);
         ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.DOWN);
     }
 
     public void movePlayerLeft(float delta) {
         player.moveLeft();
-        ((PlayerModel) player.getUserData()).setMoving(true);
         ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.LEFT);
     }
 
     public void movePlayerRight(float delta) {
         player.moveRight();
-        ((PlayerModel) player.getUserData()).setMoving(true);
         ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.RIGHT);
     }
 
-    public void stopPlayer(float delta) {
-        player.stop();
-        ((PlayerModel) player.getUserData()).setMoving(false);
+    public void stopPlayerX(float delta) {
+        player.stopX();
+    }
+
+    public void stopPlayerY(float delta) {
+        player.stopY();
+    }
+
+    public void setPlayerStopped(boolean isStopped) {
+        ((PlayerModel) player.getUserData()).setMoving(isStopped);
     }
 
     public void addBomb(PlayerModel owner_player) {
@@ -161,4 +162,5 @@ public class GameController {
     public World getWorld() {
         return world;
     }
+
 }
