@@ -43,8 +43,8 @@ public class TextureManager {
         this.assetManager.load("Bomberman_sprite.png", Texture.class);
         this.assetManager.load("Bomb_sprite_transparent.png", Texture.class);
         this.assetManager.load("explosion.png", Texture.class);
-        this.assetManager.load("Wall.png", Texture.class);
-        this.assetManager.load("BreakableBrick.png", Texture.class);
+        this.assetManager.load("SolidBrick.png", Texture.class);
+        this.assetManager.load("BreakableBrickWall.png", Texture.class);
         this.assetManager.finishLoading();
     }
 

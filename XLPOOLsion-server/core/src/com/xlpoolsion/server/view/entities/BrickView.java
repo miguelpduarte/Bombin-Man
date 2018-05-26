@@ -15,7 +15,7 @@ public class BrickView extends EntityView {
 
     @Override
     protected Sprite createSprite(XLPOOLsionServer xlpooLsionServer) {
-        Texture img = xlpooLsionServer.getAssetManager().get("Wall.png");
+        Texture img = xlpooLsionServer.getAssetManager().get("SolidBrick.png");
         Sprite temp_sprite = new Sprite(img);
         temp_sprite.setSize(WIDTH, HEIGHT);
         return temp_sprite;
