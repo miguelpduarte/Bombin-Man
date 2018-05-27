@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientManager {
     private final Socket socket;
@@ -16,6 +17,11 @@ public class ClientManager {
 
     public ClientManager(Socket socket) {
         this.socket = socket;
+        try {
+            socket.setTcpNoDelay(true);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
         createStreams();
         pollForMessages();
     }
@@ -50,13 +56,9 @@ public class ClientManager {
                             continue;
                         }
                     } catch (EOFException e) {
-                        System.out.println("EOF found, sleeping some more");
-                        try {
-                            Thread.sleep(200);
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
-                        continue;
+                        //e.printStackTrace();
+                        System.out.println("EOF found, connection closed by remote, closing here as well");
+                        break;
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
@@ -76,6 +78,7 @@ public class ClientManager {
     public void sendMessage(Message msg) {
         try {
             obj_out.writeObject(msg);
+            obj_out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,5 +98,9 @@ public class ClientManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isOpen() {
+        return messagePollingThread.isAlive();
     }
 }

@@ -15,6 +15,9 @@ public class MultithreadedServer {
     public MultithreadedServer() throws IOException {
         System.out.println("Creating server in IP: " + NetworkInfo.getInstance().getServerIP() + " at port " + NetworkInfo.getInstance().getServerPort());
         svSocket = new ServerSocket(NetworkInfo.getInstance().getServerPort());
+        //Makes the call blocking (default behaviour from what I've seen), need to investigate further
+        //TODO: Investigate further and decide best course of action here
+        svSocket.setSoTimeout(0);
         startListening();
     }
 
@@ -49,7 +52,13 @@ public class MultithreadedServer {
     public void sendToAll(Message msg) {
         System.out.println("Sending message to all clients");
         for(ClientManager clientManager : clientManagers) {
-            clientManager.sendMessage(msg);
+            if(clientManager.isOpen()){
+                clientManager.sendMessage(msg);
+            } else {
+                //Because we can't detect this mid reading polling
+                clientManager.closeConnection();
+                clientManagers.remove(clientManager);
+            }
         }
     }
 
