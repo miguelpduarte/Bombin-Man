@@ -1,6 +1,8 @@
 package com.xlpoolsion.server.networking;
 
+import com.badlogic.gdx.Gdx;
 import com.xlpoolsion.common.Message;
+import com.xlpoolsion.server.controller.GameController;
 
 public class NetworkRouter {
     private static NetworkRouter instance = null;
@@ -19,6 +21,9 @@ public class NetworkRouter {
 
     void forwardMessage(Message msg) {
         System.out.println("Router received message of type " + msg.messageType);
+        if(msg.messageType == Message.MessageType.PLAYER_MOVE) {
+            GameController.getInstance().movePlayer(msg.move_direction, Gdx.graphics.getDeltaTime());
+        }
     }
 
     //TODO: Debate about this structure

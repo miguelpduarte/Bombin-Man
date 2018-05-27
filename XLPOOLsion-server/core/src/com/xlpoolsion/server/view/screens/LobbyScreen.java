@@ -44,6 +44,11 @@ public class LobbyScreen extends ScreenAdapter {
         if(Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             NetworkRouter.getInstance().sendToAll(new Message(Message.MessageType.TEST_MESSAGE));
         }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            //Start playing
+            xlpooLsionServer.setScreen(new GameScreen(xlpooLsionServer));
+        }
     }
 
     @Override

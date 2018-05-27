@@ -125,7 +125,12 @@ public class GameScreen extends ScreenAdapter {
         view.draw(xlpooLsionServer.getBatch());
     }
 
+    private static boolean usingMobile = true;
+
     private void handleInputs(float delta) {
+        if(usingMobile) {
+            return;
+        }
 
         boolean startedMovingX = false;
         boolean startedMovingY = false;

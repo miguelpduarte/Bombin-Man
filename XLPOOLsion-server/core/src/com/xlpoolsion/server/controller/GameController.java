@@ -173,4 +173,35 @@ public class GameController {
         return world;
     }
 
+    public void movePlayer(Vector2 move_direction, float deltaTime) {
+        boolean startedMovingX = false;
+        boolean startedMovingY = false;
+
+        if(move_direction.x > 0) {
+            movePlayerRight(deltaTime);
+            startedMovingX = true;
+        } else if(move_direction.x != 0) {
+            movePlayerLeft(deltaTime);
+            startedMovingX = true;
+        }
+
+        if(move_direction.y > 0) {
+            movePlayerUp(deltaTime);
+            startedMovingY = true;
+
+        } else if(move_direction.y != 0) {
+            movePlayerDown(deltaTime);
+            startedMovingY = true;
+        }
+
+        if(!startedMovingX) {
+            stopPlayerX(deltaTime);
+        }
+
+        if(!startedMovingY) {
+            stopPlayerY(deltaTime);
+        }
+
+        setPlayerStopped(startedMovingX || startedMovingY);
+    }
 }
