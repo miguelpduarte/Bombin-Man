@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.networking.NetworkRouter;
+import com.xlpoolsion.common.Message;
 
 public class ControlsView extends StageView {
     private Skin skin;
@@ -96,9 +98,34 @@ public class ControlsView extends StageView {
         skin.add("default", simpleLblStyle);
     }
 
+    private long lastInputTime_ms = System.currentTimeMillis();
+    private static long MSG_SEND_THRESHOLD_MS = 200;
+    private static boolean isCommunicating = true;
+    private static float KNOB_THRESHOLD = 0.4f;
+
     @Override
     public void render(float delta) {
         super.render(delta);
+
+        if(!isCommunicating) {
+            return;
+        }
+
+        if(System.currentTimeMillis() - lastInputTime_ms > MSG_SEND_THRESHOLD_MS) {
+            float x = touchpad.getKnobPercentX();
+            float y = touchpad.getKnobPercentY();
+            if(Math.abs(x) < KNOB_THRESHOLD) {
+                x = 0;
+            }
+            if(Math.abs(y) < KNOB_THRESHOLD) {
+                y = 0;
+            }
+            System.out.println("X: " + touchpad.getKnobPercentX());
+            System.out.println("Y: " + touchpad.getKnobPercentY());
+            Vector2 vec = new Vector2(Math.signum(x), Math.signum(y));
+            NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.PLAYER_MOVE, vec));
+            lastInputTime_ms = System.currentTimeMillis();
+        }
     }
 
     /*

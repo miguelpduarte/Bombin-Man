@@ -27,7 +27,7 @@ public class XLPOOLsionClient extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		setScreen(new ControlsView(this));
+		setScreen(new ConnectView(this));
 	}
 
 	/**

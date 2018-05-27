@@ -17,12 +17,13 @@ public class Connection {
     private ObjectInputStream obj_in;
     private ObjectOutputStream obj_out;
     //private String myIP = "172.30.2.190";
-    //Port 9021
+    //Port 9876
 
     private Thread messageListeningThread;
 
     public Connection(String ip, int port) throws IOException {
         socket = new Socket(ip, port);
+        socket.setTcpNoDelay(true);
 
         if(socket.isConnected()) {
             System.out.println("I am connekt!");
@@ -92,6 +93,7 @@ public class Connection {
     public void sendMessage(Message msg) {
         try {
             obj_out.writeObject(msg);
+            obj_out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
