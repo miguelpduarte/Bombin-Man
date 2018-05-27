@@ -45,24 +45,10 @@ public class GameScreen extends ScreenAdapter {
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
 
-    //Replace by viewfactory?
-    private PlayerView playerView;
-    private BombView bombView;
-    private ExplosionView explosionView;
-    private BrickView brickView;
-    private BreakableBrickView breakableBrickView;
-
-
     public GameScreen(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;
 
         loadAssets();
-
-        playerView = new PlayerView(xlpooLsionServer);
-        bombView = new BombView(xlpooLsionServer);
-        explosionView = new ExplosionView(xlpooLsionServer);
-        brickView = new BrickView(xlpooLsionServer);
-        breakableBrickView = new BreakableBrickView(xlpooLsionServer);
 
         //TODO: Check how to change this in order to have a higher resolution shown
         //Creating a viewport with consistent aspect ratio
@@ -106,34 +92,37 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawEntities() {
-        //TODO: ViewFactory?
-
         List<BombModel> bombs = GameModel.getInstance().getBombs();
         for(BombModel bomb : bombs) {
-            bombView.update(bomb);
-            bombView.draw(xlpooLsionServer.getBatch());
+            EntityView view = ViewFactory.getView(xlpooLsionServer, bomb);
+            view.update(bomb);
+            view.draw(xlpooLsionServer.getBatch());
         }
 
         List<ExplosionModel> explosions = GameModel.getInstance().getExplosions();
         for(ExplosionModel explosion : explosions) {
-            explosionView.update(explosion);
-            explosionView.draw(xlpooLsionServer.getBatch());
+            EntityView view = ViewFactory.getView(xlpooLsionServer, explosion);
+            view.update(explosion);
+            view.draw(xlpooLsionServer.getBatch());
         }
         List<BrickModel> bricks = GameModel.getInstance().getBricks();
         for(BrickModel brick : bricks) {
-            brickView.update(brick);
-            brickView.draw(xlpooLsionServer.getBatch());
+            EntityView view = ViewFactory.getView(xlpooLsionServer, brick);
+            view.update(brick);
+            view.draw(xlpooLsionServer.getBatch());
         }
         List<BreakableBrickModel> breakablebricks = GameModel.getInstance().getBreakableBricks();
         for(BreakableBrickModel breakablebrick : breakablebricks) {
-            breakableBrickView.update(breakablebrick);
-            breakableBrickView.draw(xlpooLsionServer.getBatch());
+            EntityView view = ViewFactory.getView(xlpooLsionServer, breakablebrick);
+            view.update(breakablebrick);
+            view.draw(xlpooLsionServer.getBatch());
         }
 
         //Drawing player in end so that he stays on top
         PlayerModel playerModel = GameModel.getInstance().getPlayer();
-        playerView.update(playerModel);
-        playerView.draw(xlpooLsionServer.getBatch());
+        EntityView view = ViewFactory.getView(xlpooLsionServer, playerModel);
+        view.update(playerModel);
+        view.draw(xlpooLsionServer.getBatch());
     }
 
     private void handleInputs(float delta) {

@@ -5,9 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.entities.*;
+import com.xlpoolsion.server.view.entities.ViewFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.xlpoolsion.server.controller.GameController.GAME_HEIGHT;
+import static com.xlpoolsion.server.controller.GameController.GAME_WIDTH;
 
 public class GameModel {
     private static GameModel instance = null;
@@ -38,7 +42,7 @@ public class GameModel {
     };
 
     private GameModel() {
-        player = new PlayerModel(GameController.GAME_WIDTH / 2, GameController.GAME_HEIGHT / 2, 0);
+        player = new PlayerModel(GAME_WIDTH / 2, GameController.GAME_HEIGHT / 2, 0);
         bombs = new ArrayList<BombModel>();
         explosions = new ArrayList<ExplosionModel>();
         bricks = new ArrayList<BrickModel>();
@@ -55,8 +59,8 @@ public class GameModel {
 
     public static final float GRID_START_X = BrickModel.WIDTH;
     public static final float GRID_START_Y = BrickModel.WIDTH;
-    public static final float GRID_END_X = Gdx.graphics.getWidth();
-    public static final float GRID_END_Y = Gdx.graphics.getHeight();
+    public static final float GRID_END_X = GAME_WIDTH;
+    public static final float GRID_END_Y = GAME_HEIGHT;
     public static final float GRID_PADDING_X = BrickModel.WIDTH;
     public static final float GRID_PADDING_Y = BrickModel.HEIGHT;
 
@@ -95,6 +99,9 @@ public class GameModel {
     }
 
     public void remove(EntityModel model) {
+        //Destroying the no longer necessary view for this model
+        ViewFactory.destroyView(model);
+
         if (model instanceof BombModel) {
             bombs.remove(model);
             bombPool.free((BombModel) model);
@@ -161,9 +168,6 @@ public class GameModel {
     }
 
     private Vector2 snapBombToGrid(float x, float y) {
-        System.out.println("x: " + x + " y: " + y);
-        System.out.println("X: " + (int)(x / (GRID_END_X - GRID_START_X)) * GRID_PADDING_X + ", Y: " + (int)(y / (GRID_END_Y - GRID_START_Y)) * GRID_PADDING_Y);
-
         int x_k = (int) ((x - GRID_START_X)/GRID_PADDING_X);
         int y_k = (int) ((y - GRID_START_Y)/GRID_PADDING_Y);
 
