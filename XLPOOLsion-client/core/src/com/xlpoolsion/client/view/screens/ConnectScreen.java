@@ -137,11 +137,8 @@ public class ConnectScreen extends StageScreen {
         eraseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(currImg >= 0) {
-                    if(currImg != 0)
-                    {
-                        currImg--;
-                    }
+                if(currImg > 0) {
+                    currImg--;
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("CleanBackground.png"))));
                     eraseLastChar();
                 }
