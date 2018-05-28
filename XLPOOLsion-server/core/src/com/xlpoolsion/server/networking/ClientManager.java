@@ -58,7 +58,7 @@ public class ClientManager {
                     } catch (EOFException e) {
                         //e.printStackTrace();
                         System.out.println("EOF found, connection closed by remote, closing here as well");
-                        break;
+                        return;
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
@@ -94,7 +94,7 @@ public class ClientManager {
                 e.printStackTrace();
             }
         }
-        
+
         try {
             obj_in.close();
             obj_out.close();
