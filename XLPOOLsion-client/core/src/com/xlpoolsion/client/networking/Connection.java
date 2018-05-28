@@ -112,4 +112,17 @@ public class Connection {
             e.printStackTrace();
         }
     }
+
+    public static String parseIP(String connectIp) {
+        if(connectIp.length() < 12) {
+            return null;
+        }
+
+        StringBuilder res = new StringBuilder(connectIp);
+        res.insert(3, ".");
+        res.insert(7, ".");
+        res.insert(11, ".");
+
+        return res.toString();
+    }
 }

@@ -184,12 +184,15 @@ public class ConnectScreen extends StageScreen {
         connectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Attempting to connect to ip: " + connectIp);
-                try {
-                    NetworkRouter.getInstance().setConnection(new Connection(connectIp, 9876));
-                    xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                String parsedIP = Connection.parseIP(connectIp);
+                System.out.println("Attempting to connect to ip: " + parsedIP);
+                if(parsedIP != null) {
+                    try {
+                        NetworkRouter.getInstance().setConnection(new Connection(Connection.parseIP(connectIp), 9876));
+                        xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
