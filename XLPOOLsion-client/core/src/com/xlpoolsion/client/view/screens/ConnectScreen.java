@@ -40,6 +40,7 @@ public class ConnectScreen extends StageScreen {
     private Button button0;
     private Button connectButton;
     private Button backButton;
+    private Button eraseButton;
     private String connectIp = "";
 
     public ConnectScreen(XLPOOLsionClient xlpooLsionClient) {
@@ -78,6 +79,7 @@ public class ConnectScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("button_connect__down.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("button_backDOWN.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("button_backUP.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("backspace_button.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
@@ -97,6 +99,7 @@ public class ConnectScreen extends StageScreen {
         createConnectButton();
         createBackButton();
         initializeIpNumbers();
+        createEraseButton();
 
     }
 
@@ -148,6 +151,31 @@ public class ConnectScreen extends StageScreen {
          });
      }
  */
+    private void createEraseButton() {
+        eraseButton = ButtonFactory.makeButton(
+                xlpooLsionClient, "backspace_button.png", "backspace_button.png", stage.getWidth() * 0.7f, stage.getHeight() * 0.65f,
+                stage.getWidth() * 0.06f, stage.getHeight() * 0.10f);
+
+        eraseButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(currImg >= 0) {
+                    if(currImg != 0)
+                    {
+                        currImg--;
+                    }
+                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("CleanBackground.png"))));
+                    eraseLastChar();
+                }
+            }
+        });
+        stage.addActor(eraseButton);
+    }
+    private void eraseLastChar(){
+        if (connectIp != null && connectIp.length() > 0) {
+            connectIp = connectIp.substring(0, connectIp.length() - 1);
+        }
+    }
     private void createConnectButton() {
         connectButton = ButtonFactory.makeButton(
                 xlpooLsionClient, "button_connect__Up.png", "button_connect__down.png", textBoxImage.getX() + stage.getWidth() * 0.7f, textBoxImage.getY() + stage.getHeight() * 0.08f,
