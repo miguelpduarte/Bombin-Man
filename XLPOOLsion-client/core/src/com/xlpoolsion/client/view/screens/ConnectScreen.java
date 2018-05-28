@@ -129,28 +129,6 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(textBoxImage);
     }
 
-    /* private void createConnectButton() {
-         Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
-         TextureRegionDrawable trd1 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("joystick_bomb_200px.png")));
-         TextureRegionDrawable trd2 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("joystick_player_face_100px.png")));
-         buttonStyle.down = trd1;
-         buttonStyle.up = trd2;
-
-         connectButton = new Button(buttonStyle);
-         connectButton.addListener(new ClickListener() {
-             @Override
-             public void clicked(InputEvent event, float x, float y) {
-                 System.out.println("Attempting to connect to ip: " + addressText.getText());
-                 try {
-                     NetworkRouter.getInstance().setConnection(new Connection(addressText.getText(), 9876));
-                     xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-             }
-         });
-     }
- */
     private void createEraseButton() {
         eraseButton = ButtonFactory.makeButton(
                 xlpooLsionClient, "backspace_button.png", "backspace_button.png", stage.getWidth() * 0.7f, stage.getHeight() * 0.65f,
@@ -220,7 +198,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "1";
-                System.out.println(connectIp);
                 if(currImg < 12){
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("1Text.png"))));
                     currImg++;
@@ -239,7 +216,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "2";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("2Text.png"))));
                     currImg++;
@@ -257,7 +233,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "3";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("3Text.png"))));
                     currImg++;
@@ -275,7 +250,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "4";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("4Text.png"))));
                     currImg++;
@@ -293,7 +267,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "5";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("5Text.png"))));
                     currImg++;
@@ -311,7 +284,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "6";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("6Text.png"))));
                     currImg++;
@@ -329,7 +301,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "7";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("7Text.png"))));
                     currImg++;
@@ -347,7 +318,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "8";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("8Text.png"))));
                     currImg++;
@@ -365,7 +335,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "9";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("9Text.png"))));
                     currImg++;
@@ -383,7 +352,6 @@ public class ConnectScreen extends StageScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 connectIp += "0";
-                System.out.println(connectIp);
                 if(currImg < 12) {
                     ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("0Text.png"))));
                     currImg++;
