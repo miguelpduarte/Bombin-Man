@@ -1,4 +1,4 @@
-package com.xlpoolsion.client.view;
+package com.xlpoolsion.client.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.xlpoolsion.client.XLPOOLsionClient;
 
-public class StageView extends ScreenAdapter {
+public class StageScreen extends ScreenAdapter {
     protected XLPOOLsionClient xlpooLsionClient;
 
     protected Stage stage;
 
-    public StageView(XLPOOLsionClient xlpooLsionClient) {
+    public StageScreen(XLPOOLsionClient xlpooLsionClient) {
         this.xlpooLsionClient = xlpooLsionClient;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);

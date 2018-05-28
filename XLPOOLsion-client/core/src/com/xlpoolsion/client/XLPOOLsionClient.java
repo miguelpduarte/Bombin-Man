@@ -3,8 +3,7 @@ package com.xlpoolsion.client;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.xlpoolsion.client.view.ConnectView;
-import com.xlpoolsion.client.view.ControlsView;
+import com.xlpoolsion.client.view.screens.MainMenuScreen;
 
 
 public class XLPOOLsionClient extends Game {
@@ -27,7 +26,7 @@ public class XLPOOLsionClient extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		setScreen(new ConnectView(this));
+		setScreen(new MainMenuScreen(this));
 	}
 
 	/**

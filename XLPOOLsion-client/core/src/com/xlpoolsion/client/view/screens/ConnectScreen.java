@@ -1,4 +1,4 @@
-package com.xlpoolsion.client.view;
+package com.xlpoolsion.client.view.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -20,14 +20,14 @@ import com.xlpoolsion.client.networking.NetworkRouter;
 
 import java.io.IOException;
 
-public class ConnectView extends StageView {
+public class ConnectScreen extends StageScreen {
     private Table table;
     private Button connectButton;
     private Label addressLabel;
     private TextField addressText;
     private Skin skin;
 
-    public ConnectView(XLPOOLsionClient xlpooLsionClient) {
+    public ConnectScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
 
         table = new Table();
@@ -113,7 +113,7 @@ public class ConnectView extends StageView {
                 System.out.println("Attempting to connect to ip: " + addressText.getText());
                 try {
                     NetworkRouter.getInstance().setConnection(new Connection(addressText.getText(), 9876));
-                    xlpooLsionClient.setScreen(new ControlsView(xlpooLsionClient));
+                    xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

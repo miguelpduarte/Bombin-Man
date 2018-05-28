@@ -1,4 +1,4 @@
-package com.xlpoolsion.client.view;
+package com.xlpoolsion.client.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -17,12 +17,12 @@ import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.networking.NetworkRouter;
 import com.xlpoolsion.common.Message;
 
-public class ControlsView extends StageView {
+public class ControlsScreen extends StageScreen {
     private Skin skin;
 
     private Touchpad touchpad;
 
-    public ControlsView(XLPOOLsionClient xlpooLsionClient) {
+    public ControlsScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
 
         loadAssets();
