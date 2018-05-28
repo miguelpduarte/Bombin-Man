@@ -71,6 +71,7 @@ public class ConnectScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("7Text.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("8Text.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("9Text.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("0Text.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
@@ -85,6 +86,7 @@ public class ConnectScreen extends StageScreen {
         createButton7();
         createButton8();
         createButton9();
+        createButton0();
         createImageTextBox();
         initializeIpNumbers();
 
@@ -112,7 +114,7 @@ public class ConnectScreen extends StageScreen {
         textBoxImage = new Image(new Texture("TextBoxImage.png"));
         textBoxImage.setWidth(stage.getWidth() * 0.5f);
         textBoxImage.setHeight(stage.getHeight() * 0.15f);
-        textBoxImage.setPosition(stage.getWidth() * 0.25f, stage.getHeight() * 0.85f, Align.left);
+        textBoxImage.setPosition(stage.getWidth() * 0.14f, stage.getHeight() * 0.85f, Align.left);
         stage.addActor(textBoxImage);
     }
 
@@ -300,5 +302,23 @@ public class ConnectScreen extends StageScreen {
             }
         });
         stage.addActor(button9);
+    }
+    private void createButton0() {
+        button0 = ButtonFactory.makeButton(
+                xlpooLsionClient, "Bomb-0.png", "Bomb-0.png", stage.getWidth() * 0.50f, stage.getHeight() * 0.20f,
+                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
+
+        button0.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                connectIp += "0";
+                System.out.println(connectIp);
+                if(currImg < 12) {
+                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("0Text.png"))));
+                    currImg++;
+                }
+            }
+        });
+        stage.addActor(button0);
     }
 }
