@@ -38,6 +38,7 @@ public class ConnectScreen extends StageScreen {
     private Button button8;
     private Button button9;
     private Button button0;
+    private Button connectButton;
     private String connectIp = "";
 
     public ConnectScreen(XLPOOLsionClient xlpooLsionClient) {
@@ -72,6 +73,8 @@ public class ConnectScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("8Text.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("9Text.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("0Text.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("button_connect__Up.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("button_connect__down.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
@@ -88,6 +91,7 @@ public class ConnectScreen extends StageScreen {
         createButton9();
         createButton0();
         createImageTextBox();
+        createConnectButton();
         initializeIpNumbers();
 
     }
@@ -140,6 +144,25 @@ public class ConnectScreen extends StageScreen {
          });
      }
  */
+    private void createConnectButton() {
+        connectButton = ButtonFactory.makeButton(
+                xlpooLsionClient, "button_connect__Up.png", "button_connect__down.png", textBoxImage.getX() + stage.getWidth() * 0.7f, textBoxImage.getY() + stage.getHeight() * 0.08f,
+                stage.getWidth() * 0.25f, stage.getHeight() * 0.15f);
+
+        connectButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Attempting to connect to ip: " + connectIp);
+                try {
+                    NetworkRouter.getInstance().setConnection(new Connection(connectIp, 9876));
+                    xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        stage.addActor(connectButton);
+    }
     private void createButton1() {
         button1 = ButtonFactory.makeButton(
                 xlpooLsionClient, "Bomb-1.png", "Bomb-1.png", stage.getWidth() * 0.40f, stage.getHeight() * 0.65f,
