@@ -85,12 +85,16 @@ public class ClientManager {
     }
 
     public void closeConnection() {
-        try {
-            messagePollingThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(messagePollingThread.isAlive()) {
+            messagePollingThread.interrupt();
+        } else {
+            try {
+                messagePollingThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
+        
         try {
             obj_in.close();
             obj_out.close();

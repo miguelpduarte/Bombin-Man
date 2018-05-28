@@ -12,6 +12,7 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.*;
+import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.entities.*;
 
 import java.util.List;
@@ -174,5 +175,6 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
+        NetworkRouter.getInstance().closeServer();
     }
 }

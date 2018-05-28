@@ -68,6 +68,9 @@ public class MultithreadedServer {
         }
 
         try {
+            if(connectionListeningThread.isAlive()) {
+                connectionListeningThread.interrupt();
+            }
             connectionListeningThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -8,6 +8,8 @@ public class Message implements Serializable {
     public enum MessageType {
         CONTROLLER_SHAKE,
         PLAYER_MOVE,
+        PRESSED_PLACE_BOMB,
+        PRESSED_GRAB_BOMB,
         TEST_MESSAGE
     }
 
