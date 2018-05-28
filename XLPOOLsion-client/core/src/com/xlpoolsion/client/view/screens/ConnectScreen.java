@@ -39,6 +39,7 @@ public class ConnectScreen extends StageScreen {
     private Button button9;
     private Button button0;
     private Button connectButton;
+    private Button backButton;
     private String connectIp = "";
 
     public ConnectScreen(XLPOOLsionClient xlpooLsionClient) {
@@ -75,6 +76,8 @@ public class ConnectScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("0Text.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("button_connect__Up.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("button_connect__down.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("button_backDOWN.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("button_backUP.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
@@ -92,6 +95,7 @@ public class ConnectScreen extends StageScreen {
         createButton0();
         createImageTextBox();
         createConnectButton();
+        createBackButton();
         initializeIpNumbers();
 
     }
@@ -162,6 +166,19 @@ public class ConnectScreen extends StageScreen {
             }
         });
         stage.addActor(connectButton);
+    }
+    private void createBackButton() {
+        backButton = ButtonFactory.makeButton(
+                xlpooLsionClient, "button_backUP.png", "button_backDOWN.png", textBoxImage.getX() + stage.getWidth() * 0.74f, stage.getHeight() * 0.15f,
+                stage.getWidth() * 0.15f, stage.getHeight() * 0.10f);
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+            }
+        });
+        stage.addActor(backButton);
     }
     private void createButton1() {
         button1 = ButtonFactory.makeButton(
