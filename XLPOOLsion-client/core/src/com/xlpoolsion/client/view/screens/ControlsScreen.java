@@ -7,14 +7,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.networking.NetworkRouter;
+import com.xlpoolsion.client.view.ButtonFactory;
 import com.xlpoolsion.common.Message;
 
 public class ControlsScreen extends StageScreen {
@@ -40,13 +44,29 @@ public class ControlsScreen extends StageScreen {
     private void loadAssets() {
         xlpooLsionClient.getAssetManager().load("joystick_bomb_200px.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("joystick_player_face_100px.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("button_bomb_up.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("button_bomb_down.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
     private void createGUIItems() {
         //skinInit();
-
         createTouchpad();
+        createBombPlaceButton();
+    }
+
+    private void createBombPlaceButton() {
+        Button bombButton = ButtonFactory.makeButton(
+                xlpooLsionClient, "button_bomb_up.png", "button_bomb_down.png",
+                stage.getWidth() * 0.8f, stage.getHeight() * 0.15f, stage.getWidth() * 0.2f, stage.getHeight() * 0.2f
+        );
+        bombButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.PRESSED_PLACE_BOMB));
+            }
+        });
+        stage.addActor(bombButton);
     }
 
     private void createTouchpad() {
@@ -57,6 +77,8 @@ public class ControlsScreen extends StageScreen {
         tpadStyle.knob = trd2;
         touchpad = new Touchpad(2.0f, tpadStyle);
         touchpad.setPosition(stage.getWidth() * 0.2f, stage.getHeight() * 0.35f, 1);
+        touchpad.setWidth(stage.getWidth() * 0.3f);
+        touchpad.setHeight(stage.getHeight() * 0.3f);
         touchpad.setVisible(true);
 
         stage.addActor(touchpad);
