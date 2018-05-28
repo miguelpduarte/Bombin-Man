@@ -14,9 +14,11 @@ public class ClientManager {
     private ObjectInputStream obj_in;
     private ObjectOutputStream obj_out;
     private Thread messagePollingThread;
+    private int clientId;
 
-    public ClientManager(Socket socket) {
+    public ClientManager(Socket socket, int id) {
         this.socket = socket;
+        this.clientId = id;
         try {
             socket.setTcpNoDelay(true);
         } catch (SocketException e) {
@@ -42,13 +44,8 @@ public class ClientManager {
         messagePollingThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                Message msg;
                 while(true) {
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Message msg = null;
                     try {
                         msg = (Message) obj_in.readObject();
                         if(msg == null) {
@@ -57,17 +54,19 @@ public class ClientManager {
                         }
                     } catch (EOFException e) {
                         //e.printStackTrace();
-                        System.out.println("EOF found, connection closed by remote, closing here as well");
+                        System.out.println("Client " + clientId + " disconnected");
+                        closeConnection();
+                        NetworkRouter.getInstance().getServer().removeClient(clientId);
                         return;
                     } catch (IOException e) {
                         e.printStackTrace();
+                        continue;
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
+                        continue;
                     }
 
-                    System.out.println("Server received message");
-
-                    NetworkRouter.getInstance().forwardMessage(msg);
+                    NetworkRouter.getInstance().forwardMessage(clientId, msg);
                 }
             }
         });
@@ -84,17 +83,7 @@ public class ClientManager {
         }
     }
 
-    public void closeConnection() {
-        if(messagePollingThread.isAlive()) {
-            messagePollingThread.interrupt();
-        } else {
-            try {
-                messagePollingThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
+    private void closeSocket() {
         try {
             obj_in.close();
             obj_out.close();
@@ -104,7 +93,12 @@ public class ClientManager {
         }
     }
 
-    public boolean isOpen() {
-        return messagePollingThread.isAlive();
+    public void closeConnection() {
+        closeSocket();
+        messagePollingThread.interrupt();
+    }
+
+    public int getId() {
+        return clientId;
     }
 }

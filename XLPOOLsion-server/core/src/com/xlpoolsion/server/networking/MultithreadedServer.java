@@ -5,11 +5,14 @@ import com.xlpoolsion.common.Message;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class MultithreadedServer {
+    private static int MAX_CLIENTS = 4;
+
     private ServerSocket svSocket;
-    private ArrayList<ClientManager> clientManagers = new ArrayList<ClientManager>();
+    private ClientManager[] clientManagers = new ClientManager[MAX_CLIENTS];
     private Thread connectionListeningThread;
 
     public MultithreadedServer() throws IOException {
@@ -21,24 +24,34 @@ public class MultithreadedServer {
         startListening();
     }
 
+    private boolean serverRunning;
+
     /**
      * Starts listening for incoming connections in a new thread (ServerSocket.accept is a blocking call)
      */
     private void startListening() {
-        System.out.println("I will now listen for connections");
-
         connectionListeningThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true) {
+                while (true) {
                     //Continuously listen to connections and connect to them in a new thread (ClientManager is in a separate thread)
                     try {
-                        System.out.println("Waiting to accept connection");
                         Socket socket = svSocket.accept();
                         System.out.println("Created socket: " + socket.getInetAddress().getHostAddress());
+
+                        int index = getFirstAvailableIndex();
+                        if (index == -1) {
+                            //Max n clients reached, signal that to client
+                            System.out.println("Max clients reached!");
+                            continue;
+                        }
+
                         //TODO: Add restrictions here -> Same client cannot connect twice, limit max number of connections, etc
-                        clientManagers.add(new ClientManager(socket));
-                        System.out.println("Connection added! Now at " + clientManagers.size() + " connections!");
+                        clientManagers[index] = new ClientManager(socket, index);
+                        System.out.println("Client " + index + " connected");
+                    } catch (SocketException e) {
+                        //Server closed but thread didn't stop
+                        return;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -49,32 +62,44 @@ public class MultithreadedServer {
         connectionListeningThread.start();
     }
 
-    public void sendToAll(Message msg) {
-        System.out.println("Sending message to all clients");
-        for(ClientManager clientManager : clientManagers) {
-            if(clientManager.isOpen()){
-                clientManager.sendMessage(msg);
-            } else {
-                //Because we can't detect this mid reading polling
-                clientManager.closeConnection();
-                clientManagers.remove(clientManager);
+    private int getFirstAvailableIndex() {
+        for (int i = 0; i < clientManagers.length; ++i) {
+            if (clientManagers[i] == null) {
+                return i;
             }
+        }
+        return -1;
+    }
+
+    public void broadcast(Message msg) {
+        //System.out.println("Sending message to all clients");
+        for (int i = 0; i < clientManagers.length; ++i) {
+            if (clientManagers[i] != null) {
+                clientManagers[i].sendMessage(msg);
+            }
+        }
+    }
+
+    public void sendToClient(int clientId, Message msg) {
+        if (clientId < MAX_CLIENTS && clientManagers[clientId] != null) {
+            clientManagers[clientId].sendMessage(msg);
+        }
+    }
+
+    public void removeClient(int clientId) {
+        if (clientId < MAX_CLIENTS) {
+            clientManagers[clientId] = null;
         }
     }
 
     public void closeServer() {
         for (ClientManager clientManager : clientManagers) {
-            clientManager.closeConnection();
+            if (clientManager != null) {
+                clientManager.closeConnection();
+            }
         }
 
-        try {
-            if(connectionListeningThread.isAlive()) {
-                connectionListeningThread.interrupt();
-            }
-            connectionListeningThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        connectionListeningThread.interrupt();
 
         try {
             svSocket.close();

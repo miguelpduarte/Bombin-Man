@@ -19,8 +19,8 @@ public class NetworkRouter {
         return instance;
     }
 
-    void forwardMessage(Message msg) {
-        System.out.println("Router received message of type " + msg.messageType);
+    void forwardMessage(int senderId, Message msg) {
+        //System.out.println("Router received message of type " + msg.messageType);
         if(msg.messageType == Message.MessageType.PLAYER_MOVE) {
             GameController.getInstance().movePlayer(msg.move_direction, Gdx.graphics.getDeltaTime());
         }
@@ -31,12 +31,20 @@ public class NetworkRouter {
         this.server = server;
     }
 
+    public MultithreadedServer getServer() {
+        return server;
+    }
+
     public void sendToAll(Message msg) {
         if(server == null) {
             return;
         }
 
-        server.sendToAll(msg);
+        server.broadcast(msg);
+    }
+
+    public void sendToClient(int clientId, Message msg) {
+        server.sendToClient(clientId, msg);
     }
 
     public void closeServer() {
