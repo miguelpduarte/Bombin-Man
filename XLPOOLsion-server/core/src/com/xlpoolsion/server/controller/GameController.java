@@ -2,6 +2,7 @@ package com.xlpoolsion.server.controller;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.xlpoolsion.common.ServerToClientMessage;
 import com.xlpoolsion.server.controller.levels.BaseLevelController;
 import com.xlpoolsion.server.controller.levels.SimpleLevelController;
 import com.xlpoolsion.server.model.entities.BombModel;
@@ -100,6 +101,7 @@ public class GameController {
         } else {
             //This will in fact be another thing, as this will be abstract
             currentLevelController = new SimpleLevelController(NetworkRouter.getInstance().getServer().getConnectedClients());
+            NetworkRouter.getInstance().sendToAll(new ServerToClientMessage(ServerToClientMessage.MessageType.START_GAME));
             currentState = STATE.PLAYING;
         }
     }
