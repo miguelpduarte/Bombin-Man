@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class SimpleLevelModel extends BaseLevelModel {
     public SimpleLevelModel(boolean[] connectedPlayers) {
         super(connectedPlayers, new Vector2[] {
-                new Vector2(0, 0), new Vector2(12, 12), new Vector2(12, 0), new Vector2(0, 12)
+                new Vector2(20, 20), new Vector2(32, 35), new Vector2(12, 0), new Vector2(0, 12)
         });
     }
 
