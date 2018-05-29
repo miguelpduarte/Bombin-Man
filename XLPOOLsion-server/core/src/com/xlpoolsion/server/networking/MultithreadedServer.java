@@ -14,9 +14,15 @@ public class MultithreadedServer {
     private ClientManager[] clientManagers = new ClientManager[MAX_CLIENTS];
     private Thread connectionListeningThread;
 
-    public MultithreadedServer() throws IOException {
+    public MultithreadedServer() {
         System.out.println("Creating server in IP: " + NetworkInfo.getInstance().getServerIP() + " at port " + NetworkInfo.getInstance().getServerPort());
-        svSocket = new ServerSocket(NetworkInfo.getInstance().getServerPort());
+        try {
+            svSocket = new ServerSocket(NetworkInfo.getInstance().getServerPort());
+        } catch (IOException e) {
+            System.out.println("Could not create server, exiting");
+            e.printStackTrace();
+            System.exit(1);
+        }
         startListening();
     }
 

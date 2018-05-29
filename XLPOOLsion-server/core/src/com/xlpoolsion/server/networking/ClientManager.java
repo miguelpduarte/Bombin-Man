@@ -95,8 +95,8 @@ public class ClientManager {
     }
 
     public void closeConnection() {
-        closeSocket();
         messagePollingThread.interrupt();
+        closeSocket();
     }
 
     public int getId() {

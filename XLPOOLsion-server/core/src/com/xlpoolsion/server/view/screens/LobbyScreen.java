@@ -10,8 +10,6 @@ import com.xlpoolsion.server.networking.MultithreadedServer;
 import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.ButtonFactory;
 
-import java.io.IOException;
-
 public class LobbyScreen extends BaseScreen {
     private final XLPOOLsionServer xlpooLsionServer;
 
@@ -19,12 +17,7 @@ public class LobbyScreen extends BaseScreen {
         super(xlpooLsionServer, Type.Lobby);
         this.xlpooLsionServer = xlpooLsionServer;
 
-        try {
-            NetworkRouter.getInstance().setServer(new MultithreadedServer());
-        } catch (IOException e) {
-            System.out.println("OMG WHAT A SERVER CREATION EXCEPTION");
-            e.printStackTrace();
-        }
+        NetworkRouter.getInstance().setServer(new MultithreadedServer());
     }
 
     protected void loadAssets(XLPOOLsionServer xlpooLsionServer) {
