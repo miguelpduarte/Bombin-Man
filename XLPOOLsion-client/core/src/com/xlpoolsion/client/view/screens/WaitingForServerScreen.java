@@ -2,20 +2,19 @@ package com.xlpoolsion.client.view.screens;
 
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.controller.GameController;
-import com.xlpoolsion.client.networking.NetworkRouter;
 
 public class WaitingForServerScreen extends StageScreen {
     public WaitingForServerScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
-        loadAssets();
-        createUIElements();
     }
 
-    private void loadAssets() {
+    @Override
+    protected void loadAssets() {
 
     }
 
-    private void createUIElements() {
+    @Override
+    protected void createGUI() {
 
     }
 

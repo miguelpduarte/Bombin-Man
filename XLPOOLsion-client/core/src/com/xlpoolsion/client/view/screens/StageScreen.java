@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.xlpoolsion.client.XLPOOLsionClient;
 
-public class StageScreen extends ScreenAdapter {
+public abstract class StageScreen extends ScreenAdapter {
     protected XLPOOLsionClient xlpooLsionClient;
 
     protected Stage stage;
@@ -15,7 +15,13 @@ public class StageScreen extends ScreenAdapter {
         this.xlpooLsionClient = xlpooLsionClient;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        loadAssets();
+        createGUI();
     }
+
+    protected abstract void loadAssets();
+
+    protected abstract void createGUI();
 
     @Override
     public void render(float delta) {

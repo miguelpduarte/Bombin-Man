@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
@@ -15,22 +16,29 @@ import com.xlpoolsion.client.networking.NetworkRouter;
 import com.xlpoolsion.client.view.ButtonFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ConnectScreen extends StageScreen {
+    private Image textBoxImage;
+
+    private static final int MAX_NUMBERS = 12;
+    private Image[] ipNumbers;
+    private int numberInsertIndex = 0;
+
+    private Button button0;
     private Button button1;
     private Button button2;
     private Button button3;
-    private Image textBoxImage;
-    private ArrayList<Image> ipNumbers = new ArrayList<Image>();
-    private int currImg = 0;
     private Button button4;
     private Button button5;
     private Button button6;
     private Button button7;
     private Button button8;
     private Button button9;
-    private Button button0;
+
+    //private Button[] keypadButtons = new Button[10];
+    private Drawable[] ipNumberDrawables;
+    private Drawable cleanBackgroundDrawable;
+
     private Button connectButton;
     private Button backButton;
     private Button eraseButton;
@@ -41,9 +49,6 @@ public class ConnectScreen extends StageScreen {
 
     public ConnectScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
-
-        loadAssets();
-        createElements();
     }
 
     @Override
@@ -51,7 +56,7 @@ public class ConnectScreen extends StageScreen {
         super.render(delta);
         switch (GameController.getInstance().getCurrentState()) {
             case WAITING_FOR_SERVER:
-                xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
+                xlpooLsionClient.setScreen(new WaitingForServerScreen(xlpooLsionClient));
                 break;
             case SERVER_FULL:
                 System.out.println("View detected server is full");
@@ -60,7 +65,9 @@ public class ConnectScreen extends StageScreen {
         }
     }
 
-    private void loadAssets() {
+    @Override
+    protected void loadAssets() {
+        allocateArrays();
         xlpooLsionClient.getAssetManager().load("joystick_bomb_200px.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("joystick_player_face_100px.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("Bomb-1.png", Texture.class);
@@ -93,7 +100,19 @@ public class ConnectScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
-    private void createElements() {
+    private void allocateArrays() {
+        //Because StageScreen is a factory method, the arrays must be allocated before they are used in createGUI
+        // and they can't be allocated in this subclass constructor or in the field declaration because that would
+        // only run after the superclass constructor
+        ipNumbers = new Image[MAX_NUMBERS];
+        ipNumberDrawables = new Drawable[10];
+    }
+
+    @Override
+    protected void createGUI() {
+        for(int i = 0; i < 10; ++i) {
+            createKeypadButton(i);
+        }
         createButton1();
         createButton2();
         createButton3();
@@ -109,29 +128,39 @@ public class ConnectScreen extends StageScreen {
         createBackButton();
         initializeIpNumbers();
         createEraseButton();
+    }
+
+    //TODO
+    private void createKeypadButton(int i) {
 
     }
 
     private void initializeIpNumbers() {
-        Image Slot;
+        loadIpNumberDrawables();
 
         float imageWidth = stage.getHeight() * 0.04f;
         float imageHeight = stage.getHeight() * 0.1f;
         float imageStartX = textBoxImage.getX() + imageWidth;
         float imageStartY = textBoxImage.getY() + stage.getWidth() * 0.02f;
 
-        for(int i = 0; i < 12;i++){
-            Slot = new Image();
-            Slot.setPosition(imageStartX + (imageWidth * i),imageStartY,Align.center);
-            Slot.setDrawable(new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("CleanBackground.png"))));
-            Slot.setSize(imageWidth, imageHeight);
-            ipNumbers.add(Slot);
-            stage.addActor(ipNumbers.get(i));
+        for(int i = 0; i < 12; i++){
+            ipNumbers[i] = new Image();
+            ipNumbers[i].setPosition(imageStartX + (imageWidth * i), imageStartY, Align.center);
+            ipNumbers[i].setDrawable(cleanBackgroundDrawable);
+            ipNumbers[i].setSize(imageWidth, imageHeight);
+            stage.addActor(ipNumbers[i]);
         }
     }
 
+    private void loadIpNumberDrawables() {
+        for(int i = 0; i < 10; ++i) {
+            ipNumberDrawables[i] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get(i + "Text.png")));
+        }
+        cleanBackgroundDrawable = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("CleanBackground.png")));
+    }
+
     private void createImageTextBox() {
-        textBoxImage = new Image(new Texture("TextBoxImage.png"));
+        textBoxImage = new Image((Texture) xlpooLsionClient.getAssetManager().get("TextBoxImage.png"));
         textBoxImage.setWidth(stage.getWidth() * 0.5f);
         textBoxImage.setHeight(stage.getHeight() * 0.15f);
         textBoxImage.setPosition(stage.getWidth() * 0.14f, stage.getHeight() * 0.85f, Align.left);
@@ -146,15 +175,26 @@ public class ConnectScreen extends StageScreen {
         eraseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(currImg > 0) {
-                    currImg--;
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("CleanBackground.png"))));
-                    eraseLastChar();
-                }
+                updateInput(-1);
             }
         });
         stage.addActor(eraseButton);
     }
+
+    private void updateInput(int insertedNumber) {
+        if(insertedNumber == -1) {
+            if(numberInsertIndex > 0) {
+                numberInsertIndex--;
+                ipNumbers[numberInsertIndex].setDrawable(cleanBackgroundDrawable);
+                eraseLastChar();
+            }
+        } else if(numberInsertIndex < MAX_NUMBERS && insertedNumber < 10) {
+            connectIp += insertedNumber;
+            ipNumbers[numberInsertIndex].setDrawable(ipNumberDrawables[insertedNumber]);
+            numberInsertIndex++;
+        }
+    }
+
     private void eraseLastChar(){
         if (connectIp != null && connectIp.length() > 0) {
             connectIp = connectIp.substring(0, connectIp.length() - 1);
@@ -168,13 +208,14 @@ public class ConnectScreen extends StageScreen {
         connectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Unparsed ip: " + connectIp);
                 String parsedIP = Connection.parseIP(connectIp);
                 System.out.println("Attempting to connect to ip: " + parsedIP);
                 if(parsedIP != null) {
                     try {
+                        //TODO: Move port number to protocol class
                         NetworkRouter.getInstance().setConnection(new Connection(parsedIP, 9876));
                     } catch (IOException e) {
+                        System.out.println("Couldn't connect to server");
                         e.printStackTrace();
                     }
                 }
@@ -182,6 +223,7 @@ public class ConnectScreen extends StageScreen {
         });
         stage.addActor(connectButton);
     }
+
     private void createBackButton() {
         backButton = ButtonFactory.makeButton(
                 xlpooLsionClient, "button_backUP.png", "button_backDOWN.png", textBoxImage.getX() + stage.getWidth() * 0.74f, stage.getHeight() * 0.15f,
@@ -195,6 +237,7 @@ public class ConnectScreen extends StageScreen {
         });
         stage.addActor(backButton);
     }
+
     private void createButton1() {
         button1 = ButtonFactory.makeButton(
                 xlpooLsionClient, "Bomb-1.png", "Bomb-1.png", stage.getWidth() * 0.40f, stage.getHeight() * 0.65f,
@@ -203,12 +246,7 @@ public class ConnectScreen extends StageScreen {
         button1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "1";
-                if(currImg < 12){
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("1Text.png"))));
-                    currImg++;
-                }
-
+                updateInput(1);
             }
         });
         stage.addActor(button1);
@@ -221,11 +259,7 @@ public class ConnectScreen extends StageScreen {
         button2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "2";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("2Text.png"))));
-                    currImg++;
-                }
+                updateInput(2);
             }
         });
         stage.addActor(button2);
@@ -238,11 +272,7 @@ public class ConnectScreen extends StageScreen {
         button3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "3";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("3Text.png"))));
-                    currImg++;
-                }
+                updateInput(3);
             }
         });
         stage.addActor(button3);
@@ -255,11 +285,7 @@ public class ConnectScreen extends StageScreen {
         button4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "4";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("4Text.png"))));
-                    currImg++;
-                }
+                updateInput(4);
             }
         });
         stage.addActor(button4);
@@ -272,11 +298,7 @@ public class ConnectScreen extends StageScreen {
         button5.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "5";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("5Text.png"))));
-                    currImg++;
-                }
+                updateInput(5);
             }
         });
         stage.addActor(button5);
@@ -289,11 +311,7 @@ public class ConnectScreen extends StageScreen {
         button6.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "6";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("6Text.png"))));
-                    currImg++;
-                }
+                updateInput(6);
             }
         });
         stage.addActor(button6);
@@ -306,11 +324,7 @@ public class ConnectScreen extends StageScreen {
         button7.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "7";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("7Text.png"))));
-                    currImg++;
-                }
+                updateInput(7);
             }
         });
         stage.addActor(button7);
@@ -323,11 +337,7 @@ public class ConnectScreen extends StageScreen {
         button8.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "8";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("8Text.png"))));
-                    currImg++;
-                }
+                updateInput(8);
             }
         });
         stage.addActor(button8);
@@ -340,11 +350,7 @@ public class ConnectScreen extends StageScreen {
         button9.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "9";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("9Text.png"))));
-                    currImg++;
-                }
+                updateInput(9);
             }
         });
         stage.addActor(button9);
@@ -357,11 +363,7 @@ public class ConnectScreen extends StageScreen {
         button0.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                connectIp += "0";
-                if(currImg < 12) {
-                    ipNumbers.get(currImg).setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("0Text.png"))));
-                    currImg++;
-                }
+                updateInput(0);
             }
         });
         stage.addActor(button0);

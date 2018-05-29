@@ -29,12 +29,10 @@ public class ControlsScreen extends StageScreen {
 
     public ControlsScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
-
-        loadAssets();
-        createGUIItems();
     }
 
-    private void loadAssets() {
+    @Override
+    protected void loadAssets() {
         xlpooLsionClient.getAssetManager().load("joystick_bomb_200px.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("joystick_player_face_100px.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("button_bomb_up.png", Texture.class);
@@ -42,7 +40,8 @@ public class ControlsScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
-    private void createGUIItems() {
+    @Override
+    protected void createGUI() {
         createTouchpad();
         createBombPlaceButton();
     }
@@ -124,7 +123,7 @@ public class ControlsScreen extends StageScreen {
 
         switch (GameController.getInstance().getCurrentState()) {
             case LOST_CONNECTION:
-                System.out.println("Client lost connection detected in view");
+                //System.out.println("Client lost connection detected in view");
                 xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
                 break;
             case WON:
@@ -161,8 +160,8 @@ public class ControlsScreen extends StageScreen {
         if(Math.abs(y) < KNOB_THRESHOLD) {
             y = 0;
         }
-        System.out.println("X: " + touchpad.getKnobPercentX());
-        System.out.println("Y: " + touchpad.getKnobPercentY());
+        //System.out.println("X: " + touchpad.getKnobPercentX());
+        //System.out.println("Y: " + touchpad.getKnobPercentY());
         Vector2 vec = new Vector2(Math.signum(x), Math.signum(y));
         NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.PLAYER_MOVE, vec));
         lastInputTime_ms = System.currentTimeMillis();

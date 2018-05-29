@@ -12,11 +12,9 @@ import com.xlpoolsion.client.view.ButtonFactory;
 public class MainMenuScreen extends StageScreen {
     public MainMenuScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
-        loadAssets();
-        createGUI();
     }
 
-    private void loadAssets() {
+    protected void loadAssets() {
         xlpooLsionClient.getAssetManager().load("button_connect_up.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("button_connect_down.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("button_exit_up.png", Texture.class);
@@ -25,7 +23,7 @@ public class MainMenuScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
-    private void createGUI() {
+    protected void createGUI() {
         addBackground();
         createConnectButton();
         createExitButton();
