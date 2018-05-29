@@ -12,12 +12,14 @@ public class PlayerModel extends EntityModel {
     private boolean overBomb = false;
     private Orientation currentOrientation = Orientation.DOWN;
     private float current_speed = 4.4f;
+    private int id;
 
     //Powerups
     private int explosion_radius = 3;
 
-    public PlayerModel(float x, float y, float rotation) {
+    public PlayerModel(float x, float y, float rotation, int id) {
         super(x, y, rotation);
+        this.id = id;
     }
 
     public float getCurrentSpeed() {
@@ -51,6 +53,10 @@ public class PlayerModel extends EntityModel {
 
     public void setOverBomb(boolean overBomb) {
         this.overBomb = overBomb;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public enum Orientation {

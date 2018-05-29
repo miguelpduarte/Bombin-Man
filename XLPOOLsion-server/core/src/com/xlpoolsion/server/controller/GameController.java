@@ -1,24 +1,36 @@
 package com.xlpoolsion.server.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
-import com.xlpoolsion.server.controller.entities.*;
-import com.xlpoolsion.server.model.GameModel;
-import com.xlpoolsion.server.model.entities.*;
+import com.badlogic.gdx.physics.box2d.World;
+import com.xlpoolsion.server.controller.levels.BaseLevelController;
+import com.xlpoolsion.server.controller.levels.SimpleLevelController;
+import com.xlpoolsion.server.model.entities.BombModel;
+import com.xlpoolsion.server.model.levels.BaseLevelModel;
+import com.xlpoolsion.server.networking.NetworkRouter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.xlpoolsion.server.model.GameModel.*;
+import static com.xlpoolsion.server.networking.MultithreadedServer.MAX_CLIENTS;
 
 public class GameController {
     private static GameController instance = null;
+    private BaseLevelController currentLevelController;
 
-    private final World world;
-    private final PlayerBody player;
-    private ArrayList<BrickBody> brickWalls;
+    public STATE getCurrentState() {
+        return currentState;
+    }
+
+    //TODO: Decide if using this or preferring more "middleware-y" functions
+    /*
+    public void setCurrentState(STATE currentState) {
+        this.currentState = currentState;
+    }
+    */
+
+    public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME, ALL_PLAYERS_DISCONNECTED};
+
+    private STATE currentState;
+
+    //private final World world;
+    public static final int MAX_PLAYERS = MAX_CLIENTS;
 
     /**
      * The map width in meters.
@@ -31,17 +43,8 @@ public class GameController {
     public static final float GAME_HEIGHT = 50;
 
     private GameController() {
-        world = new World(new Vector2(0, 0), true);
-
-        //Creating bodies
-        player = new PlayerBody(world, GameModel.getInstance().getPlayer());
-        loadWalls();
-        loadBreakableBricks();
-
-        world.setContactListener(CollisionController.getInstance());
+        currentState = STATE.WAITING_FOR_CONNECTIONS;
     }
-
-
 
     public static GameController getInstance() {
         if (instance == null) {
@@ -50,119 +53,34 @@ public class GameController {
         return instance;
     }
 
-    private float accumulator = 0;
-    private static final float TIME_STEP = 1 / 60f;
-    private static final int VELOCITY_ITERATIONS = 6;
-    private static final int POSITION_ITERATIONS = 2;
-
     public void update(float delta) {
-        GameModel.getInstance().update(delta);
-
-        // fixed time step
-        // max frame time to avoid spiral of death (on slow devices)
-        float frameTime = Math.min(delta, 0.25f);
-
-        accumulator += frameTime;
-        while (accumulator >= TIME_STEP) {
-            world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-            accumulator -= TIME_STEP;
-        }
-
-        //Updating bodies
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
-
-        for (Body body : bodies) {
-            //verifyBounds(body);
-            ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
-            ((EntityModel) body.getUserData()).setRotation(body.getAngle());
+        if(this.currentState == STATE.PLAYING) {
+            this.currentLevelController.update(delta);
         }
     }
 
-    public void movePlayerUp(float delta) {
-        player.moveUp();
-        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.UP);
+    public void informPlayerDisconnect(int playerId) {
+
     }
 
-    public void movePlayerDown(float delta) {
-        player.moveDown();
-        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.DOWN);
+    public void movePlayer(int playerId, Vector2 move_direction, float delta) {
+        currentLevelController.movePlayer(playerId, move_direction, delta);
     }
 
-    public void movePlayerLeft(float delta) {
-        player.moveLeft();
-        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.LEFT);
-    }
-
-    public void movePlayerRight(float delta) {
-        player.moveRight();
-        ((PlayerModel) player.getUserData()).setOrientation(PlayerModel.Orientation.RIGHT);
-    }
-
-    public void stopPlayerX(float delta) {
-        player.stopX();
-    }
-
-    public void stopPlayerY(float delta) {
-        player.stopY();
-    }
-
-    public void setPlayerStopped(boolean isStopped) {
-        ((PlayerModel) player.getUserData()).setMoving(isStopped);
-    }
-
-    public void addBomb(PlayerModel owner_player) {
-        //TODO: Time and bomb limit verifications
-        BombModel bomb = GameModel.getInstance().createBomb(owner_player);
-        //No need to do anything with the declared body, as it is stored in the world
-        new BombBody(world, bomb);
+    public void placeBomb(int playerId) {
+        currentLevelController.placeBomb(playerId);
     }
 
     public void createExplosions(BombModel bomb) {
-        List<ExplosionModel> explosions = GameModel.getInstance().createExplosions(bomb);
-        for(ExplosionModel explosion : explosions) {
-            new ExplosionBody(world, explosion);
-        }
-    }
-    private void loadWalls() {
-        for(int i = 0; GRID_START_Y + i*GRID_PADDING_Y < GRID_END_Y; i += 4) {
-            for(int j = 0; GRID_START_X + j*GRID_PADDING_X < GRID_END_X; j += 6) {
-                BrickModel brick = GameModel.getInstance().createBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
-                new BrickBody(world, brick);
-            }
-        }
-    }
-
-    private void loadBreakableBricks() {
-        for(int i = 0; GRID_START_Y + i*GRID_PADDING_Y < GRID_END_Y; ++i) {
-            for(int j = 0; GRID_START_X + j*GRID_PADDING_X < GRID_END_X; ++j) {
-                if (i % 4 == 0) {
-                    //Linha em que tem fixos
-                    //Desenhar a nao por um a cada 4, começando a nao por
-                    if(j % 6 != 0) {
-                        BreakableBrickModel breakablebrick = GameModel.getInstance().createBreakableBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
-                        new BreakableBrickBody(world, breakablebrick);
-                    }
-                } else {
-                    //Linha sem fixos, desenhar espaçado
-                    if(j % 6 == 0) {
-                        BreakableBrickModel breakablebrick = GameModel.getInstance().createBreakableBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
-                        new BreakableBrickBody(world, breakablebrick);
-                    }
-                }
-            }
-        }
+        currentLevelController.createExplosions(bomb);
     }
 
     public void removeFlagged() {
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
-        for (Body body : bodies) {
-            if (((EntityModel)body.getUserData()).isFlaggedForRemoval()) {
-                GameModel.getInstance().remove((EntityModel) body.getUserData());
-                world.destroyBody(body);
-            }
-        }
+        currentLevelController.removeFlagged();
+    }
+
+    public BaseLevelModel getLevelModel() {
+        return currentLevelController.getModel();
     }
 
     /**
@@ -170,38 +88,19 @@ public class GameController {
      * @return
      */
     public World getWorld() {
-        return world;
+        return currentLevelController.getWorld();
     }
 
-    public void movePlayer(Vector2 move_direction, float deltaTime) {
-        boolean startedMovingX = false;
-        boolean startedMovingY = false;
+    private static final int MIN_CONNECTED_CLIENTS = 2;
 
-        if(move_direction.x > 0) {
-            movePlayerRight(deltaTime);
-            startedMovingX = true;
-        } else if(move_direction.x != 0) {
-            movePlayerLeft(deltaTime);
-            startedMovingX = true;
+    public void startGame(int level) {
+        if(NetworkRouter.getInstance().getServer().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {
+            System.out.println("Can't start the game without at least " + MIN_CONNECTED_CLIENTS + " clients");
+            return;
+        } else {
+            //This will in fact be another thing, as this will be abstract
+            currentLevelController = new SimpleLevelController(NetworkRouter.getInstance().getServer().getConnectedClients());
+            currentState = STATE.PLAYING;
         }
-
-        if(move_direction.y > 0) {
-            movePlayerUp(deltaTime);
-            startedMovingY = true;
-
-        } else if(move_direction.y != 0) {
-            movePlayerDown(deltaTime);
-            startedMovingY = true;
-        }
-
-        if(!startedMovingX) {
-            stopPlayerX(deltaTime);
-        }
-
-        if(!startedMovingY) {
-            stopPlayerY(deltaTime);
-        }
-
-        setPlayerStopped(startedMovingX || startedMovingY);
     }
 }

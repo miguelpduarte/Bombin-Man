@@ -22,7 +22,9 @@ public class NetworkRouter {
     void forwardMessage(int senderId, Message msg) {
         //System.out.println("Router received message of type " + msg.messageType);
         if(msg.messageType == Message.MessageType.PLAYER_MOVE) {
-            GameController.getInstance().movePlayer(msg.move_direction, Gdx.graphics.getDeltaTime());
+            GameController.getInstance().movePlayer(senderId, msg.move_direction, Gdx.graphics.getDeltaTime());
+        } else if(msg.messageType == Message.MessageType.PRESSED_PLACE_BOMB) {
+            GameController.getInstance().placeBomb(senderId);
         }
     }
 

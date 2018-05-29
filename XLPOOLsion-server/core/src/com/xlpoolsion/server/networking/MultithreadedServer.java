@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
 
 public class MultithreadedServer {
-    private static int MAX_CLIENTS = 4;
+    public static int MAX_CLIENTS = 4;
 
     private ServerSocket svSocket;
     private ClientManager[] clientManagers = new ClientManager[MAX_CLIENTS];
@@ -106,5 +105,25 @@ public class MultithreadedServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getNConnectedClients() {
+        int res = 0;
+        for (ClientManager clientManager : clientManagers) {
+            if (clientManager != null) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public boolean[] getConnectedClients() {
+        boolean[] res = new boolean[MAX_CLIENTS];
+        for(int i = 0; i < clientManagers.length; ++i) {
+            if(clientManagers[i] != null) {
+                res[i] = true;
+            }
+        }
+        return res;
     }
 }
