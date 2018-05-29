@@ -43,6 +43,8 @@ public class MultithreadedServer {
                         if (index == -1) {
                             //Max n clients reached, signal that to client
                             System.out.println("Max clients reached!");
+                            //Opening a client error communicator that will tell the client the server was full and wait for an ACK, or resolve on timeout or disconnect
+                            new ClientErrorCommunicator(socket);
                             continue;
                         }
 
