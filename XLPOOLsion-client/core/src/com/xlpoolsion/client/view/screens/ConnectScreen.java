@@ -1,22 +1,15 @@
 package com.xlpoolsion.client.view.screens;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
+import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.networking.Connection;
 import com.xlpoolsion.client.networking.NetworkRouter;
 import com.xlpoolsion.client.view.ButtonFactory;
@@ -41,6 +34,9 @@ public class ConnectScreen extends StageScreen {
     private Button connectButton;
     private Button backButton;
     private Button eraseButton;
+
+    //Create textures and store them
+
     private String connectIp = "";
 
     public ConnectScreen(XLPOOLsionClient xlpooLsionClient) {
@@ -48,6 +44,20 @@ public class ConnectScreen extends StageScreen {
 
         loadAssets();
         createElements();
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        switch (GameController.getInstance().getCurrentState()) {
+            case WAITING_FOR_SERVER:
+                xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
+                break;
+            case SERVER_FULL:
+                System.out.println("View detected server is full");
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+                break;
+        }
     }
 
     private void loadAssets() {
@@ -83,7 +93,6 @@ public class ConnectScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
-
     private void createElements() {
         createButton1();
         createButton2();
@@ -114,7 +123,7 @@ public class ConnectScreen extends StageScreen {
         for(int i = 0; i < 12;i++){
             Slot = new Image();
             Slot.setPosition(imageStartX + (imageWidth * i),imageStartY,Align.center);
-            Slot.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("CleanBackground.png"))));
+            Slot.setDrawable(new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("CleanBackground.png"))));
             Slot.setSize(imageWidth, imageHeight);
             ipNumbers.add(Slot);
             stage.addActor(ipNumbers.get(i));
@@ -159,12 +168,12 @@ public class ConnectScreen extends StageScreen {
         connectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Unparsed ip: " + connectIp);
                 String parsedIP = Connection.parseIP(connectIp);
                 System.out.println("Attempting to connect to ip: " + parsedIP);
                 if(parsedIP != null) {
                     try {
-                        NetworkRouter.getInstance().setConnection(new Connection(Connection.parseIP(connectIp), 9876));
-                        xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
+                        NetworkRouter.getInstance().setConnection(new Connection(parsedIP, 9876));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

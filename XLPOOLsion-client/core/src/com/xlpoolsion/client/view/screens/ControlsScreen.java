@@ -17,9 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.xlpoolsion.client.XLPOOLsionClient;
+import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.networking.NetworkRouter;
 import com.xlpoolsion.client.view.ButtonFactory;
-import com.xlpoolsion.common.Message;
+import com.xlpoolsion.common.ClientToServerMessage;
 
 public class ControlsScreen extends StageScreen {
     private Skin skin;
@@ -31,14 +32,6 @@ public class ControlsScreen extends StageScreen {
 
         loadAssets();
         createGUIItems();
-
-        /*
-        try {
-            NetworkRouter.getInstance().setConnection(new Connection("192.168.2.197", 9876));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
     }
 
     private void loadAssets() {
@@ -50,7 +43,6 @@ public class ControlsScreen extends StageScreen {
     }
 
     private void createGUIItems() {
-        //skinInit();
         createTouchpad();
         createBombPlaceButton();
     }
@@ -63,7 +55,7 @@ public class ControlsScreen extends StageScreen {
         bombButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.PRESSED_PLACE_BOMB));
+                NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.PRESSED_PLACE_BOMB));
             }
         });
         stage.addActor(bombButton);
@@ -121,60 +113,60 @@ public class ControlsScreen extends StageScreen {
     }
 
     private long lastInputTime_ms = System.currentTimeMillis();
-    private static long MSG_SEND_THRESHOLD_MS = 200;
-    private static boolean isCommunicating = true;
+    private static long MSG_SEND_THRESHOLD_MS = 73;
     private static float KNOB_THRESHOLD = 0.4f;
 
     @Override
     public void render(float delta) {
         super.render(delta);
 
-        if(!isCommunicating) {
-            return;
-        }
+        sendInputMessages(delta);
 
+        switch (GameController.getInstance().getCurrentState()) {
+            case LOST_CONNECTION:
+                System.out.println("Client lost connection detected in view");
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+                break;
+            case WON:
+                System.out.println("This client won");
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+                break;
+            case LOST:
+                System.out.println("This client lost");
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+                break;
+        }
+    }
+
+    private void sendInputMessages(float delta) {
         if(System.currentTimeMillis() - lastInputTime_ms > MSG_SEND_THRESHOLD_MS) {
-            float x = touchpad.getKnobPercentX();
-            float y = touchpad.getKnobPercentY();
-            if(Math.abs(x) < KNOB_THRESHOLD) {
-                x = 0;
-            }
-            if(Math.abs(y) < KNOB_THRESHOLD) {
-                y = 0;
-            }
-            System.out.println("X: " + touchpad.getKnobPercentX());
-            System.out.println("Y: " + touchpad.getKnobPercentY());
-            Vector2 vec = new Vector2(Math.signum(x), Math.signum(y));
-            NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.PLAYER_MOVE, vec));
-            lastInputTime_ms = System.currentTimeMillis();
+            sendTouchpadMessages();
+            sendPhoneShakeMessages();
         }
     }
 
-    /*
-    @Override
-    public void render(float delta) {
-        if(Gdx.input.justTouched()) {
-            //touchpad.setPosition(Gdx.input.getX(), Gdx.input.getY());
-            //NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.TEST_MESSAGE));
-            if(conn == null) {
-                System.out.println("Conn is null!");
-            } else {
-                conn.sendMessage(new Message(Message.MessageType.TEST_MESSAGE));
-            }
-        }
-
-
+    private void sendPhoneShakeMessages() {
         if(isShakingPhone()) {
-            Gdx.input.vibrate(250);
-            if(conn == null) {
-                System.out.println("Conn is null!");
-            } else {
-                conn.sendMessage(new Message(Message.MessageType.CONTROLLER_SHAKE));
-            }
-            //NetworkRouter.getInstance().sendToServer(new Message(Message.MessageType.CONTROLLER_SHAKE));
+            Gdx.input.vibrate(100);
+            NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.CONTROLLER_SHAKE));
         }
     }
-    */
+
+    private void sendTouchpadMessages() {
+        float x = touchpad.getKnobPercentX();
+        float y = touchpad.getKnobPercentY();
+        if(Math.abs(x) < KNOB_THRESHOLD) {
+            x = 0;
+        }
+        if(Math.abs(y) < KNOB_THRESHOLD) {
+            y = 0;
+        }
+        System.out.println("X: " + touchpad.getKnobPercentX());
+        System.out.println("Y: " + touchpad.getKnobPercentY());
+        Vector2 vec = new Vector2(Math.signum(x), Math.signum(y));
+        NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.PLAYER_MOVE, vec));
+        lastInputTime_ms = System.currentTimeMillis();
+    }
 
     private static final float SHAKE_THRESHOLD = 10.0f;
 
