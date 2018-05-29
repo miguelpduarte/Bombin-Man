@@ -6,11 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.view.ButtonFactory;
-
-import javax.swing.text.StyledEditorKit;
 
 public class MainMenuScreen extends StageScreen {
     public MainMenuScreen(XLPOOLsionClient xlpooLsionClient) {
@@ -29,12 +26,12 @@ public class MainMenuScreen extends StageScreen {
     }
 
     private void createGUI() {
-        addBackGround();
+        addBackground();
         createConnectButton();
         createExitButton();
     }
 
-    private void addBackGround() {
+    private void addBackground() {
         Image background = new Image(new Texture("BackgroundMainmenu.jpg"));
         background.setSize(stage.getWidth(),stage.getHeight());
         stage.addActor(background);
