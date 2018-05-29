@@ -17,8 +17,9 @@ public class NetworkRouter {
         return instance;
     }
 
-    //TODO: Debate about this structure
     public void setConnection(Connection connection) {
+        //To ensure that no duplicate connections are attempted
+        endConnection();
         this.connection = connection;
     }
 
