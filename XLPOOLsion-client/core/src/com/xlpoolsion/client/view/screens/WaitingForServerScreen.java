@@ -28,8 +28,8 @@ public class WaitingForServerScreen extends StageScreen {
             case SERVER_FULL:
                 System.out.println("Server full! Screen is WIP");
                 xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
-                //TODO: Close connection on this message please
-                //NetworkRouter.getInstance().endConnection();
+                //Temporary because screen is not yet created (Should be done when pressing back button in server_full screen)
+                GameController.getInstance().resetState();
                 break;
             case LOST_CONNECTION:
                 System.out.println("Lost connection to server!!");

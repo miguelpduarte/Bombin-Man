@@ -67,7 +67,7 @@ public class Connection {
                         continue;
                     }
 
-                    System.out.println("Client received message of type: " + msg.messageType);
+                    //System.out.println("Client received message of type: " + msg.messageType);
 
                     if(msg.messageType == ServerToClientMessage.MessageType.SERVER_FULL) {
                         //Server full should be handled internally (in this class)
@@ -76,6 +76,7 @@ public class Connection {
                         closeSocket();
                         GameController.getInstance().signalServerFull();
                         NetworkRouter.getInstance().terminateConnection();
+                        return;
                     }
 
                     NetworkRouter.getInstance().forwardMessage(msg);
