@@ -21,6 +21,13 @@ public class NetworkRouter {
 
     void forwardMessage(int senderId, Message msg) {
         //System.out.println("Router received message of type " + msg.messageType);
+
+        //TEMPORARY
+        if(GameController.getInstance().getCurrentState() != GameController.STATE.PLAYING) {
+            //To prevent null pointer exceptions by doing what wouldnt be done anyway
+            return;
+        }
+
         if(msg.messageType == Message.MessageType.PLAYER_MOVE) {
             GameController.getInstance().movePlayer(senderId, msg.move_direction, Gdx.graphics.getDeltaTime());
         } else if(msg.messageType == Message.MessageType.PRESSED_PLACE_BOMB) {
