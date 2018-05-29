@@ -9,42 +9,36 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Connection {
     private Socket socket;
     private ObjectInputStream obj_in;
     private ObjectOutputStream obj_out;
-    //private String myIP = "172.30.2.190";
     //Port 9876
 
     private Thread messageListeningThread;
 
     public Connection(String ip, int port) throws IOException {
         socket = new Socket(ip, port);
-        socket.setTcpNoDelay(true);
-
-        if(socket.isConnected()) {
-            System.out.println("I am connekt!");
-        } else {
-            System.out.println("I am not connekt :(");
+        try {
+            socket.setTcpNoDelay(true);
+        } catch(SocketException e) {
+            e.printStackTrace();
         }
 
+        createStreams();
+        GameController.getInstance().waitForServer();
+        pollForMessages();
+    }
+
+    private void createStreams() {
         try {
             obj_in = new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            System.out.println("Obj in stream creation exception");
-            e.printStackTrace();
-        }
-        try {
             obj_out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
-            System.out.println("Obj out stream creation exception");
             e.printStackTrace();
         }
-
-        GameController.getInstance().waitForServer();
-
-        pollForMessages();
     }
 
     /**
@@ -60,8 +54,10 @@ public class Connection {
                     try {
                         msg = (ServerToClientMessage) obj_in.readObject();
                     } catch (EOFException e) {
-                        System.out.println("Lost connection to server or something like that");
+                        System.out.println("Lost connection to server");
                         closeSocket();
+                        GameController.getInstance().signalLostConnection();
+                        NetworkRouter.getInstance().terminateConnection();
                         return;
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -72,6 +68,15 @@ public class Connection {
                     }
 
                     System.out.println("Client received message of type: " + msg.messageType);
+
+                    if(msg.messageType == ServerToClientMessage.MessageType.SERVER_FULL) {
+                        //Server full should be handled internally (in this class)
+                        System.out.println("Received server full, sending ACK and closing");
+                        sendMessage(new ClientToServerMessage(ClientToServerMessage.MessageType.ACK));
+                        closeSocket();
+                        GameController.getInstance().signalServerFull();
+                        NetworkRouter.getInstance().terminateConnection();
+                    }
 
                     NetworkRouter.getInstance().forwardMessage(msg);
                 }
