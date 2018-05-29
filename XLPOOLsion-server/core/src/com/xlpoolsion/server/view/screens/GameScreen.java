@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -93,26 +94,26 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawEntities() {
-        List<BombModel> bombs = GameModel.getInstance().getBombs();
+        List<BombModel> bombs = GameController.getInstance().getLevelModel().getBombs();
         for(BombModel bomb : bombs) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, bomb);
             view.update(bomb);
             view.draw(xlpooLsionServer.getBatch());
         }
 
-        List<ExplosionModel> explosions = GameModel.getInstance().getExplosions();
+        List<ExplosionModel> explosions = GameController.getInstance().getLevelModel().getExplosions();
         for(ExplosionModel explosion : explosions) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, explosion);
             view.update(explosion);
             view.draw(xlpooLsionServer.getBatch());
         }
-        List<BrickModel> bricks = GameModel.getInstance().getBricks();
+        List<BrickModel> bricks = GameController.getInstance().getLevelModel().getBricks();
         for(BrickModel brick : bricks) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, brick);
             view.update(brick);
             view.draw(xlpooLsionServer.getBatch());
         }
-        List<BreakableBrickModel> breakablebricks = GameModel.getInstance().getBreakableBricks();
+        List<BreakableBrickModel> breakablebricks = GameController.getInstance().getLevelModel().getBreakableBricks();
         for(BreakableBrickModel breakablebrick : breakablebricks) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, breakablebrick);
             view.update(breakablebrick);
@@ -120,10 +121,15 @@ public class GameScreen extends ScreenAdapter {
         }
 
         //Drawing player in end so that he stays on top
-        PlayerModel playerModel = GameModel.getInstance().getPlayer();
-        EntityView view = ViewFactory.getView(xlpooLsionServer, playerModel);
-        view.update(playerModel);
-        view.draw(xlpooLsionServer.getBatch());
+        for(int i = 0; i < GameController.MAX_PLAYERS; ++i) {
+            PlayerModel playerModel = GameController.getInstance().getLevelModel().getPlayer(i);
+            if(playerModel == null) {
+                continue;
+            }
+            EntityView view = ViewFactory.getView(xlpooLsionServer, playerModel);
+            view.update(playerModel);
+            view.draw(xlpooLsionServer.getBatch());
+        }
     }
 
     private static boolean usingMobile = true;
@@ -133,38 +139,24 @@ public class GameScreen extends ScreenAdapter {
             return;
         }
 
-        boolean startedMovingX = false;
-        boolean startedMovingY = false;
+        Vector2 move_dir = new Vector2(0, 0);
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            GameController.getInstance().movePlayerUp(delta);
-            startedMovingY = true;
+            move_dir.y = 1;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            GameController.getInstance().movePlayerDown(delta);
-            startedMovingY = true;
+            move_dir.y = -1;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            GameController.getInstance().movePlayerRight(delta);
-            startedMovingX = true;
+            move_dir.x = 1;
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            GameController.getInstance().movePlayerLeft(delta);
-            startedMovingX = true;
+            move_dir.x = -1;
         }
 
-        if(!startedMovingX) {
-            GameController.getInstance().stopPlayerX(delta);
-        }
-
-        if(!startedMovingY) {
-            GameController.getInstance().stopPlayerY(delta);
-        }
-
-        GameController.getInstance().setPlayerStopped(startedMovingX || startedMovingY);
+        GameController.getInstance().movePlayer(0, move_dir, delta);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            //Change to specific player when networking is done
-            GameController.getInstance().addBomb(GameModel.getInstance().getPlayer());
+            GameController.getInstance().placeBomb(0);
         }
     }
 

@@ -5,24 +5,24 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.xlpoolsion.common.Message;
 import com.xlpoolsion.server.XLPOOLsionServer;
+import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.networking.MultithreadedServer;
 import com.xlpoolsion.server.networking.NetworkRouter;
+import com.xlpoolsion.server.view.ButtonFactory;
 
 import java.io.IOException;
 
-public class LobbyScreen extends ScreenAdapter {
+public class LobbyScreen extends BaseScreen {
     private final XLPOOLsionServer xlpooLsionServer;
-    private final Texture img;
 
     public LobbyScreen(XLPOOLsionServer xlpooLsionServer) {
+        super(xlpooLsionServer, Type.Lobby);
         this.xlpooLsionServer = xlpooLsionServer;
-
-        xlpooLsionServer.getAssetManager().load("badlogic.jpg", Texture.class);
-        xlpooLsionServer.getAssetManager().finishLoading();
-
-        this.img = xlpooLsionServer.getAssetManager().get("badlogic.jpg");
 
         try {
             NetworkRouter.getInstance().setServer(new MultithreadedServer());
@@ -32,27 +32,41 @@ public class LobbyScreen extends ScreenAdapter {
         }
     }
 
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0f, 0.6f, 0.3f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-        xlpooLsionServer.getBatch().begin();
-        xlpooLsionServer.getBatch().draw(img, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
-        xlpooLsionServer.getBatch().end();
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            NetworkRouter.getInstance().sendToAll(new Message(Message.MessageType.TEST_MESSAGE));
-        }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            //Start playing
-            xlpooLsionServer.setScreen(new GameScreen(xlpooLsionServer));
-        }
+    protected void loadAssets(XLPOOLsionServer xlpooLsionServer) {
+        //xlpooLsionServer.getAssetManager().load("badlogic.jpg", Texture.class);
+        xlpooLsionServer.getAssetManager().load("Wall.png", Texture.class);
+        xlpooLsionServer.getAssetManager().load("SolidWall.png", Texture.class);
+        xlpooLsionServer.getAssetManager().finishLoading();
     }
 
     @Override
-    public void dispose() {
+    protected void addUIElements(XLPOOLsionServer xlpooLsionServer) {
+        createPlayButton(xlpooLsionServer);
+    }
 
+    private void createPlayButton(XLPOOLsionServer xlpooLsionServer) {
+        Button playButton = ButtonFactory.makeButton(
+                xlpooLsionServer, "Wall.png", "SolidWall.png",
+                stage.getWidth() * 0.4f, stage.getHeight() * 0.3f, stage.getWidth() * 0.3f, stage.getHeight() * 0.1f);
+
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                GameController.getInstance().startGame(0);
+            }
+        });
+        stage.addActor(playButton);
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        //Switching screen in case game was entered
+        switch (GameController.getInstance().getCurrentState()) {
+            case PLAYING:
+                xlpooLsionServer.setScreen(new GameScreen(xlpooLsionServer));
+                break;
+        }
     }
 }
