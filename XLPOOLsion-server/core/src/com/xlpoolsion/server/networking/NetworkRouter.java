@@ -1,7 +1,8 @@
 package com.xlpoolsion.server.networking;
 
 import com.badlogic.gdx.Gdx;
-import com.xlpoolsion.common.Message;
+import com.xlpoolsion.common.ClientToServerMessage;
+import com.xlpoolsion.common.ServerToClientMessage;
 import com.xlpoolsion.server.controller.GameController;
 
 public class NetworkRouter {
@@ -19,7 +20,7 @@ public class NetworkRouter {
         return instance;
     }
 
-    void forwardMessage(int senderId, Message msg) {
+    void forwardMessage(int senderId, ClientToServerMessage msg) {
         //System.out.println("Router received message of type " + msg.messageType);
 
         //TEMPORARY
@@ -28,14 +29,13 @@ public class NetworkRouter {
             return;
         }
 
-        if(msg.messageType == Message.MessageType.PLAYER_MOVE) {
+        if(msg.messageType == ClientToServerMessage.MessageType.PLAYER_MOVE) {
             GameController.getInstance().movePlayer(senderId, msg.move_direction, Gdx.graphics.getDeltaTime());
-        } else if(msg.messageType == Message.MessageType.PRESSED_PLACE_BOMB) {
+        } else if(msg.messageType == ClientToServerMessage.MessageType.PRESSED_PLACE_BOMB) {
             GameController.getInstance().placeBomb(senderId);
         }
     }
 
-    //TODO: Debate about this structure
     public void setServer(MultithreadedServer server) {
         this.server = server;
     }
@@ -44,20 +44,28 @@ public class NetworkRouter {
         return server;
     }
 
-    public void sendToAll(Message msg) {
-        if(server == null) {
-            return;
+    public void sendToAll(ServerToClientMessage msg) {
+        if(server != null) {
+            server.broadcast(msg);
         }
-
-        server.broadcast(msg);
     }
 
-    public void sendToClient(int clientId, Message msg) {
-        server.sendToClient(clientId, msg);
+    public void sendToClient(int clientId, ServerToClientMessage msg) {
+        if(server != null) {
+            server.sendToClient(clientId, msg);
+        }
+    }
+
+    public void sendToAllExcept(int clientId, ServerToClientMessage msg) {
+        if (server != null) {
+            server.sendToAllExcept(clientId, msg);
+        }
     }
 
     public void closeServer() {
-        server.closeServer();
-        server = null;
+        if (server != null) {
+            server.closeServer();
+            server = null;
+        }
     }
 }

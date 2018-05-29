@@ -1,13 +1,13 @@
 package com.xlpoolsion.client.networking;
 
-import com.xlpoolsion.common.Message;
+import com.xlpoolsion.common.ClientToServerMessage;
+import com.xlpoolsion.common.ServerToClientMessage;
 
 public class NetworkRouter {
     private static NetworkRouter instance = null;
     private Connection connection = null;
 
     private NetworkRouter() {
-
     }
 
     public static NetworkRouter getInstance() {
@@ -22,11 +22,11 @@ public class NetworkRouter {
         this.connection = connection;
     }
 
-    void forwardMessage(Message msg) {
+    void forwardMessage(ServerToClientMessage msg) {
         System.out.println("Router in client received message of type " + msg.messageType);
     }
 
-    public void sendToServer(Message msg) {
+    public void sendToServer(ClientToServerMessage msg) {
         System.out.println("Sending message of type " + msg.messageType);
         if(connection == null) {
             System.out.println("Not connected");

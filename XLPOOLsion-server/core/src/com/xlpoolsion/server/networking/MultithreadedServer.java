@@ -1,6 +1,6 @@
 package com.xlpoolsion.server.networking;
 
-import com.xlpoolsion.common.Message;
+import com.xlpoolsion.common.ServerToClientMessage;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -17,13 +17,8 @@ public class MultithreadedServer {
     public MultithreadedServer() throws IOException {
         System.out.println("Creating server in IP: " + NetworkInfo.getInstance().getServerIP() + " at port " + NetworkInfo.getInstance().getServerPort());
         svSocket = new ServerSocket(NetworkInfo.getInstance().getServerPort());
-        //Makes the call blocking (default behaviour from what I've seen), need to investigate further
-        //TODO: Investigate further and decide best course of action here
-        svSocket.setSoTimeout(0);
         startListening();
     }
-
-    private boolean serverRunning;
 
     /**
      * Starts listening for incoming connections in a new thread (ServerSocket.accept is a blocking call)
@@ -70,8 +65,7 @@ public class MultithreadedServer {
         return -1;
     }
 
-    public void broadcast(Message msg) {
-        //System.out.println("Sending message to all clients");
+    public void broadcast(ServerToClientMessage msg) {
         for (int i = 0; i < clientManagers.length; ++i) {
             if (clientManagers[i] != null) {
                 clientManagers[i].sendMessage(msg);
@@ -79,7 +73,18 @@ public class MultithreadedServer {
         }
     }
 
-    public void sendToClient(int clientId, Message msg) {
+    public void sendToAllExcept(int clientId, ServerToClientMessage msg) {
+        for(int i = 0; i < clientManagers.length; ++i) {
+            if(i == clientId) {
+                continue;
+            }
+            if(clientManagers[i] != null) {
+                clientManagers[i].sendMessage(msg);
+            }
+        }
+    }
+
+    public void sendToClient(int clientId, ServerToClientMessage msg) {
         if (clientId < MAX_CLIENTS && clientManagers[clientId] != null) {
             clientManagers[clientId].sendMessage(msg);
         }

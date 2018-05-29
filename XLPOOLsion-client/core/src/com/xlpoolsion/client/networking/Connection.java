@@ -1,15 +1,13 @@
 package com.xlpoolsion.client.networking;
 
-import com.xlpoolsion.common.Message;
+import com.xlpoolsion.client.controller.GameController;
+import com.xlpoolsion.common.ClientToServerMessage;
+import com.xlpoolsion.common.ServerToClientMessage;
 
-import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.net.ConnectException;
 import java.net.Socket;
 
 public class Connection {
@@ -44,6 +42,8 @@ public class Connection {
             e.printStackTrace();
         }
 
+        GameController.getInstance().waitForServer();
+
         pollForMessages();
     }
 
@@ -55,29 +55,20 @@ public class Connection {
             @Override
             public void run() {
                 System.out.println("Starting to poll for messages");
-
+                ServerToClientMessage msg;
                 while (true) {
                     try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    Message msg = null;
-                    try {
-                        msg = (Message) obj_in.readObject();
+                        msg = (ServerToClientMessage) obj_in.readObject();
                     } catch (EOFException e) {
-                        System.out.println("Got an EOF, sleeping a bit");
-                        try {
-                            Thread.sleep(200);
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
-                        continue;
+                        System.out.println("Lost connection to server or something like that");
+                        closeSocket();
+                        return;
                     } catch (IOException e) {
                         e.printStackTrace();
+                        continue;
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
+                        continue;
                     }
 
                     System.out.println("Client received message of type: " + msg.messageType);
@@ -90,7 +81,17 @@ public class Connection {
         messageListeningThread.start();
     }
 
-    public void sendMessage(Message msg) {
+    private void closeSocket() {
+        try {
+            obj_in.close();
+            obj_out.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessage(ClientToServerMessage msg) {
         try {
             obj_out.writeObject(msg);
             obj_out.flush();
@@ -100,21 +101,12 @@ public class Connection {
     }
 
     public void close() {
-        try {
-            messageListeningThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        closeSocket();
+        messageListeningThread.interrupt();
     }
 
     public static String parseIP(String connectIp) {
-        if(connectIp.length() < 12) {
+        if(connectIp.length() != 12) {
             return null;
         }
 
@@ -123,6 +115,16 @@ public class Connection {
         res.insert(7, ".");
         res.insert(11, ".");
 
-        return res.toString();
+        String temp_str = res.toString();
+        String[] cenas = temp_str.split("\\.");
+
+        String final_str = "";
+        for(String s : cenas) {
+            final_str += "" + Integer.parseInt(s) + ".";
+        }
+
+        final_str = final_str.substring(0, final_str.length()-1);
+
+        return final_str;
     }
 }

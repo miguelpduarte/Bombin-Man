@@ -1,6 +1,7 @@
 package com.xlpoolsion.server.networking;
 
-import com.xlpoolsion.common.Message;
+import com.xlpoolsion.common.ClientToServerMessage;
+import com.xlpoolsion.common.ServerToClientMessage;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -44,12 +45,12 @@ public class ClientManager {
         messagePollingThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Message msg;
+                ClientToServerMessage msg;
                 while(true) {
                     try {
-                        msg = (Message) obj_in.readObject();
+                        msg = (ClientToServerMessage) obj_in.readObject();
                         if(msg == null) {
-                            System.out.println("Message was null, continuing");
+                            //System.out.println("Message was null, continuing");
                             continue;
                         }
                     } catch (EOFException e) {
@@ -74,7 +75,7 @@ public class ClientManager {
         messagePollingThread.start();
     }
 
-    public void sendMessage(Message msg) {
+    public void sendMessage(ServerToClientMessage msg) {
         try {
             obj_out.writeObject(msg);
             obj_out.flush();
