@@ -10,7 +10,7 @@ public class ClientToServerMessage implements Serializable {
         PLAYER_MOVE,
         PRESSED_PLACE_BOMB,
         PRESSED_GRAB_BOMB,
-        TEST_MESSAGE
+        ACK
     }
 
     public final MessageType messageType;
