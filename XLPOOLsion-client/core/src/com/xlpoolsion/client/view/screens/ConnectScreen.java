@@ -24,18 +24,7 @@ public class ConnectScreen extends StageScreen {
     private Image[] ipNumbers;
     private int numberInsertIndex = 0;
 
-    private Button button0;
-    private Button button1;
-    private Button button2;
-    private Button button3;
-    private Button button4;
-    private Button button5;
-    private Button button6;
-    private Button button7;
-    private Button button8;
-    private Button button9;
-
-    //private Button[] keypadButtons = new Button[10];
+    private Button[] keypadButtons;
     private Drawable[] ipNumberDrawables;
     private Drawable cleanBackgroundDrawable;
 
@@ -107,6 +96,7 @@ public class ConnectScreen extends StageScreen {
         // only run after the superclass constructor
         ipNumbers = new Image[MAX_NUMBERS];
         ipNumberDrawables = new Drawable[10];
+        keypadButtons = new Button[10];
     }
 
     @Override
@@ -114,16 +104,6 @@ public class ConnectScreen extends StageScreen {
         for(int i = 0; i < 10; ++i) {
             createKeypadButton(i);
         }
-        createButton1();
-        createButton2();
-        createButton3();
-        createButton4();
-        createButton5();
-        createButton6();
-        createButton7();
-        createButton8();
-        createButton9();
-        createButton0();
         createImageTextBox();
         createConnectButton();
         createBackButton();
@@ -131,8 +111,7 @@ public class ConnectScreen extends StageScreen {
         createEraseButton();
     }
 
-    private Button createKeypadButton(int i) {
-        Button button;
+    private void createKeypadButton(final int i) {
         float xpos;
         float ypos;
         if(i == 0){
@@ -142,11 +121,18 @@ public class ConnectScreen extends StageScreen {
             xpos = stage.getWidth() * (0.40f + (((i-1)%3)*0.1f));
             ypos = stage.getHeight() * (0.65f - (((i - 1) / 3) * 0.15f));
         }
-        button = ButtonFactory.makeButton(
+        keypadButtons[i] = ButtonFactory.makeButton(
                 xlpooLsionClient, "Bomb-" + i + ".png", "Bomb-" + i + ".png", xpos, ypos,
                 stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
-        return button;
 
+        keypadButtons[i].addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                updateInput(i);
+            }
+        });
+
+        stage.addActor(keypadButtons[i]);
     }
 
     private void initializeIpNumbers() {
@@ -250,111 +236,5 @@ public class ConnectScreen extends StageScreen {
             }
         });
         stage.addActor(backButton);
-    }
-
-    private void createButton1() {
-        button1 = createKeypadButton(1);
-
-        button1.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(1);
-            }
-        });
-        stage.addActor(button1);
-    }
-    private void createButton2() {
-        button2 = createKeypadButton(2);
-        button2.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(2);
-            }
-        });
-        stage.addActor(button2);
-    }
-    private void createButton3() {
-        button3 = createKeypadButton(3);
-
-        button3.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(3);
-            }
-        });
-        stage.addActor(button3);
-    }
-    private void createButton4() {
-        button4 = createKeypadButton(4);
-        button4.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(4);
-            }
-        });
-        stage.addActor(button4);
-    }
-    private void createButton5() {
-        button5 = createKeypadButton(5);
-        button5.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(5);
-            }
-        });
-        stage.addActor(button5);
-    }
-    private void createButton6() {
-        button6 = createKeypadButton(6);
-        button6.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(6);
-            }
-        });
-        stage.addActor(button6);
-    }
-    private void createButton7() {
-        button7 = createKeypadButton(7);
-
-        button7.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(7);
-            }
-        });
-        stage.addActor(button7);
-    }
-    private void createButton8() {
-        button8 = createKeypadButton(8);
-        button8.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(8);
-            }
-        });
-        stage.addActor(button8);
-    }
-    private void createButton9() {
-        button9 = createKeypadButton(9);
-
-        button9.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(9);
-            }
-        });
-        stage.addActor(button9);
-    }
-    private void createButton0() {
-        button0 = createKeypadButton(0);
-
-        button0.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                updateInput(0);
-            }
-        });
-        stage.addActor(button0);
     }
 }
