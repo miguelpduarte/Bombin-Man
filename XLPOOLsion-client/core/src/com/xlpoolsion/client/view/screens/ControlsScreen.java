@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.networking.NetworkRouter;
@@ -33,10 +34,10 @@ public class ControlsScreen extends StageScreen {
 
     @Override
     protected void loadAssets() {
-        xlpooLsionClient.getAssetManager().load("joystick_bomb_200px.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("joystick_player_face_100px.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("button_bomb_up.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("button_bomb_down.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("JoystickBack.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("JoystickButton.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("Bomb_down.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("Bomb_up.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
@@ -48,8 +49,8 @@ public class ControlsScreen extends StageScreen {
 
     private void createBombPlaceButton() {
         Button bombButton = ButtonFactory.makeButton(
-                xlpooLsionClient, "button_bomb_up.png", "button_bomb_down.png",
-                stage.getWidth() * 0.8f, stage.getHeight() * 0.15f, stage.getWidth() * 0.2f, stage.getHeight() * 0.2f
+                xlpooLsionClient, "Bomb_up.png", "Bomb_down.png",
+                stage.getWidth() * 0.8f, stage.getHeight() * 0.4f, stage.getHeight() * 0.3f, stage.getHeight() * 0.3f
         );
         bombButton.addListener(new ClickListener() {
             @Override
@@ -62,14 +63,14 @@ public class ControlsScreen extends StageScreen {
 
     private void createTouchpad() {
         Touchpad.TouchpadStyle tpadStyle = new Touchpad.TouchpadStyle();
-        TextureRegionDrawable trd1 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("joystick_bomb_200px.png")));
-        TextureRegionDrawable trd2 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("joystick_player_face_100px.png")));
+        TextureRegionDrawable trd1 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("JoystickBack.png")));
+        TextureRegionDrawable trd2 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("JoystickButton.png")));
         tpadStyle.background = trd1;
         tpadStyle.knob = trd2;
         touchpad = new Touchpad(2.0f, tpadStyle);
-        touchpad.setPosition(stage.getWidth() * 0.2f, stage.getHeight() * 0.35f, 1);
-        touchpad.setWidth(stage.getWidth() * 0.3f);
-        touchpad.setHeight(stage.getHeight() * 0.3f);
+        touchpad.setPosition(stage.getWidth() * 0.2f, stage.getHeight() * 0.35f, Align.center);
+        touchpad.setWidth(stage.getHeight() * 0.4f);
+        touchpad.setHeight(stage.getHeight() * 0.4f);
         touchpad.setVisible(true);
 
         stage.addActor(touchpad);
