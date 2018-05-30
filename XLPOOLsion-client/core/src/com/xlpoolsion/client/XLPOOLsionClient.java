@@ -31,7 +31,7 @@ public class XLPOOLsionClient extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		setScreen(new LoseScreen(this));
+		setScreen(new MainMenuScreen(this));
 	}
 
 	/**

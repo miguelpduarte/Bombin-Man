@@ -14,7 +14,7 @@ public class BreakableBrickView extends EntityView {
 
     @Override
     protected Sprite createSprite(XLPOOLsionServer xlpooLsionServer) {
-        Texture img = xlpooLsionServer.getAssetManager().get("BreakableBrickWall.png");
+        Texture img = xlpooLsionServer.getAssetManager().get("BreakableBrick2.png");
         Sprite temp_sprite = new Sprite(img);
         temp_sprite.setSize(WIDTH, HEIGHT);
         return temp_sprite;
