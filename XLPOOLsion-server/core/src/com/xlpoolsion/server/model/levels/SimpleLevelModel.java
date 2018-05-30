@@ -31,6 +31,15 @@ public class SimpleLevelModel extends BaseLevelModel {
 
     @Override
     protected void createBricks() {
+        for(int i = 0; GRID_START_Y + i*GRID_PADDING_Y < GRID_END_Y; i++) {
+            for(int j = 0; GRID_START_X + j*GRID_PADDING_X < GRID_END_X; j++) {
+                if(i*j == 0 || GRID_START_X *2  + i * GRID_PADDING_Y > GRID_END_Y || GRID_START_X * 2 + j * GRID_PADDING_X > GRID_END_X){
+                    createBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
+                }
+
+            }
+        }
+
         for(int i = 0; GRID_START_Y + i*GRID_PADDING_Y < GRID_END_Y; i += 4) {
             for(int j = 0; GRID_START_X + j*GRID_PADDING_X < GRID_END_X; j += 6) {
                 createBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
