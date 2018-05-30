@@ -130,7 +130,7 @@ public class ConnectScreen extends StageScreen {
         initializeIpNumbers();
         createEraseButton();
     }
-    
+
     private Button createKeypadButton(int i) {
         Button button;
         float xpos;

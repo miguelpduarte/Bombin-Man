@@ -30,7 +30,7 @@ public class MainMenuScreen extends StageScreen {
     }
 
     private void addBackground() {
-        Image background = new Image(new Texture("BackgroundMainmenu.jpg"));
+        Image background =new Image((Texture) xlpooLsionClient.getAssetManager().get("BackgroundMainmenu.jpg"));
         background.setSize(stage.getWidth(),stage.getHeight());
         stage.addActor(background);
     }

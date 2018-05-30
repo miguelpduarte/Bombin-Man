@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xlpoolsion.client.view.screens.ConnectScreen;
 import com.xlpoolsion.client.view.screens.ControlsScreen;
 import com.xlpoolsion.client.view.screens.MainMenuScreen;
+import com.xlpoolsion.client.view.screens.WaitingForServerScreen;
 
 
 public class XLPOOLsionClient extends Game {
