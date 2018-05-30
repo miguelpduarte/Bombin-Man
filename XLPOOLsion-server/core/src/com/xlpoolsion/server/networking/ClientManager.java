@@ -49,10 +49,14 @@ public class ClientManager {
                 while(true) {
                     try {
                         msg = (ClientToServerMessage) obj_in.readObject();
-                        if(msg == null) {
+                        if (msg == null) {
                             //System.out.println("Message was null, continuing");
                             continue;
                         }
+
+                    } catch (SocketException e) {
+                        //Socket was closed but thread is still running, terminate it
+                        return;
                     } catch (EOFException e) {
                         //e.printStackTrace();
                         System.out.println("Client " + clientId + " disconnected");
