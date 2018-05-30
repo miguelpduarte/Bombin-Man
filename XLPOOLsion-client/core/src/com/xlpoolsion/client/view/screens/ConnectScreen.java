@@ -130,9 +130,22 @@ public class ConnectScreen extends StageScreen {
         initializeIpNumbers();
         createEraseButton();
     }
-
-    //TODO
-    private void createKeypadButton(int i) {
+    
+    private Button createKeypadButton(int i) {
+        Button button;
+        float xpos;
+        float ypos;
+        if(i == 0){
+            xpos = stage.getWidth() * 0.50f;
+            ypos = stage.getHeight() * 0.20f;
+        } else {
+            xpos = stage.getWidth() * (0.40f + (((i-1)%3)*0.1f));
+            ypos = stage.getHeight() * (0.65f - (((i - 1) / 3) * 0.15f));
+        }
+        button = ButtonFactory.makeButton(
+                xlpooLsionClient, "Bomb-" + i + ".png", "Bomb-" + i + ".png", xpos, ypos,
+                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
+        return button;
 
     }
 
@@ -240,9 +253,7 @@ public class ConnectScreen extends StageScreen {
     }
 
     private void createButton1() {
-        button1 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-1.png", "Bomb-1.png", stage.getWidth() * 0.40f, stage.getHeight() * 0.65f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
+        button1 = createKeypadButton(1);
 
         button1.addListener(new ClickListener() {
             @Override
@@ -253,10 +264,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button1);
     }
     private void createButton2() {
-        button2 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-2.png", "Bomb-2.png", stage.getWidth() * 0.50f, stage.getHeight() * 0.65f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
-
+        button2 = createKeypadButton(2);
         button2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -266,9 +274,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button2);
     }
     private void createButton3() {
-        button3 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-3.png", "Bomb-3.png", stage.getWidth() * 0.60f, stage.getHeight() * 0.65f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
+        button3 = createKeypadButton(3);
 
         button3.addListener(new ClickListener() {
             @Override
@@ -279,10 +285,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button3);
     }
     private void createButton4() {
-        button4 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-4.png", "Bomb-4.png", stage.getWidth() * 0.40f, stage.getHeight() * 0.50f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
-
+        button4 = createKeypadButton(4);
         button4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -292,10 +295,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button4);
     }
     private void createButton5() {
-        button5 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-5.png", "Bomb-5.png", stage.getWidth() * 0.50f, stage.getHeight() * 0.50f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
-
+        button5 = createKeypadButton(5);
         button5.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -305,10 +305,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button5);
     }
     private void createButton6() {
-        button6 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-6.png", "Bomb-6.png", stage.getWidth() * 0.60f, stage.getHeight() * 0.50f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
-
+        button6 = createKeypadButton(6);
         button6.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -318,9 +315,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button6);
     }
     private void createButton7() {
-        button7 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-7.png", "Bomb-7.png", stage.getWidth() * 0.40f, stage.getHeight() * 0.35f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
+        button7 = createKeypadButton(7);
 
         button7.addListener(new ClickListener() {
             @Override
@@ -331,10 +326,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button7);
     }
     private void createButton8() {
-        button8 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-8.png", "Bomb-8.png", stage.getWidth() * 0.50f, stage.getHeight() * 0.35f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
-
+        button8 = createKeypadButton(8);
         button8.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -344,9 +336,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button8);
     }
     private void createButton9() {
-        button9 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-9.png", "Bomb-9.png", stage.getWidth() * 0.60f, stage.getHeight() * 0.35f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
+        button9 = createKeypadButton(9);
 
         button9.addListener(new ClickListener() {
             @Override
@@ -357,9 +347,7 @@ public class ConnectScreen extends StageScreen {
         stage.addActor(button9);
     }
     private void createButton0() {
-        button0 = ButtonFactory.makeButton(
-                xlpooLsionClient, "Bomb-0.png", "Bomb-0.png", stage.getWidth() * 0.50f, stage.getHeight() * 0.20f,
-                stage.getHeight() * 0.15f, stage.getHeight() * 0.15f);
+        button0 = createKeypadButton(0);
 
         button0.addListener(new ClickListener() {
             @Override
