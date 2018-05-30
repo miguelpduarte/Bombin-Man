@@ -195,7 +195,7 @@ public class LobbyScreen extends BaseScreen {
                 break;
         }
 
-        updatePlayerStatusImages(NetworkRouter.getInstance().getServer().getConnectedClients());
+        updatePlayerStatusImages(NetworkRouter.getInstance().getConnectedClients());
     }
 
     private void updatePlayerStatusImages(boolean[] connectedClients) {

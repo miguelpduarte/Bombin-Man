@@ -68,4 +68,12 @@ public class NetworkRouter {
             server = null;
         }
     }
+
+    public boolean[] getConnectedClients() {
+        if(server != null) {
+            return server.getConnectedClients();
+        } else {
+            return new boolean[0];
+        }
+    }
 }
