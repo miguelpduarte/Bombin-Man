@@ -11,20 +11,20 @@ public abstract class BaseScreen extends ScreenAdapter {
 
     private Type type;
     protected Stage stage;
-    private XLPOOLsionServer xlpooLsionServer;
+    protected final XLPOOLsionServer xlpooLsionServer;
 
     public BaseScreen(XLPOOLsionServer xlpooLsionServer, Type screenType) {
         this.xlpooLsionServer = xlpooLsionServer;
         this.type = screenType;
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        loadAssets(xlpooLsionServer);
-        addUIElements(xlpooLsionServer);
+        loadAssets();
+        addUIElements();
     }
 
-    protected abstract void loadAssets(XLPOOLsionServer xlpooLsionServer);
+    protected abstract void loadAssets();
 
-    protected abstract void addUIElements(XLPOOLsionServer xlpooLsionServer);
+    protected abstract void addUIElements();
 
     private void clearScreen() {
         Gdx.gl.glClearColor(0f, 0.6f, 0.3f, 1);
