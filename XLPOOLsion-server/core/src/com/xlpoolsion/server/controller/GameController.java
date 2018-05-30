@@ -1,5 +1,6 @@
 package com.xlpoolsion.server.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.common.ServerToClientMessage;
@@ -17,6 +18,11 @@ public class GameController {
 
     public STATE getCurrentState() {
         return currentState;
+    }
+
+    public void closeGame() {
+        NetworkRouter.getInstance().closeServer();
+        Gdx.app.exit();
     }
 
     //TODO: Decide if using this or preferring more "middleware-y" functions
