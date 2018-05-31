@@ -230,4 +230,11 @@ public abstract class BaseLevelController {
     public BaseLevelModel getModel() {
         return levelModel;
     }
+
+    public void informPlayerDisconnect(int playerId) {
+        PlayerModel player = levelModel.getPlayer(playerId);
+        if(player != null && !player.isDying()) {
+            player.startDying();
+        }
+    }
 }

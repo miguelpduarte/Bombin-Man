@@ -17,7 +17,7 @@ public class ClientManager {
     private Thread messagePollingThread;
     private int clientId;
 
-    public ClientManager(Socket socket, int id) {
+    ClientManager(Socket socket, int id) {
         this.socket = socket;
         this.clientId = id;
         try {
@@ -60,6 +60,7 @@ public class ClientManager {
                     } catch (EOFException e) {
                         //e.printStackTrace();
                         System.out.println("Client " + clientId + " disconnected");
+                        NetworkRouter.getInstance().informPlayerDisconnect(clientId);
                         closeConnection();
                         NetworkRouter.getInstance().getServer().removeClient(clientId);
                         return;
@@ -79,7 +80,7 @@ public class ClientManager {
         messagePollingThread.start();
     }
 
-    public void sendMessage(ServerToClientMessage msg) {
+    void sendMessage(ServerToClientMessage msg) {
         try {
             obj_out.writeObject(msg);
             obj_out.flush();
@@ -98,7 +99,7 @@ public class ClientManager {
         }
     }
 
-    public void closeConnection() {
+    void closeConnection() {
         messagePollingThread.interrupt();
         closeSocket();
     }

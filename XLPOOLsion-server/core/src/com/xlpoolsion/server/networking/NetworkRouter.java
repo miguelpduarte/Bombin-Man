@@ -76,4 +76,8 @@ public class NetworkRouter {
             return new boolean[0];
         }
     }
+
+    void informPlayerDisconnect(int clientId) {
+        GameController.getInstance().informPlayerDisconnect(clientId);
+    }
 }

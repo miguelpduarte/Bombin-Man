@@ -57,7 +57,9 @@ public class GameController {
     }
 
     public void informPlayerDisconnect(int playerId) {
-
+        if(this.currentState == STATE.PLAYING) {
+            this.currentLevelController.informPlayerDisconnect(playerId);
+        }
     }
 
     public void movePlayer(int playerId, Vector2 move_direction, float delta) {
