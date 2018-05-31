@@ -12,6 +12,9 @@ public class PlayerModel extends EntityModel {
     private boolean overBomb = false;
     private Orientation currentOrientation = Orientation.DOWN;
     private float current_speed = 4.4f;
+    private int speedChanger = 0;
+    private int explosionChanger = 0;
+    private int allowedBombs = 2;
     private int id;
 
     //Powerups
@@ -23,7 +26,7 @@ public class PlayerModel extends EntityModel {
     }
 
     public float getCurrentSpeed() {
-        return current_speed;
+        return current_speed + speedChanger;
     }
 
     public boolean isMoving() {
@@ -39,31 +42,29 @@ public class PlayerModel extends EntityModel {
     }
 
     public int getExplosionRadius() {
-        return explosion_radius;
+        return explosion_radius + explosionChanger;
     }
 
     public void speedUp(){
-        if(current_speed < 6.0f){
-            current_speed += 0.4f;
-        }
+        speedChanger++;
     }
 
     public void speedDown(){
-        if(current_speed > 3.0f){
-            current_speed -= 0.2f;
-        }
+       speedChanger--;
     }
 
     public void radiusDown(){
-        if(explosion_radius > 1){
-            explosion_radius --;
-        }
+       explosionChanger--;
     }
 
     public void radiusUp(){
-        if(explosion_radius < 7){
-            explosion_radius ++;
-        }
+       explosionChanger++;
+    }
+    public void increaseAllowedBombs(){
+        allowedBombs++;
+    }
+    public void decreaseAllowedBombs(){
+        allowedBombs--;
     }
 
     //TODO: Change to increment maybe so that powerups are used directly without get?
