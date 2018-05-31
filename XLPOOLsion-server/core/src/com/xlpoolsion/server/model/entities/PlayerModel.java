@@ -14,6 +14,12 @@ public class PlayerModel extends EntityModel {
     private static final float STARTING_SPEED = 4.4f;
     private static final int STARTING_ALLOWED_BOMBS = 1;
     private static final int STARTING_EXPLOSION_RADIUS = 3;
+    private static final int MAX_EXPLODING_BONUS = 6;
+    private static final int MAX_EXPLODING_PENALTY = -2;
+    private static final int MAX_BOMBS_BONUS = 10;
+    private static final int MAX_SPEED_BONUS = 6;
+    private static final int MAX_SPEED_PENALTY = -2;
+    private static final int MAX_BOMBS_PENALTY = 1;
     private int activeBombs = 0;
     private int id;
 
@@ -59,37 +65,37 @@ public class PlayerModel extends EntityModel {
     }
 
     public void speedUp() {
-        if (speedChanger < 6) {
+        if (speedChanger < MAX_SPEED_BONUS) {
             speedChanger++;
         }
     }
 
     public void speedDown() {
-        if (speedChanger > -2) {
+        if (speedChanger > -MAX_SPEED_PENALTY) {
             speedChanger--;
         }
     }
 
     public void radiusUp() {
-        if(explosionChanger < 6){
+        if(explosionChanger < MAX_EXPLODING_BONUS){
             explosionChanger++;
         }
     }
 
     public void radiusDown() {
-        if (explosionChanger > -2) {
+        if (explosionChanger > MAX_EXPLODING_PENALTY) {
             explosionChanger--;
         }
     }
 
     public void increaseAllowedBombs() {
-        if(allowedBombsChanger < 10){
+        if(allowedBombsChanger < MAX_BOMBS_BONUS){
             allowedBombsChanger++;
         }
     }
 
     public void decreaseAllowedBombs() {
-        if(allowedBombsChanger > 0){
+        if(allowedBombsChanger > MAX_BOMBS_PENALTY){
             allowedBombsChanger--;
         }
     }
