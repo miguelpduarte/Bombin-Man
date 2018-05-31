@@ -2,9 +2,7 @@ package com.xlpoolsion.server.controller;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.xlpoolsion.common.ServerToClientMessage;
 import com.xlpoolsion.server.model.entities.*;
-import com.xlpoolsion.server.networking.NetworkRouter;
 
 public class CollisionController implements ContactListener {
     private static CollisionController instance = null;
@@ -125,7 +123,6 @@ public class CollisionController implements ContactListener {
     }
 
     private void playerExplosionContact(Body playerBody, Body explosionBody) {
-        NetworkRouter.getInstance().sendToClient(((PlayerModel)playerBody.getUserData()).getId(), new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_LOST));
-        ((PlayerModel)playerBody.getUserData()).startDying();
+        GameController.getInstance().killPlayer((PlayerModel) playerBody.getUserData());
     }
 }

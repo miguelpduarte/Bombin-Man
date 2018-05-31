@@ -8,6 +8,7 @@ import com.xlpoolsion.server.controller.levels.BaseLevelController;
 import com.xlpoolsion.server.controller.levels.SimpleLevelController;
 import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.BreakableBrickModel;
+import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.model.levels.BaseLevelModel;
 import com.xlpoolsion.server.networking.NetworkRouter;
 
@@ -26,12 +27,10 @@ public class GameController {
         Gdx.app.exit();
     }
 
-    //TODO: Decide if using this or preferring more "middleware-y" functions
-    /*
-    public void setCurrentState(STATE currentState) {
-        this.currentState = currentState;
+    public void killPlayer(PlayerModel playerModel) {
+        NetworkRouter.getInstance().sendToClient(playerModel.getId(), new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_LOST));
+        playerModel.startDying();
     }
-    */
 
     public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME, ALL_PLAYERS_DISCONNECTED};
 
