@@ -73,6 +73,10 @@ public class GameController {
         currentLevelController.createPowerUp(brick);
     }
 
+    public void createPowerDown(BreakableBrickModel brick){
+        currentLevelController.createPowerDown(brick);
+    }
+
     public void createExplosions(BombModel bomb) {
         currentLevelController.createExplosions(bomb);
     }
@@ -93,7 +97,7 @@ public class GameController {
         return currentLevelController.getWorld();
     }
 
-    private static final int MIN_CONNECTED_CLIENTS = 2;
+    private static final int MIN_CONNECTED_CLIENTS = 1;
 
     public void startGame(int level) {
         if(NetworkRouter.getInstance().getServer().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {
