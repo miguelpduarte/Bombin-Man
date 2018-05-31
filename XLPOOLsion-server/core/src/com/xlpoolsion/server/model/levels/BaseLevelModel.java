@@ -138,19 +138,19 @@ public abstract class BaseLevelModel {
         temp_explosions.add(createSingleExplosion(origin));
 
         //Creating Up
-        List<ExplosionModel> upExplosions = createExplosionHelper(origin, new Vector2(0, ExplosionModel.HEIGHT), explosion_radius);
+        List<ExplosionModel> upExplosions = createExplosionHelper(origin, new Vector2(0, GRID_PADDING_Y), explosion_radius);
         temp_explosions.addAll(upExplosions);
 
         //Creating Down
-        List<ExplosionModel> downExplosions = createExplosionHelper(origin, new Vector2(0, -ExplosionModel.HEIGHT), explosion_radius);
+        List<ExplosionModel> downExplosions = createExplosionHelper(origin, new Vector2(0, -GRID_PADDING_Y), explosion_radius);
         temp_explosions.addAll(downExplosions);
 
         //Creating Left
-        List<ExplosionModel> leftExplosions = createExplosionHelper(origin, new Vector2(-ExplosionModel.WIDTH, 0), explosion_radius);
+        List<ExplosionModel> leftExplosions = createExplosionHelper(origin, new Vector2(-GRID_PADDING_X, 0), explosion_radius);
         temp_explosions.addAll(leftExplosions);
 
         //Creating Right
-        List<ExplosionModel> rightExplosions = createExplosionHelper(origin, new Vector2(ExplosionModel.WIDTH, 0), explosion_radius);
+        List<ExplosionModel> rightExplosions = createExplosionHelper(origin, new Vector2(GRID_PADDING_X, 0), explosion_radius);
         temp_explosions.addAll(rightExplosions);
 
         explosions.addAll(temp_explosions);
@@ -159,19 +159,36 @@ public abstract class BaseLevelModel {
 
     private List<ExplosionModel> createExplosionHelper(Vector2 origin, Vector2 shift, int explosionRadius) {
         ArrayList<ExplosionModel> explosions = new ArrayList<ExplosionModel>();
+        EntityModel fetchedBrick;
 
         for (int i = 1; i <= explosionRadius; ++i) {
             Vector2 tempvec = new Vector2(origin);
-            explosions.add(createSingleExplosion(tempvec.mulAdd(shift, i)));
+            tempvec.mulAdd(shift, i);
+            if((fetchedBrick = getBrickAt(tempvec.x, tempvec.y)) == null) {
+                //No brick, continue creating explosions
+                explosions.add(createSingleExplosion(tempvec));
+            } else {
+                //Found brick, stop creating explosions, and if brick is destroyable mark it for destruction
+                //(explosions destroy adjacent bricks but do not propagate there)
+                if(fetchedBrick instanceof  BreakableBrickModel) {
+                    fetchedBrick.setFlaggedForRemoval(true);
+                }
+                break;
+            }
         }
 
         return explosions;
+    }
+
+    private EntityModel getBrickAt(float x, float y) {
+        return brickMatrix[(int) ((x - GRID_START_X)/GRID_PADDING_X)][(int) ((y - GRID_START_Y)/GRID_PADDING_Y)];
     }
 
     private ExplosionModel createSingleExplosion(Vector2 coordinates) {
         ExplosionModel explosion = explosionPool.obtain();
         explosion.setFlaggedForRemoval(false);
         explosion.setPosition(coordinates.x, coordinates.y);
+        //explosion.setDirection(something With The CoordinateVector and maybe something passed from createExplosionHelper)
         explosion.setRotation(0);
         explosion.setTimeToDecay(ExplosionModel.EXPLOSION_DECAY_TIME);
         return explosion;
