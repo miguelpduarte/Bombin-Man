@@ -26,22 +26,38 @@ public class ViewFactory {
         } else if (model instanceof ExplosionModel) {
             viewMap.put(model, new ExplosionView(xlpooLsionServer));
         } else if (model instanceof PlayerModel) {
-            if(((PlayerModel) model).getId() == 1){
-                viewMap.put(model, new PlayerBlueView(xlpooLsionServer));
-            } else if(((PlayerModel) model).getId() == 2){
-                viewMap.put(model, new PlayerBlackView(xlpooLsionServer));
-            } else if(((PlayerModel) model).getId() == 3){
-                viewMap.put(model, new PlayerRedView(xlpooLsionServer));
-            } else {
-                viewMap.put(model, new PlayerRedView(xlpooLsionServer));
-            }
+            createPlayerView(xlpooLsionServer, model);
         } else if (model instanceof PowerUpModel) {
-            if(((PowerUpModel) model).getType() == PowerUpModel.PowerUpType.SpeedUp){
-                viewMap.put(model, new SpeedUpView(xlpooLsionServer));
-            } else if(((PowerUpModel) model).getType() == PowerUpModel.PowerUpType.BombRadUp){
-                viewMap.put(model, new RadiusUpView(xlpooLsionServer));
-            }
+            createPowerupView(xlpooLsionServer, model);
+        }
+    }
 
+    private static void createPlayerView(XLPOOLsionServer xlpooLsionServer, EntityModel model) {
+        switch(((PlayerModel) model).getId()) {
+            case 1:
+                viewMap.put(model, new PlayerBlueView(xlpooLsionServer));
+                break;
+            case 2:
+                viewMap.put(model, new PlayerBlackView(xlpooLsionServer));
+                break;
+            case 3:
+                viewMap.put(model, new PlayerRedView(xlpooLsionServer));
+                break;
+            default:
+                //Player 0 is the default sprite, and so this is future proofed for the case that more players are added
+                viewMap.put(model, new PlayerRedView(xlpooLsionServer));
+                break;
+        }
+    }
+
+    private static void createPowerupView(XLPOOLsionServer xlpooLsionServer, EntityModel model) {
+        switch(((PowerUpModel)model).getType()) {
+            case SpeedUp:
+                viewMap.put(model, new SpeedUpView(xlpooLsionServer));
+                break;
+            case BombRadUp:
+                viewMap.put(model, new RadiusUpView(xlpooLsionServer));
+                break;
         }
     }
 
