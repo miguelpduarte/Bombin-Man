@@ -3,11 +3,15 @@ package com.xlpoolsion.client.view.screens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
+import com.xlpoolsion.client.view.ButtonFactory;
 
 public class LoseScreen extends StageScreen {
     public LoseScreen(XLPOOLsionClient xlpooLsionClient) {
@@ -24,6 +28,7 @@ public class LoseScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("Losing1.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("Losing2.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("Losing3.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("back-button-md.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("RedBackground.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
@@ -41,6 +46,7 @@ public class LoseScreen extends StageScreen {
         addBackground();
         createimageLosing();
         createAnimation();
+        createBackButton();
     }
 
     private void addBackground() {
@@ -56,6 +62,19 @@ public class LoseScreen extends StageScreen {
         losingImage.setHeight(stage.getHeight() * 0.4f);
         losingImage.setPosition(stage.getWidth() * 0.5f, stage.getHeight() * 0.4f, Align.center);
         stage.addActor(losingImage);
+    }
+
+    private void createBackButton() {
+        Button backButton = ButtonFactory.makeButton(
+                xlpooLsionClient, "back-button-md.png", "back-button-md.png", stage.getWidth() * 0.8f, stage.getHeight() * 0.15f,
+                stage.getWidth() * 0.15f, stage.getHeight() * 0.15f);
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            }
+        });
+        stage.addActor(backButton);
     }
 
     @Override

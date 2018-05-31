@@ -13,32 +13,32 @@ import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.view.ButtonFactory;
 
-public class WinScreen extends StageScreen {
-    public WinScreen(XLPOOLsionClient xlpooLsionClient) {
+public class ServerFullScreen extends StageScreen {
+    public ServerFullScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
 
     private static final float FRAME_TIME = 0.6f;
     private float stateTime = 0;
-    private Image victoryImage;
+    private Image serverFullImage;
 
-    private Animation<Drawable> victoryAnim;
+    private Animation<Drawable> ServerFullAnim;
     @Override
     protected void loadAssets() {
-        xlpooLsionClient.getAssetManager().load("Victory_white1.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("Victory_white2.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("GreenBackground.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("ServerFull.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("ServerFull2.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("back-button-md.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("GreenBackground.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
     private void createAnimation() {
-        Drawable[] frames = new Drawable[2];
+        Drawable[] frames = new Drawable[4];
+        frames[0] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png")));
+        frames[1] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull2.png")));
+        frames[2] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png")));
+        frames[3] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png")));
 
-        for(int i = 0;i < frames.length;i++){
-            frames[i] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("Victory_white"+ (i+1) + ".png")));
-        }
-
-        victoryAnim = new Animation<Drawable>(FRAME_TIME, frames);
+        ServerFullAnim = new Animation<Drawable>(FRAME_TIME, frames);
     }
     @Override
     protected void createGUI() {
@@ -56,12 +56,12 @@ public class WinScreen extends StageScreen {
     }
 
     private void createImageVictory() {
-        victoryImage = new Image((Texture) xlpooLsionClient.getAssetManager().get("Victory_white1.png"));
-        victoryImage.setWidth(stage.getWidth() * 0.3f);
-        victoryImage.setHeight(stage.getHeight() * 0.4f);
-        victoryImage.setPosition(stage.getWidth() * 0.5f, stage.getHeight() * 0.4f, Align.center);
-        stage.addActor(victoryImage);
+        serverFullImage = new Image((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png"));
+        serverFullImage.setWidth(stage.getWidth());
+        serverFullImage.setHeight(stage.getHeight());
+        stage.addActor(serverFullImage);
     }
+
     private void createBackButton() {
         Button backButton = ButtonFactory.makeButton(
                 xlpooLsionClient, "back-button-md.png", "back-button-md.png", stage.getWidth() * 0.8f, stage.getHeight() * 0.15f,
@@ -79,7 +79,7 @@ public class WinScreen extends StageScreen {
     public void render(float delta) {
         super.render(delta);
         stateTime += delta;
-        victoryImage.setDrawable(victoryAnim.getKeyFrame(stateTime,true));
+        serverFullImage.setDrawable(ServerFullAnim.getKeyFrame(stateTime,true));
 
     }
 }

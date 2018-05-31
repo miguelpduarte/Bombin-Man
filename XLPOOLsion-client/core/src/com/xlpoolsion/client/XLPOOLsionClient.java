@@ -7,6 +7,7 @@ import com.xlpoolsion.client.view.screens.ConnectScreen;
 import com.xlpoolsion.client.view.screens.ControlsScreen;
 import com.xlpoolsion.client.view.screens.LoseScreen;
 import com.xlpoolsion.client.view.screens.MainMenuScreen;
+import com.xlpoolsion.client.view.screens.ServerFullScreen;
 import com.xlpoolsion.client.view.screens.WaitingForServerScreen;
 import com.xlpoolsion.client.view.screens.WinScreen;
 
@@ -31,7 +32,7 @@ public class XLPOOLsionClient extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		setScreen(new MainMenuScreen(this));
+		setScreen(new ServerFullScreen(this));
 	}
 
 	/**
