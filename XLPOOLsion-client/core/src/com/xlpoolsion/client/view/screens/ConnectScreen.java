@@ -47,11 +47,6 @@ public class ConnectScreen extends StageScreen {
             case WAITING_FOR_SERVER:
                 xlpooLsionClient.setScreen(new WaitingForServerScreen(xlpooLsionClient));
                 break;
-            case SERVER_FULL:
-                //TODO: ???? Should this be here even? - This transition should never be possible!!!
-                System.out.println("View detected server is full");
-                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
-                break;
         }
     }
 

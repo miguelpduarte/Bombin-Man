@@ -19,6 +19,7 @@ public class LoseScreen extends StageScreen {
     private Image losingImage;
 
     private Animation<Drawable> losingAnim;
+
     @Override
     protected void loadAssets() {
         xlpooLsionClient.getAssetManager().load("Losing1.png", Texture.class);
@@ -27,6 +28,7 @@ public class LoseScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("RedBackground.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
+
     private void createAnimation() {
         Drawable[] frames = new Drawable[3];
 
@@ -36,10 +38,11 @@ public class LoseScreen extends StageScreen {
 
         losingAnim = new Animation<Drawable>(FRAME_TIME, frames);
     }
+
     @Override
     protected void createGUI() {
         addBackground();
-        createimageLosing();
+        createLosingImage();
         createAnimation();
     }
 
@@ -50,7 +53,7 @@ public class LoseScreen extends StageScreen {
         stage.addActor(background);
     }
 
-    private void createimageLosing() {
+    private void createLosingImage() {
         losingImage = new Image((Texture) xlpooLsionClient.getAssetManager().get("Losing1.png"));
         losingImage.setWidth(stage.getWidth() * 0.3f);
         losingImage.setHeight(stage.getHeight() * 0.4f);
@@ -63,6 +66,5 @@ public class LoseScreen extends StageScreen {
         super.render(delta);
         stateTime += delta;
         losingImage.setDrawable(losingAnim.getKeyFrame(stateTime,true));
-
     }
 }

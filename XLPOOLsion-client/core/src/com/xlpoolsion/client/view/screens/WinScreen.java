@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
+import com.xlpoolsion.client.controller.GameController;
 
 public class WinScreen extends StageScreen {
     public WinScreen(XLPOOLsionClient xlpooLsionClient) {
@@ -19,6 +20,7 @@ public class WinScreen extends StageScreen {
     private Image victoryImage;
 
     private Animation<Drawable> victoryAnim;
+
     @Override
     protected void loadAssets() {
         xlpooLsionClient.getAssetManager().load("Victory_white1.png", Texture.class);
@@ -26,6 +28,7 @@ public class WinScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("GreenBackground.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
+
     private void createAnimation() {
         Drawable[] frames = new Drawable[2];
 
@@ -35,6 +38,7 @@ public class WinScreen extends StageScreen {
 
         victoryAnim = new Animation<Drawable>(FRAME_TIME, frames);
     }
+
     @Override
     protected void createGUI() {
         addBackground();
@@ -62,6 +66,5 @@ public class WinScreen extends StageScreen {
         super.render(delta);
         stateTime += delta;
         victoryImage.setDrawable(victoryAnim.getKeyFrame(stateTime,true));
-
     }
 }

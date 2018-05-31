@@ -59,6 +59,7 @@ public class WaitingForServerScreen extends StageScreen {
         loadingImage.setDrawable(loadingAnim.getKeyFrame(stateTime,true));
         switch (GameController.getInstance().getCurrentState()) {
             case PLAYING:
+                //Game started
                 xlpooLsionClient.setScreen(new ControlsScreen(xlpooLsionClient));
                 break;
             case SERVER_FULL:
