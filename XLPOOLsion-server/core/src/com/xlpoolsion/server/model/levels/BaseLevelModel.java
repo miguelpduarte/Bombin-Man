@@ -104,6 +104,16 @@ public abstract class BaseLevelModel {
                 explosion.setFlaggedForRemoval(true);
             }
         }
+
+        for (PlayerModel playerModel : players) {
+            if(playerModel != null){
+                if(playerModel.isDying()){
+                    if(playerModel.decreaseTimeTillDeath(delta)){
+                        playerModel.setFlaggedForRemoval(true);
+                    }
+                }
+            }
+        }
     }
 
     static final int GRID_START_X_BRICKS = 0;

@@ -21,10 +21,13 @@ public abstract class PlayerView extends EntityView {
     protected Animation<TextureRegion> rightAnim;
     protected Animation<TextureRegion> downAnim;
     protected Animation<TextureRegion> leftAnim;
+    protected Animation<TextureRegion> deathAnim;
 
     private float stateTime = 0;
+    private float deathTime = 0;
 
     private boolean isMoving = false;
+    private boolean isDying = false;
     private PlayerModel.Orientation orientation;
 
     public PlayerView(XLPOOLsionServer xlpooLsionServer) {
@@ -69,18 +72,28 @@ public abstract class PlayerView extends EntityView {
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
+    protected Animation<TextureRegion> createDeathAnimation(TextureRegion[][] deathregion) {
+        TextureRegion[] frames = new TextureRegion[10];
+        System.arraycopy(deathregion[0], 0, frames, 0, 10);
+
+        return new Animation<TextureRegion>(FRAME_TIME, frames);
+    }
+
     @Override
     public void update(EntityModel model) {
         super.update(model);
         isMoving = ((PlayerModel) model).isMoving();
+        isDying = ((PlayerModel) model).isDying();
         orientation = ((PlayerModel) model).getCurrentOrientation();
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         stateTime += Gdx.graphics.getDeltaTime();
-
-        if(isMoving) {
+        if(isDying){
+            sprite.setRegion(deathAnim.getKeyFrame(deathTime, false));
+            deathTime += Gdx.graphics.getDeltaTime();
+        }else if(isMoving) {
             setMovingAnimationFrame();
         } else {
             setStillAnimationFrame();

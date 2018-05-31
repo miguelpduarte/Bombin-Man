@@ -10,7 +10,11 @@ public class PlayerModel extends EntityModel {
 
     private boolean moving = false;
     private boolean overBomb = false;
+    private boolean dying = false;
+    private float time_till_death = DYING_TIMEOUT;
     private Orientation currentOrientation = Orientation.DOWN;
+
+    public static final float DYING_TIMEOUT = 4.0f;
     private static final float STARTING_SPEED = 4.4f;
     private static final int STARTING_ALLOWED_BOMBS = 1;
     private static final int STARTING_EXPLOSION_RADIUS = 3;
@@ -51,7 +55,18 @@ public class PlayerModel extends EntityModel {
         DOWN,
         LEFT
     }
+    public boolean isDying(){
+        return dying;
+    }
 
+    public void startDying(){
+        dying = true;
+    }
+
+    public boolean decreaseTimeTillDeath(float delta) {
+        time_till_death -= delta;
+        return time_till_death < 0;
+    }
     public Orientation getCurrentOrientation() {
         return currentOrientation;
     }

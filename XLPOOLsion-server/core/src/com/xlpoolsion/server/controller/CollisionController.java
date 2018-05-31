@@ -123,6 +123,6 @@ public class CollisionController implements ContactListener {
     }
 
     private void playerExplosionContact(Body playerBody, Body explosionBody) {
-        System.out.println("Player ded");
+        ((PlayerModel)playerBody.getUserData()).startDying();
     }
 }
