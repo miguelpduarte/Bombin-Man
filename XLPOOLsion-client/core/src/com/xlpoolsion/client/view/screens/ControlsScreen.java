@@ -124,16 +124,14 @@ public class ControlsScreen extends StageScreen {
 
         switch (GameController.getInstance().getCurrentState()) {
             case LOST_CONNECTION:
-                //System.out.println("Client lost connection detected in view");
+                System.out.println("Client lost connection detected in view");
                 xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
                 break;
             case WON:
-                System.out.println("This client won");
-                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+                xlpooLsionClient.setScreen(new WinScreen(xlpooLsionClient));
                 break;
             case LOST:
-                System.out.println("This client lost");
-                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+                xlpooLsionClient.setScreen(new LoseScreen(xlpooLsionClient));
                 break;
         }
     }
@@ -172,11 +170,5 @@ public class ControlsScreen extends StageScreen {
 
     private boolean isShakingPhone() {
         return Math.abs(Gdx.input.getGyroscopeY()) > SHAKE_THRESHOLD;
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        NetworkRouter.getInstance().endConnection();
     }
 }

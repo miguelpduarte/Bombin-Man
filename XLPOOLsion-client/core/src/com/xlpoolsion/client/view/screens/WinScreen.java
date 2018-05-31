@@ -23,6 +23,7 @@ public class WinScreen extends StageScreen {
     private Image victoryImage;
 
     private Animation<Drawable> victoryAnim;
+
     @Override
     protected void loadAssets() {
         xlpooLsionClient.getAssetManager().load("Victory_white1.png", Texture.class);
@@ -31,6 +32,7 @@ public class WinScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("back-button-md.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
+
     private void createAnimation() {
         Drawable[] frames = new Drawable[2];
 
@@ -40,6 +42,7 @@ public class WinScreen extends StageScreen {
 
         victoryAnim = new Animation<Drawable>(FRAME_TIME, frames);
     }
+
     @Override
     protected void createGUI() {
         addBackground();
@@ -80,6 +83,5 @@ public class WinScreen extends StageScreen {
         super.render(delta);
         stateTime += delta;
         victoryImage.setDrawable(victoryAnim.getKeyFrame(stateTime,true));
-
     }
 }
