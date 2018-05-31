@@ -182,8 +182,6 @@ public abstract class BaseLevelController {
     }
 
     public void placeBomb(int playerId) {
-        //TODO: Bomb placement location restriction (on top is not possible)
-        //Bomb number limit verification
         PlayerModel player = levelModel.getPlayer(playerId);
 
         if(!player.isOverBomb() && player.incrementActiveBombs()) {
@@ -192,8 +190,6 @@ public abstract class BaseLevelController {
             new BombBody(world, bomb);
             //Bomb placed on player, so it is over the bomb
             player.setOverBomb(true);
-        } else {
-            System.out.println("Player " + playerId + " cannot place more bombs for now!");
         }
     }
 

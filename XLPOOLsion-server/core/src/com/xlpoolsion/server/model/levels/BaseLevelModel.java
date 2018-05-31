@@ -182,7 +182,11 @@ public abstract class BaseLevelModel {
     }
 
     private EntityModel getBrickAt(float x, float y) {
-        return brickMatrix[(int) ((x - GRID_START_X)/GRID_PADDING_X)][(int) ((y - GRID_START_Y)/GRID_PADDING_Y)];
+        if(x < GRID_START_X || y < GRID_START_Y || x >= GRID_END_X || y >= GRID_END_Y) {
+            return null;
+        } else {
+            return brickMatrix[(int) ((x - GRID_START_X) / GRID_PADDING_X)][(int) ((y - GRID_START_Y) / GRID_PADDING_Y)];
+        }
     }
 
     private ExplosionModel createSingleExplosion(Vector2 coordinates) {
