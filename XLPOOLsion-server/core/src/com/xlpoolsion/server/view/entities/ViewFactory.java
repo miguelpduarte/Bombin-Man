@@ -60,6 +60,9 @@ public class ViewFactory {
             case BombRadUp:
                 viewMap.put(model, new RadiusUpView(xlpooLsionServer));
                 break;
+            case BombsUp:
+                viewMap.put(model, new BombUpView(xlpooLsionServer));
+                break;
         }
     }
 
@@ -70,6 +73,9 @@ public class ViewFactory {
                 break;
             case BombRadDown:
                 viewMap.put(model, new RadiusDownView(xlpooLsionServer));
+                break;
+            case BombsDown:
+                viewMap.put(model, new BombDownView(xlpooLsionServer));
                 break;
         }
     }

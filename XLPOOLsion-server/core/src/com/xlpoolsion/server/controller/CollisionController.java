@@ -53,19 +53,31 @@ public class CollisionController implements ContactListener {
     }
 
     private void powerUpContact(Body powerUpBody,Body playerBody){
-        if(((PowerUpModel)powerUpBody.getUserData()).getType() == PowerUpModel.PowerUpType.SpeedUp) {
-            ((PlayerModel) playerBody.getUserData()).speedUp();
-        } else if(((PowerUpModel)powerUpBody.getUserData()).getType() == PowerUpModel.PowerUpType.BombRadUp) {
-            ((PlayerModel) playerBody.getUserData()).radiusUp();
+        switch (((PowerUpModel)powerUpBody.getUserData()).getType()){
+            case SpeedUp:
+                ((PlayerModel) playerBody.getUserData()).speedUp();
+                break;
+            case BombRadUp:
+                ((PlayerModel) playerBody.getUserData()).radiusUp();
+                break;
+            case BombsUp:
+                ((PlayerModel) playerBody.getUserData()).increaseAllowedBombs();
+                break;
         }
         ((PowerUpModel)powerUpBody.getUserData()).setFlaggedForRemoval(true);
     }
 
     private void powerDownContact(Body powerDownBody,Body playerBody){
-        if(((PowerDownModel)powerDownBody.getUserData()).getType() == PowerDownModel.PowerDownType.SpeedDown) {
-            ((PlayerModel) playerBody.getUserData()).speedDown();
-        }  else if(((PowerDownModel)powerDownBody.getUserData()).getType() == PowerDownModel.PowerDownType.BombRadDown) {
-            ((PlayerModel) playerBody.getUserData()).radiusDown();
+        switch(((PowerDownModel)powerDownBody.getUserData()).getType()){
+            case SpeedDown:
+                ((PlayerModel) playerBody.getUserData()).speedDown();
+                break;
+            case BombsDown:
+                ((PlayerModel) playerBody.getUserData()).decreaseAllowedBombs();
+                break;
+            case BombRadDown:
+                ((PlayerModel) playerBody.getUserData()).radiusDown();
+                break;
         }
         ((PowerDownModel)powerDownBody.getUserData()).setFlaggedForRemoval(true);
     }

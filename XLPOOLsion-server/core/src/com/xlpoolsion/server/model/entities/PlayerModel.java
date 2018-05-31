@@ -83,11 +83,15 @@ public class PlayerModel extends EntityModel {
     }
 
     public void increaseAllowedBombs() {
-        allowedBombsChanger++;
+        if(allowedBombsChanger < 10){
+            allowedBombsChanger++;
+        }
     }
 
     public void decreaseAllowedBombs() {
-        allowedBombsChanger--;
+        if(allowedBombsChanger > 0){
+            allowedBombsChanger--;
+        }
     }
 
     public boolean incrementActiveBombs() {

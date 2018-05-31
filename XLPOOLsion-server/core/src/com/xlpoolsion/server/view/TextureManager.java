@@ -52,6 +52,8 @@ public class TextureManager {
         this.assetManager.load("PwrRadiusDown.png", Texture.class);
         this.assetManager.load("PwrSpeedUp.png", Texture.class);
         this.assetManager.load("PwrSpeedDown.png", Texture.class);
+        this.assetManager.load("PwrBombUp.png", Texture.class);
+        this.assetManager.load("PwrBombDown.png", Texture.class);
         this.assetManager.finishLoading();
     }
 
