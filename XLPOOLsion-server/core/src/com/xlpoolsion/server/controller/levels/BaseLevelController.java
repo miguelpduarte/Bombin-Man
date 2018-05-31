@@ -182,10 +182,17 @@ public abstract class BaseLevelController {
     }
 
     public void placeBomb(int playerId) {
-        //TODO: Time and bomb limit verifications
-        BombModel bomb = levelModel.createBomb(playerId);
-        //No need to do anything with the declared body, as it is stored in the world
-        new BombBody(world, bomb);
+        //TODO: Bomb placement location restriction (on top is not possible)
+        //Bomb number limit verification
+        PlayerModel player = levelModel.getPlayer(playerId);
+
+        if(!player.isOverBomb() && player.incrementActiveBombs()) {
+            BombModel bomb = levelModel.createBomb(playerId);
+            //No need to do anything with the declared body, as it is stored in the world
+            new BombBody(world, bomb);
+        } else {
+            System.out.println("Player " + playerId + " cannot place more bombs for now!");
+        }
     }
 
     public void removeFlagged() {

@@ -11,14 +11,16 @@ public class PlayerModel extends EntityModel {
     private boolean moving = false;
     private boolean overBomb = false;
     private Orientation currentOrientation = Orientation.DOWN;
-    private float current_speed = 4.4f;
-    private int speedChanger = 0;
-    private int explosionChanger = 0;
-    private int allowedBombs = 2;
+    private static final float STARTING_SPEED = 4.4f;
+    private static final int STARTING_ALLOWED_BOMBS = 1;
+    private static final int STARTING_EXPLOSION_RADIUS = 3;
+    private int activeBombs = 0;
     private int id;
 
     //Powerups
-    private int explosion_radius = 3;
+    private int speedChanger = 0;
+    private int explosionChanger = 0;
+    private int allowedBombsChanger = 0;
 
     public PlayerModel(float x, float y, float rotation, int id) {
         super(x, y, rotation);
@@ -26,7 +28,7 @@ public class PlayerModel extends EntityModel {
     }
 
     public float getCurrentSpeed() {
-        return current_speed + speedChanger;
+        return STARTING_SPEED + speedChanger;
     }
 
     public boolean isMoving() {
@@ -37,12 +39,23 @@ public class PlayerModel extends EntityModel {
         this.moving = moving;
     }
 
+    public enum Orientation {
+        UP,
+        RIGHT,
+        DOWN,
+        LEFT
+    }
+
+    public Orientation getCurrentOrientation() {
+        return currentOrientation;
+    }
+
     public void setOrientation(Orientation currentOrientation) {
         this.currentOrientation = currentOrientation;
     }
 
     public int getExplosionRadius() {
-        return explosion_radius + explosionChanger;
+        return STARTING_EXPLOSION_RADIUS + explosionChanger;
     }
 
     public void speedUp() {
@@ -57,29 +70,36 @@ public class PlayerModel extends EntityModel {
         }
     }
 
-    public void radiusDown() {
-        if(explosionChanger > -2){
-            explosionChanger--;
-        }
-    }
-
     public void radiusUp() {
         if(explosionChanger < 6){
             explosionChanger++;
         }
     }
 
+    public void radiusDown() {
+        if (explosionChanger > -2) {
+            explosionChanger--;
+        }
+    }
+
     public void increaseAllowedBombs() {
-        allowedBombs++;
+        allowedBombsChanger++;
     }
 
     public void decreaseAllowedBombs() {
-        allowedBombs--;
+        allowedBombsChanger--;
     }
 
-    //TODO: Change to increment maybe so that powerups are used directly without get?
-    public void setExplosionRadius(int explosion_radius) {
-        this.explosion_radius = explosion_radius;
+    public boolean incrementActiveBombs() {
+        if(activeBombs < STARTING_ALLOWED_BOMBS + allowedBombsChanger) {
+            activeBombs++;
+            return true;
+        }
+        return false;
+    }
+
+    public void decrementActiveBombs() {
+        activeBombs--;
     }
 
     public boolean isOverBomb() {
@@ -92,16 +112,5 @@ public class PlayerModel extends EntityModel {
 
     public int getId() {
         return id;
-    }
-
-    public enum Orientation {
-        UP,
-        RIGHT,
-        DOWN,
-        LEFT
-    }
-
-    public Orientation getCurrentOrientation() {
-        return currentOrientation;
     }
 }

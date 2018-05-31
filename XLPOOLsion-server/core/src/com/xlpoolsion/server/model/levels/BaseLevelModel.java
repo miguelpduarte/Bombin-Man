@@ -203,6 +203,7 @@ public abstract class BaseLevelModel {
         ViewFactory.destroyView(model);
 
         if (model instanceof BombModel) {
+            ((BombModel) model).getOwner().decrementActiveBombs();
             bombs.remove(model);
             bombPool.free((BombModel) model);
         } else if (model instanceof ExplosionModel) {
