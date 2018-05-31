@@ -30,7 +30,7 @@ public class LoseScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("Losing2.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("Losing3.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("back-button-md.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("RedBackground.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("Game_Over_background.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
 
@@ -53,7 +53,7 @@ public class LoseScreen extends StageScreen {
     }
 
     private void addBackground() {
-        Image background = new Image((Texture) xlpooLsionClient.getAssetManager().get("RedBackground.png"));
+        Image background = new Image((Texture) xlpooLsionClient.getAssetManager().get("Game_Over_background.png"));
         background.setWidth(stage.getWidth());
         background.setHeight(stage.getHeight());
         stage.addActor(background);
