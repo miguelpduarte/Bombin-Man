@@ -28,7 +28,7 @@ public class ServerFullScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("ServerFull.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("ServerFull2.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("back-button-md.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("GreenBackground.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("ServerFullBackground.jpg", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
     private void createAnimation() {
@@ -49,7 +49,7 @@ public class ServerFullScreen extends StageScreen {
     }
 
     private void addBackground() {
-        Image background = new Image((Texture) xlpooLsionClient.getAssetManager().get("GreenBackground.png"));
+        Image background = new Image((Texture) xlpooLsionClient.getAssetManager().get("ServerFullBackground.jpg"));
         background.setWidth(stage.getWidth());
         background.setHeight(stage.getHeight());
         stage.addActor(background);
