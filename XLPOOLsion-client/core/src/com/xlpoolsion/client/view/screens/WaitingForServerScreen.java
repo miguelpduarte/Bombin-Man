@@ -27,6 +27,7 @@ public class WaitingForServerScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().load("Loading-3.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("Loading-4.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("Loading-5.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("WaitingForServer.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
     private void createAnimation() {
@@ -42,6 +43,15 @@ public class WaitingForServerScreen extends StageScreen {
     protected void createGUI() {
         createImageLoading();
         createAnimation();
+        createTextImage();
+    }
+
+    private void createTextImage() {
+        Image textImage = new Image((Texture) xlpooLsionClient.getAssetManager().get("WaitingForServer.png"));
+        textImage.setWidth(stage.getWidth() * 0.6f);
+        textImage.setHeight(stage.getHeight() * 0.2f);
+        textImage.setPosition(stage.getWidth() * 0.5f, stage.getHeight() * 0.8f, Align.center);
+        stage.addActor(textImage);
     }
 
     private void createImageLoading() {
