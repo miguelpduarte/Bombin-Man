@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
+import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.view.ButtonFactory;
 
 public class LoseScreen extends StageScreen {
@@ -18,7 +19,7 @@ public class LoseScreen extends StageScreen {
         super(xlpooLsionClient);
     }
 
-    private static final float FRAME_TIME = 0.4f;
+    private static final float FRAME_TIME = 0.2f;
     private float stateTime = 0;
     private Image losingImage;
 
@@ -75,6 +76,8 @@ public class LoseScreen extends StageScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                GameController.getInstance().resetState();
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
             }
         });
         stage.addActor(backButton);
