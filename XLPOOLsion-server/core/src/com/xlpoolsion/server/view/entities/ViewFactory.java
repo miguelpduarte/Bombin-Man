@@ -29,6 +29,8 @@ public class ViewFactory {
             createPlayerView(xlpooLsionServer, model);
         } else if (model instanceof PowerUpModel) {
             createPowerupView(xlpooLsionServer, model);
+        } else if (model instanceof PowerDownModel) {
+            createPowerDownView(xlpooLsionServer, model);
         }
     }
 
@@ -57,6 +59,17 @@ public class ViewFactory {
                 break;
             case BombRadUp:
                 viewMap.put(model, new RadiusUpView(xlpooLsionServer));
+                break;
+        }
+    }
+
+    private static void createPowerDownView(XLPOOLsionServer xlpooLsionServer, EntityModel model) {
+        switch(((PowerDownModel)model).getType()) {
+            case SpeedDown:
+                viewMap.put(model, new SpeedDownView(xlpooLsionServer));
+                break;
+            case BombRadDown:
+                viewMap.put(model, new RadiusDownView(xlpooLsionServer));
                 break;
         }
     }

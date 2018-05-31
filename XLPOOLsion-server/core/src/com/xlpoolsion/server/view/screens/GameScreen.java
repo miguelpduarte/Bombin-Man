@@ -108,6 +108,12 @@ public class GameScreen extends ScreenAdapter {
             view.update(powerUp);
             view.draw(xlpooLsionServer.getBatch());
         }
+        List<PowerDownModel> powerDowns = GameController.getInstance().getLevelModel().getPowerDowns();
+        for(PowerDownModel powerDown : powerDowns) {
+            EntityView view = ViewFactory.getView(xlpooLsionServer, powerDown);
+            view.update(powerDown);
+            view.draw(xlpooLsionServer.getBatch());
+        }
 
         List<BreakableBrickModel> breakablebricks = GameController.getInstance().getLevelModel().getBreakableBricks();
         for(BreakableBrickModel breakablebrick : breakablebricks) {

@@ -39,6 +39,7 @@ public abstract class BaseLevelModel {
     private ArrayList<BrickModel> bricks = new ArrayList<BrickModel>();
     private ArrayList<BreakableBrickModel> breakableBricks = new ArrayList<BreakableBrickModel>();
     private ArrayList<PowerUpModel> powerUps = new ArrayList<PowerUpModel>();
+    private ArrayList<PowerDownModel> powerDowns = new ArrayList<PowerDownModel>();
     private EntityModel[][] brickMatrix = new EntityModel[GRID_END_X_BRICKS - GRID_START_X_BRICKS][GRID_END_Y_BRICKS - GRID_START_Y_BRICKS];
 
     /**
@@ -194,7 +195,8 @@ public abstract class BaseLevelModel {
         return explosion;
     }
 
-    private static final float POWERUP_CHANCE = 0.6f;
+    private static final float POWERUP_CHANCE = 0.4f;
+    private static final float POWERDOWN_CHANCE = 0.1f;
 
     public void remove(EntityModel model) {
         //Destroying the no longer necessary view for this model
@@ -207,8 +209,10 @@ public abstract class BaseLevelModel {
             explosions.remove(model);
             explosionPool.free((ExplosionModel) model);
         } else if (model instanceof BreakableBrickModel) {
-            if(Math.random() > POWERUP_CHANCE){
+            if(Math.random() < POWERUP_CHANCE){
                 GameController.getInstance().createPowerUp((BreakableBrickModel) model);
+            } else if(Math.random() < POWERDOWN_CHANCE){
+                GameController.getInstance().createPowerDown((BreakableBrickModel) model);
             }
             brickMatrix[(int) ((model.getX() - GRID_START_X)/GRID_PADDING_X)][(int) ((model.getY() - GRID_START_Y)/GRID_PADDING_Y)] = null;
             breakableBricks.remove(model);
@@ -217,6 +221,9 @@ public abstract class BaseLevelModel {
         }
         else if (model instanceof PowerUpModel) {
             powerUps.remove(model);
+        }
+        else if (model instanceof PowerDownModel) {
+            powerDowns.remove(model);
         }
 
     }
@@ -268,6 +275,21 @@ public abstract class BaseLevelModel {
         return powerUp;
     }
 
+    /**
+     * Creates a powerDown at the given coordinates and adds it to internal storage
+     *
+     * @param brick The Model that was destroid to give room for the powerDown
+     */
+    public PowerDownModel createPowerDown(BreakableBrickModel brick) {
+        PowerDownModel powerDown= new PowerDownModel(brick.getX(), brick.getY(), 0);
+
+        powerDown.setFlaggedForRemoval(false);
+        powerDown.setPosition(brick.getX(),brick.getY());
+
+        powerDowns.add(powerDown);
+        return powerDown;
+    }
+
     public PlayerModel getPlayer(int playerId) {
         return players[playerId];
     }
@@ -290,5 +312,8 @@ public abstract class BaseLevelModel {
 
     public List<PowerUpModel> getPowerUps() {
         return powerUps;
+    }
+    public List<PowerDownModel> getPowerDowns() {
+        return powerDowns;
     }
 }

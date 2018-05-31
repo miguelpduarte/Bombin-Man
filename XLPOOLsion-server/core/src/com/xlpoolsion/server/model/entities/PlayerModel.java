@@ -45,25 +45,35 @@ public class PlayerModel extends EntityModel {
         return explosion_radius + explosionChanger;
     }
 
-    public void speedUp(){
-        speedChanger++;
+    public void speedUp() {
+        if (speedChanger < 6) {
+            speedChanger++;
+        }
     }
 
-    public void speedDown(){
-       speedChanger--;
+    public void speedDown() {
+        if (speedChanger > -2) {
+            speedChanger--;
+        }
     }
 
-    public void radiusDown(){
-       explosionChanger--;
+    public void radiusDown() {
+        if(explosionChanger > -2){
+            explosionChanger--;
+        }
     }
 
-    public void radiusUp(){
-       explosionChanger++;
+    public void radiusUp() {
+        if(explosionChanger < 6){
+            explosionChanger++;
+        }
     }
-    public void increaseAllowedBombs(){
+
+    public void increaseAllowedBombs() {
         allowedBombs++;
     }
-    public void decreaseAllowedBombs(){
+
+    public void decreaseAllowedBombs() {
         allowedBombs--;
     }
 

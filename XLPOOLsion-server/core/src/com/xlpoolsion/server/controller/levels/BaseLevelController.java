@@ -217,6 +217,10 @@ public abstract class BaseLevelController {
         PowerUpModel powerUp = levelModel.createPowerUp(brick);
         new PowerUpBody(world,powerUp);
     }
+    public void createPowerDown(BreakableBrickModel brick) {
+        PowerDownModel powerDown = levelModel.createPowerDown(brick);
+        new PowerDownBody(world,powerDown);
+    }
 
     public BaseLevelModel getModel() {
         return levelModel;

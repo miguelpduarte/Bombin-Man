@@ -9,10 +9,7 @@ import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;
 public  class PowerUpModel extends EntityModel {
     public enum PowerUpType {
         SpeedUp,
-        //SpeedDown,
         BombRadUp,
-        //BombRadDown,
-
     }
 
     public static final float WIDTH = SpeedUpView.WIDTH * PIXEL_TO_METER;
