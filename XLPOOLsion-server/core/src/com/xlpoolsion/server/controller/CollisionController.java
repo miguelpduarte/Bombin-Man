@@ -47,7 +47,15 @@ public class CollisionController implements ContactListener {
     }
 
     private void powerUpContact(Body powerUpBody,Body playerBody){
-        ((PlayerModel)playerBody.getUserData()).speedUp();
+        if(((PowerUpModel)powerUpBody.getUserData()).getType() == PowerUpModel.PowerUpType.SpeedUp) {
+            ((PlayerModel) playerBody.getUserData()).speedUp();
+        } /*else if(((PowerUpModel)powerUpBody.getUserData()).getType() == PowerUpModel.PowerUpType.SpeedDown) {
+            ((PlayerModel) playerBody.getUserData()).speedDown();
+        }*/ else if(((PowerUpModel)powerUpBody.getUserData()).getType() == PowerUpModel.PowerUpType.BombRadUp) {
+            ((PlayerModel) playerBody.getUserData()).radiusUp();
+        }/* else if(((PowerUpModel)powerUpBody.getUserData()).getType() == PowerUpModel.PowerUpType.BombRadDown) {
+            ((PlayerModel) playerBody.getUserData()).radiusDown();
+        }*/
         ((PowerUpModel)powerUpBody.getUserData()).setFlaggedForRemoval(true);
     }
 

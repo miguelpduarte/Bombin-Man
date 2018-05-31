@@ -103,7 +103,7 @@ public class GameController {
         return currentLevelController.getWorld();
     }
 
-    private static final int MIN_CONNECTED_CLIENTS = 1;
+    private static final int MIN_CONNECTED_CLIENTS = 2;
 
     public void startGame(int level) {
         if(NetworkRouter.getInstance().getServer().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {

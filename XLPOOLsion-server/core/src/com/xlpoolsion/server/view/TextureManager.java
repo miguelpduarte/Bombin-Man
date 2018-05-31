@@ -45,6 +45,10 @@ public class TextureManager {
         this.assetManager.load("explosion.png", Texture.class);
         this.assetManager.load("SolidBrick.png", Texture.class);
         this.assetManager.load("BreakableBrick2.png", Texture.class);
+        this.assetManager.load("PwrRadiusUp.png", Texture.class);
+        this.assetManager.load("PwrRadiusDown.png", Texture.class);
+        this.assetManager.load("PwrSpeedUp.png", Texture.class);
+        this.assetManager.load("PwrSpeedDown.png", Texture.class);
         this.assetManager.finishLoading();
     }
 

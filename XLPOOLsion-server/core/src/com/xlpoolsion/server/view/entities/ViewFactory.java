@@ -28,7 +28,12 @@ public class ViewFactory {
         } else if (model instanceof PlayerModel) {
             viewMap.put(model, new PlayerView(xlpooLsionServer));
         } else if (model instanceof PowerUpModel) {
-            viewMap.put(model, new PowerUpView(xlpooLsionServer));
+            if(((PowerUpModel) model).getType() == PowerUpModel.PowerUpType.SpeedUp){
+                viewMap.put(model, new SpeedUpView(xlpooLsionServer));
+            } else if(((PowerUpModel) model).getType() == PowerUpModel.PowerUpType.BombRadUp){
+                viewMap.put(model, new RadiusUpView(xlpooLsionServer));
+            }
+
         }
     }
 

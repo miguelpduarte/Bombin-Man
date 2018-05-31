@@ -107,6 +107,12 @@ public class GameScreen extends ScreenAdapter {
             view.update(explosion);
             view.draw(xlpooLsionServer.getBatch());
         }
+        List<PowerUpModel> powerUps = GameController.getInstance().getLevelModel().getPowerUps();
+        for(PowerUpModel powerUp : powerUps) {
+            EntityView view = ViewFactory.getView(xlpooLsionServer, powerUp);
+            view.update(powerUp);
+            view.draw(xlpooLsionServer.getBatch());
+        }
 
         List<BreakableBrickModel> breakablebricks = GameController.getInstance().getLevelModel().getBreakableBricks();
         for(BreakableBrickModel breakablebrick : breakablebricks) {
@@ -122,12 +128,6 @@ public class GameScreen extends ScreenAdapter {
             view.draw(xlpooLsionServer.getBatch());
         }
 
-        List<PowerUpModel> powerUps = GameController.getInstance().getLevelModel().getPowerUps();
-        for(PowerUpModel powerUp : powerUps) {
-            EntityView view = ViewFactory.getView(xlpooLsionServer, powerUp);
-            view.update(powerUp);
-            view.draw(xlpooLsionServer.getBatch());
-        }
 
         //Drawing player in end so that he stays on top
         for(int i = 0; i < GameController.MAX_PLAYERS; ++i) {

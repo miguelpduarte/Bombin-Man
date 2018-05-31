@@ -179,7 +179,9 @@ public abstract class BaseLevelModel {
             explosions.remove(model);
             explosionPool.free((ExplosionModel) model);
         } else if (model instanceof BreakableBrickModel) {
-            GameController.getInstance().createPowerUp((BreakableBrickModel) model);
+            if(Math.random() > 0.6){
+                GameController.getInstance().createPowerUp((BreakableBrickModel) model);
+            }
             breakableBricks.remove(model);
         } else if (model instanceof PlayerModel) {
             players[((PlayerModel) model).getId()] = null;
