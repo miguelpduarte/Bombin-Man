@@ -185,7 +185,7 @@ public abstract class BaseLevelModel {
         if(x < GRID_START_X || y < GRID_START_Y || x >= GRID_END_X || y >= GRID_END_Y) {
             return null;
         } else {
-            return brickMatrix[(int) ((x - GRID_START_X) / GRID_PADDING_X)][(int) ((y - GRID_START_Y) / GRID_PADDING_Y)];
+            return brickMatrix[Math.round((x - GRID_START_X) / GRID_PADDING_X)][Math.round((y - GRID_START_Y) / GRID_PADDING_Y)];
         }
     }
 
@@ -219,7 +219,9 @@ public abstract class BaseLevelModel {
             } else if(Math.random() < POWERDOWN_CHANCE){
                 GameController.getInstance().createPowerDown((BreakableBrickModel) model);
             }
-            brickMatrix[(int) ((model.getX() - GRID_START_X)/GRID_PADDING_X)][(int) ((model.getY() - GRID_START_Y)/GRID_PADDING_Y)] = null;
+
+            //Deleting the breakable brick from the brick matrix and from the breakable brick arraylist
+            brickMatrix[Math.round((model.getX() - GRID_START_X)/GRID_PADDING_X)][Math.round((model.getY() - GRID_START_Y)/GRID_PADDING_Y)] = null;
             breakableBricks.remove(model);
         } else if (model instanceof PlayerModel) {
             players[((PlayerModel) model).getId()] = null;
@@ -246,6 +248,9 @@ public abstract class BaseLevelModel {
         brick.setPosition(x * BrickModel.WIDTH, y * BrickModel.HEIGHT);
 
         bricks.add(brick);
+        if(brickMatrix[x][y] != null) {
+            throw new IllegalArgumentException("Brick doubly created at: " + x + ", " + y);
+        }
         brickMatrix[x][y] = brick;
     }
 
@@ -262,6 +267,9 @@ public abstract class BaseLevelModel {
         breakablebrick.setPosition(x * BreakableBrickModel.WIDTH, y * BreakableBrickModel.HEIGHT);
 
         breakableBricks.add(breakablebrick);
+        if(brickMatrix[x][y] != null) {
+            throw new IllegalArgumentException("Breakable brick doubly created at: " + x + ", " + y);
+        }
         brickMatrix[x][y] = breakablebrick;
     }
 
