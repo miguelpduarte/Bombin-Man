@@ -47,7 +47,7 @@ public class ViewFactory {
                 break;
             default:
                 //Player 0 is the default sprite, and so this is future proofed for the case that more players are added
-                viewMap.put(model, new PlayerWhiteView(xlpooLsionServer));
+                viewMap.put(model, new PlayerRedView(xlpooLsionServer));
                 break;
         }
     }

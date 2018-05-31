@@ -12,13 +12,11 @@ public class PlayerWhiteView extends PlayerView {
      void createAnimations(XLPOOLsionServer xlpooLsionServer) {
         Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite.png");
         TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 32);
-        Texture deathTextures = xlpooLsionServer.getAssetManager().get("DeathAnimation.png");
-        TextureRegion deathText[][] = TextureRegion.split(deathTextures,16,32);
 
         super.upAnim = createUpAnimation(fullregion);
         super.rightAnim = createRightAnimation(fullregion);
         super.downAnim = createDownAnimation(fullregion);
         super.leftAnim = createLeftAnimation(fullregion);
-        super.deathAnim = createDeathAnimation(deathText);
+        super.deathAnim = createDeathAnimation(fullregion);
     }
 }

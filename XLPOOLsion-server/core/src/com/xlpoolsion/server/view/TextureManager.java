@@ -54,7 +54,6 @@ public class TextureManager {
         this.assetManager.load("PwrSpeedDown.png", Texture.class);
         this.assetManager.load("PwrBombUp.png", Texture.class);
         this.assetManager.load("PwrBombDown.png", Texture.class);
-        this.assetManager.load("DeathAnimation.png", Texture.class);
         this.assetManager.finishLoading();
     }
 

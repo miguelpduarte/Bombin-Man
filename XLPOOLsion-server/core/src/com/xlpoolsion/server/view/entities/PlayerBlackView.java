@@ -17,5 +17,6 @@ public class PlayerBlackView extends PlayerView {
         super.rightAnim = createRightAnimation(fullregion);
         super.downAnim = createDownAnimation(fullregion);
         super.leftAnim = createLeftAnimation(fullregion);
+        super.deathAnim = createDeathAnimation(fullregion);
     }
 }

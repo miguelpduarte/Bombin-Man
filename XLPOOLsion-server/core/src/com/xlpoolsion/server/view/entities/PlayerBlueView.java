@@ -10,12 +10,13 @@ public class PlayerBlueView extends PlayerView {
     }
 
      void createAnimations(XLPOOLsionServer xlpooLsionServer) {
-        Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite_Black.png");
+        Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite_Blue.png");
         TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 32);
 
         super.upAnim = createUpAnimation(fullregion);
         super.rightAnim = createRightAnimation(fullregion);
         super.downAnim = createDownAnimation(fullregion);
         super.leftAnim = createLeftAnimation(fullregion);
+        super.deathAnim = createDeathAnimation(fullregion);
     }
 }

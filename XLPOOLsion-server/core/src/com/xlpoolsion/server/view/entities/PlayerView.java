@@ -74,7 +74,7 @@ public abstract class PlayerView extends EntityView {
 
     protected Animation<TextureRegion> createDeathAnimation(TextureRegion[][] deathregion) {
         TextureRegion[] frames = new TextureRegion[10];
-        System.arraycopy(deathregion[0], 0, frames, 0, 10);
+        System.arraycopy(deathregion[24], 0, frames, 0, 10);
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
