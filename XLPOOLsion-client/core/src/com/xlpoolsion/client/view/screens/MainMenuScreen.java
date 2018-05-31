@@ -15,10 +15,8 @@ public class MainMenuScreen extends StageScreen {
     }
 
     protected void loadAssets() {
-        xlpooLsionClient.getAssetManager().load("button_connect_up.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("button_connect_down.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("button_exit_up.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("button_exit_down.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("ExitButton.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("ConnectButton.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("BackgroundMainmenu.jpg", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
@@ -37,8 +35,8 @@ public class MainMenuScreen extends StageScreen {
 
     private void createExitButton() {
         Button exitButton = ButtonFactory.makeButton(
-                xlpooLsionClient, "button_exit_up.png", "button_exit_down.png", stage.getWidth() * 0.5f, stage.getHeight() * 0.35f,
-                stage.getWidth() * 0.3f, stage.getHeight() * 0.1f
+                xlpooLsionClient, "ExitButton.png", "ExitButton.png", stage.getWidth() * 0.5f, stage.getHeight() * 0.35f,
+                stage.getWidth() * 0.17f, stage.getHeight() * 0.1f
         );
         exitButton.addListener(new ClickListener() {
             @Override
@@ -51,7 +49,7 @@ public class MainMenuScreen extends StageScreen {
 
     private void createConnectButton() {
         Button connectButton = ButtonFactory.makeButton(
-                xlpooLsionClient, "button_connect_up.png", "button_connect_down.png", stage.getWidth() * 0.5f, stage.getHeight() * 0.55f,
+                xlpooLsionClient, "ConnectButton.png", "ConnectButton.png", stage.getWidth() * 0.5f, stage.getHeight() * 0.55f,
                 stage.getWidth() * 0.3f, stage.getHeight() * 0.1f);
 
         connectButton.addListener(new ClickListener() {

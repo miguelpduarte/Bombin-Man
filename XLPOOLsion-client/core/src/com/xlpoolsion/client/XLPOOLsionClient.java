@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xlpoolsion.client.view.screens.ConnectScreen;
 import com.xlpoolsion.client.view.screens.ControlsScreen;
 import com.xlpoolsion.client.view.screens.LoseScreen;
+import com.xlpoolsion.client.view.screens.LostConnectionScreen;
 import com.xlpoolsion.client.view.screens.MainMenuScreen;
 import com.xlpoolsion.client.view.screens.ServerFullScreen;
 import com.xlpoolsion.client.view.screens.WaitingForServerScreen;
@@ -32,7 +33,7 @@ public class XLPOOLsionClient extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		setScreen(new WinScreen(this));
+		setScreen(new MainMenuScreen(this));
 	}
 
 	/**
