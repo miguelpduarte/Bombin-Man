@@ -40,16 +40,6 @@ public class GameController {
     //private final World world;
     public static final int MAX_PLAYERS = MAX_CLIENTS;
 
-    /**
-     * The map width in meters.
-     */
-    public static final float GAME_WIDTH = 50;
-
-    /**
-     * The map height in meters.
-     */
-    public static final float GAME_HEIGHT = 50;
-
     private GameController() {
         currentState = STATE.WAITING_FOR_CONNECTIONS;
     }

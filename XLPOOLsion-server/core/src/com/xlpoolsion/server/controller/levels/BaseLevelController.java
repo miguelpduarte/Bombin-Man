@@ -14,6 +14,24 @@ import java.util.List;
 import static com.xlpoolsion.server.controller.GameController.MAX_PLAYERS;
 
 public abstract class BaseLevelController {
+    /**
+     * The level width in bricks
+     */
+    public static final int LEVEL_WIDTH_BRICKS = 20;
+    /**
+     * The level height in bricks
+     */
+    public static final int LEVEL_HEIGHT_BRICKS = 20;
+
+    /**
+     * The level width in meters
+     */
+    public static final float LEVEL_WIDTH = LEVEL_WIDTH_BRICKS * BrickModel.WIDTH;
+    /**
+     * The level height in meters
+     */
+    public static final float LEVEL_HEIGHT = LEVEL_HEIGHT_BRICKS * BrickModel.HEIGHT;
+
     private final World world;
     private PlayerBody[] players = new PlayerBody[MAX_PLAYERS];
     private BaseLevelModel levelModel;
@@ -77,11 +95,32 @@ public abstract class BaseLevelController {
         world.getBodies(bodies);
 
         for (Body body : bodies) {
-            //verifyBounds(body);
+            verifyBounds(body);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
             ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
     }
+
+    /**
+     * Verifies if the body is inside the level bounds and if not
+     * limits it to inside the bounds
+     *
+     * @param body The body to be verified.
+     */
+    private void verifyBounds(Body body) {
+        if (body.getPosition().x < 0)
+            body.setTransform(0, body.getPosition().y, body.getAngle());
+
+        if (body.getPosition().y < 0)
+            body.setTransform(body.getPosition().x, 0, body.getAngle());
+
+        if (body.getPosition().x > LEVEL_WIDTH)
+            body.setTransform(LEVEL_WIDTH, body.getPosition().y, body.getAngle());
+
+        if (body.getPosition().y > LEVEL_HEIGHT)
+            body.setTransform(body.getPosition().x, LEVEL_HEIGHT, body.getAngle());
+    }
+
 
     public void movePlayer(int playerId, Vector2 move_direction, float delta) {
         if(move_direction.isZero()) {
@@ -160,6 +199,10 @@ public abstract class BaseLevelController {
         }
     }
 
+    /**
+     * Used for debug physics camera
+     * @return
+     */
     public World getWorld() {
         return world;
     }

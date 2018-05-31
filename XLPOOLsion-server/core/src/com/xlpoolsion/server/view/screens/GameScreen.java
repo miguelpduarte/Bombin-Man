@@ -13,11 +13,10 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.entities.*;
 import com.xlpoolsion.server.networking.NetworkRouter;
-import com.xlpoolsion.server.view.entities.*;
+import com.xlpoolsion.server.view.entities.EntityView;
+import com.xlpoolsion.server.view.entities.ViewFactory;
 
 import java.util.List;
-
-import static com.xlpoolsion.server.controller.GameController.GAME_WIDTH;
 
 public class GameScreen extends ScreenAdapter {
     /**
@@ -39,10 +38,6 @@ public class GameScreen extends ScreenAdapter {
     //Adjust according to the player height in the future
     public static final float PIXEL_TO_METER = 0.08f;
 
-    //The ingame viewport is supposed to show the full game + some space for the HUD/UI
-    private static final float VIEWPORT_WIDTH = GAME_WIDTH * 1.1f;
-    private static final float VIEWPORT_WIDTH_PX = VIEWPORT_WIDTH / PIXEL_TO_METER;
-
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
 
@@ -51,9 +46,6 @@ public class GameScreen extends ScreenAdapter {
 
         loadAssets();
 
-        //TODO: Check how to change this in order to have a higher resolution shown
-        //Creating a viewport with consistent aspect ratio
-        //viewport = new FitViewport(VIEWPORT_WIDTH_PX, VIEWPORT_WIDTH_PX * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
         viewport = new ScreenViewport();
 
         if (DEBUG_PHYSICS) {
@@ -92,6 +84,9 @@ public class GameScreen extends ScreenAdapter {
             debugRenderer.render(GameController.getInstance().getWorld(), debugCamera);
         }
     }
+
+    public static final float ENTITY_VIEW_X_SHIFT = Gdx.graphics.getWidth()/2;
+    public static final float ENTITY_VIEW_Y_SHIFT = Gdx.graphics.getHeight()/2;
 
     private void drawEntities() {
         List<BombModel> bombs = GameController.getInstance().getLevelModel().getBombs();

@@ -11,6 +11,4 @@ public class BrickModel extends EntityModel {
     public BrickModel(float x, float y, float rotation) {
         super(x, y, rotation);
     }
-
-
 }

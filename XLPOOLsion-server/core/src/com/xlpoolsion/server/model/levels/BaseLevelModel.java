@@ -9,8 +9,7 @@ import com.xlpoolsion.server.view.entities.ViewFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.xlpoolsion.server.controller.GameController.GAME_HEIGHT;
-import static com.xlpoolsion.server.controller.GameController.GAME_WIDTH;
+import static com.xlpoolsion.server.controller.levels.BaseLevelController.*;
 
 public abstract class BaseLevelModel {
     private PlayerModel[] players = new PlayerModel[GameController.MAX_PLAYERS];
@@ -100,12 +99,16 @@ public abstract class BaseLevelModel {
         }
     }
 
-    public static final float GRID_START_X = BrickModel.WIDTH;
-    public static final float GRID_START_Y = BrickModel.WIDTH;
-    public static final float GRID_END_X = GAME_WIDTH;
-    public static final float GRID_END_Y = GAME_HEIGHT;
-    public static final float GRID_PADDING_X = BrickModel.WIDTH;
-    public static final float GRID_PADDING_Y = BrickModel.HEIGHT;
+    static final int GRID_START_X_BRICKS = 0;
+    static final int GRID_START_Y_BRICKS = 0;
+    static final float GRID_START_X = GRID_START_X_BRICKS * BrickModel.WIDTH;
+    static final float GRID_START_Y = GRID_START_Y_BRICKS * BrickModel.HEIGHT;
+    static final float GRID_END_X_BRICKS = LEVEL_WIDTH_BRICKS;
+    static final float GRID_END_Y_BRICKS = LEVEL_HEIGHT_BRICKS;
+    static final float GRID_END_X = LEVEL_WIDTH;
+    static final float GRID_END_Y = LEVEL_HEIGHT;
+    static final float GRID_PADDING_X = BrickModel.WIDTH;
+    static final float GRID_PADDING_Y = BrickModel.HEIGHT;
 
     private Vector2 snapBombToGrid(float x, float y) {
         int x_k = (int) ((x - GRID_START_X)/GRID_PADDING_X);
@@ -193,33 +196,37 @@ public abstract class BaseLevelModel {
     }
 
     /**
-     * Creates a brick at the given coordinates and adds it to internal storage
+     * Creates a brick at the given coordinates (in bricks) and adds it to internal storage
      *
-     * @param x x Coordinate
-     * @param y y Coordinate
+     * @param x x Coordinate in bricks
+     * @param y y Coordinate in bricks
      */
-    public void createBrick(float x, float y) {
-        BrickModel brick = new BrickModel(x, y, 0);
+    public void createBrick(int x, int y) {
+        BrickModel brick = new BrickModel(x * BrickModel.WIDTH, y * BrickModel.HEIGHT, 0);
 
         brick.setFlaggedForRemoval(false);
-        brick.setPosition(x,y);
+        brick.setPosition(x * BrickModel.WIDTH, y * BrickModel.HEIGHT);
 
         bricks.add(brick);
+
+        //ADD TO BRICK MATRIX HERE
     }
 
     /**
-     * Creates a Breakable brick at the given coordinates and adds it to internal storage
+     * Creates a Breakable brick at the given coordinates (in bricks) and adds it to internal storage
      *
-     * @param x x Coordinate
-     * @param y y Coordinate
+     * @param x x Coordinate in bricks
+     * @param y y Coordinate in bricks
      */
-    public void createBreakableBrick(float x, float y) {
-        BreakableBrickModel breakablebrick = new BreakableBrickModel(x, y, 0);
+    public void createBreakableBrick(int x, int y) {
+        BreakableBrickModel breakablebrick = new BreakableBrickModel(x * BreakableBrickModel.WIDTH, y * BreakableBrickModel.HEIGHT, 0);
 
         breakablebrick.setFlaggedForRemoval(false);
-        breakablebrick.setPosition(x,y);
+        breakablebrick.setPosition(x * BreakableBrickModel.WIDTH, y * BreakableBrickModel.HEIGHT);
 
         breakableBricks.add(breakablebrick);
+
+        //ADD TO BRICK MATRIX HERE
     }
 
     /**

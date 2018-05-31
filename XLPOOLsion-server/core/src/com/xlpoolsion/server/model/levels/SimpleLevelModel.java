@@ -2,6 +2,8 @@ package com.xlpoolsion.server.model.levels;
 
 import com.badlogic.gdx.math.Vector2;
 
+import static com.xlpoolsion.server.controller.levels.BaseLevelController.*;
+
 public class SimpleLevelModel extends BaseLevelModel {
     public SimpleLevelModel(boolean[] connectedPlayers) {
         super(connectedPlayers, new Vector2[] {
@@ -11,18 +13,18 @@ public class SimpleLevelModel extends BaseLevelModel {
 
     @Override
     protected void createBreakableBricks() {
-        for(int i = 0; GRID_START_Y + i*GRID_PADDING_Y < GRID_END_Y; ++i) {
-            for(int j = 0; GRID_START_X + j*GRID_PADDING_X < GRID_END_X; ++j) {
+        for(int i = GRID_START_Y_BRICKS + 1; i < GRID_END_Y_BRICKS - 1; ++i) {
+            for(int j = GRID_START_X_BRICKS + 1; j < GRID_END_X_BRICKS - 1; ++j) {
                 if (i % 4 == 0) {
                     //Linha em que tem fixos
                     //Desenhar a nao por um a cada 4, começando a nao por
                     if(j % 6 != 0) {
-                        createBreakableBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
+                        createBreakableBrick(j, i);
                     }
                 } else {
                     //Linha sem fixos, desenhar espaçado
                     if(j % 6 == 0) {
-                        createBreakableBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
+                        createBreakableBrick(j, i);
                     }
                 }
             }
@@ -31,19 +33,24 @@ public class SimpleLevelModel extends BaseLevelModel {
 
     @Override
     protected void createBricks() {
-        for(int i = 0; GRID_START_Y + i*GRID_PADDING_Y < GRID_END_Y; i++) {
-            for(int j = 0; GRID_START_X + j*GRID_PADDING_X < GRID_END_X; j++) {
-                if(i*j == 0 || GRID_START_X *2  + i * GRID_PADDING_Y > GRID_END_Y || GRID_START_X * 2 + j * GRID_PADDING_X > GRID_END_X){
-                    createBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
+        //Outer bounds
+        for(int i = GRID_START_Y_BRICKS; i < GRID_END_Y_BRICKS; ++i) {
+            for(int j = GRID_START_X_BRICKS; j < GRID_END_X_BRICKS; ++j) {
+                if(i*j == 0 || i == GRID_END_Y_BRICKS - 1 || j == GRID_END_X_BRICKS - 1) {
+                    createBrick(j, i);
                 }
-
             }
         }
 
-        for(int i = 0; GRID_START_Y + i*GRID_PADDING_Y < GRID_END_Y; i += 4) {
-            for(int j = 0; GRID_START_X + j*GRID_PADDING_X < GRID_END_X; j += 6) {
-                createBrick(GRID_START_X + j*GRID_PADDING_X, GRID_START_Y + i*GRID_PADDING_Y);
+        /*
+        for(int i = GRID_START_Y_BRICKS + 1; i < GRID_END_Y_BRICKS - 1; i += 4) {
+            for(int j = GRID_START_X_BRICKS + 1; j < GRID_END_X_BRICKS - 1; j += 6) {
+                createBrick(j, i);
             }
         }
+        */
+
+        //Debugging screen center
+        createBrick(LEVEL_WIDTH_BRICKS/2, LEVEL_HEIGHT_BRICKS/2);
     }
 }
