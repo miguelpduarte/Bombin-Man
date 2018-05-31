@@ -53,6 +53,9 @@ public class Connection {
                 while (true) {
                     try {
                         msg = (ServerToClientMessage) obj_in.readObject();
+                    } catch (SocketException e) {
+                        //Socket was closed but thread is still running, terminate it
+                        return;
                     } catch (EOFException e) {
                         System.out.println("Lost connection to server");
                         closeSocket();
