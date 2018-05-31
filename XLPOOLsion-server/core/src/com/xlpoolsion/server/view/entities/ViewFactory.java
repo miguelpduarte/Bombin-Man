@@ -26,7 +26,15 @@ public class ViewFactory {
         } else if (model instanceof ExplosionModel) {
             viewMap.put(model, new ExplosionView(xlpooLsionServer));
         } else if (model instanceof PlayerModel) {
-            viewMap.put(model, new PlayerView(xlpooLsionServer));
+            if(((PlayerModel) model).getId() == 1){
+                viewMap.put(model, new PlayerBlueView(xlpooLsionServer));
+            } else if(((PlayerModel) model).getId() == 2){
+                viewMap.put(model, new PlayerBlackView(xlpooLsionServer));
+            } else if(((PlayerModel) model).getId() == 3){
+                viewMap.put(model, new PlayerRedView(xlpooLsionServer));
+            } else {
+                viewMap.put(model, new PlayerRedView(xlpooLsionServer));
+            }
         } else if (model instanceof PowerUpModel) {
             if(((PowerUpModel) model).getType() == PowerUpModel.PowerUpType.SpeedUp){
                 viewMap.put(model, new SpeedUpView(xlpooLsionServer));

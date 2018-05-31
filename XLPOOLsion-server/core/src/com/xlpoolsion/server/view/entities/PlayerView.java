@@ -10,17 +10,17 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
-public class PlayerView extends EntityView {
+public abstract class PlayerView extends EntityView {
 
     private static final float FRAME_TIME = 0.13f;
 
     public static final float WIDTH = 32;
     public static final float HEIGHT = 64;
 
-    private Animation<TextureRegion> upAnim;
-    private Animation<TextureRegion> rightAnim;
-    private Animation<TextureRegion> downAnim;
-    private Animation<TextureRegion> leftAnim;
+    protected Animation<TextureRegion> upAnim;
+    protected Animation<TextureRegion> rightAnim;
+    protected Animation<TextureRegion> downAnim;
+    protected Animation<TextureRegion> leftAnim;
 
     private float stateTime = 0;
 
@@ -39,38 +39,30 @@ public class PlayerView extends EntityView {
         return temp_sprite;
     }
 
-    private void createAnimations(XLPOOLsionServer xlpooLsionServer) {
-        Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite.png");
-        TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 32);
+    abstract void createAnimations(XLPOOLsionServer xlpooLsionServer);
 
-        upAnim = createUpAnimation(fullregion);
-        rightAnim = createRightAnimation(fullregion);
-        downAnim = createDownAnimation(fullregion);
-        leftAnim = createLeftAnimation(fullregion);
-    }
-
-    private Animation<TextureRegion> createUpAnimation(TextureRegion[][] fullregion) {
+    protected Animation<TextureRegion> createUpAnimation(TextureRegion[][] fullregion) {
         TextureRegion[] frames = new TextureRegion[3];
         System.arraycopy(fullregion[0], 0, frames, 0, 3);
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
-    private Animation<TextureRegion> createRightAnimation(TextureRegion[][] fullregion) {
+    protected Animation<TextureRegion> createRightAnimation(TextureRegion[][] fullregion) {
         TextureRegion[] frames = new TextureRegion[3];
         System.arraycopy(fullregion[1], 0, frames, 0, 3);
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
-    private Animation<TextureRegion> createDownAnimation(TextureRegion[][] fullregion) {
+    protected Animation<TextureRegion> createDownAnimation(TextureRegion[][] fullregion) {
         TextureRegion[] frames = new TextureRegion[3];
         System.arraycopy(fullregion[2], 0, frames, 0, 3);
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
-    private Animation<TextureRegion> createLeftAnimation(TextureRegion[][] fullregion) {
+    protected Animation<TextureRegion> createLeftAnimation(TextureRegion[][] fullregion) {
         TextureRegion[] frames = new TextureRegion[3];
         System.arraycopy(fullregion[3], 0, frames, 0, 3);
 
