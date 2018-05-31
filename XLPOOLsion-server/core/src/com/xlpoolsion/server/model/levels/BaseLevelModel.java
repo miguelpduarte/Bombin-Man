@@ -17,7 +17,7 @@ public abstract class BaseLevelModel {
     /**
      * A pool of bombs
      */
-    Pool<BombModel> bombPool = new Pool<BombModel>() {
+    private Pool<BombModel> bombPool = new Pool<BombModel>() {
         @Override
         protected BombModel newObject() {
             return new BombModel(0, 0, 0);
@@ -27,7 +27,7 @@ public abstract class BaseLevelModel {
     /**
      * A pool of explosions
      */
-    Pool<ExplosionModel> explosionPool = new Pool<ExplosionModel>() {
+    private Pool<ExplosionModel> explosionPool = new Pool<ExplosionModel>() {
         @Override
         protected ExplosionModel newObject() {
             return new ExplosionModel(0, 0, 0);
@@ -39,6 +39,7 @@ public abstract class BaseLevelModel {
     private ArrayList<BrickModel> bricks = new ArrayList<BrickModel>();
     private ArrayList<BreakableBrickModel> breakableBricks = new ArrayList<BreakableBrickModel>();
     private ArrayList<PowerUpModel> powerUps = new ArrayList<PowerUpModel>();
+    private EntityModel[][] brickMatrix = new EntityModel[GRID_END_X_BRICKS - GRID_START_X_BRICKS][GRID_END_Y_BRICKS - GRID_START_Y_BRICKS];
 
     /**
      * Constructs a Level Model with the indicated players that will be created in the indicated spawns. createBricks and createBreakableBricks are template methods
@@ -108,8 +109,8 @@ public abstract class BaseLevelModel {
     static final int GRID_START_Y_BRICKS = 0;
     static final float GRID_START_X = GRID_START_X_BRICKS * BrickModel.WIDTH;
     static final float GRID_START_Y = GRID_START_Y_BRICKS * BrickModel.HEIGHT;
-    static final float GRID_END_X_BRICKS = LEVEL_WIDTH_BRICKS;
-    static final float GRID_END_Y_BRICKS = LEVEL_HEIGHT_BRICKS;
+    static final int GRID_END_X_BRICKS = LEVEL_WIDTH_BRICKS;
+    static final int GRID_END_Y_BRICKS = LEVEL_HEIGHT_BRICKS;
     static final float GRID_END_X = LEVEL_WIDTH;
     static final float GRID_END_Y = LEVEL_HEIGHT;
     static final float GRID_PADDING_X = BrickModel.WIDTH;
@@ -176,6 +177,8 @@ public abstract class BaseLevelModel {
         return explosion;
     }
 
+    private static final float POWERUP_CHANCE = 0.6f;
+
     public void remove(EntityModel model) {
         //Destroying the no longer necessary view for this model
         ViewFactory.destroyView(model);
@@ -187,9 +190,10 @@ public abstract class BaseLevelModel {
             explosions.remove(model);
             explosionPool.free((ExplosionModel) model);
         } else if (model instanceof BreakableBrickModel) {
-            if(Math.random() > 0.6){
+            if(Math.random() > POWERUP_CHANCE){
                 GameController.getInstance().createPowerUp((BreakableBrickModel) model);
             }
+            brickMatrix[(int) ((model.getX() - GRID_START_X)/GRID_PADDING_X)][(int) ((model.getY() - GRID_START_Y)/GRID_PADDING_Y)] = null;
             breakableBricks.remove(model);
         } else if (model instanceof PlayerModel) {
             players[((PlayerModel) model).getId()] = null;
@@ -213,8 +217,7 @@ public abstract class BaseLevelModel {
         brick.setPosition(x * BrickModel.WIDTH, y * BrickModel.HEIGHT);
 
         bricks.add(brick);
-
-        //ADD TO BRICK MATRIX HERE
+        brickMatrix[x][y] = brick;
     }
 
     /**
@@ -230,8 +233,7 @@ public abstract class BaseLevelModel {
         breakablebrick.setPosition(x * BreakableBrickModel.WIDTH, y * BreakableBrickModel.HEIGHT);
 
         breakableBricks.add(breakablebrick);
-
-        //ADD TO BRICK MATRIX HERE
+        brickMatrix[x][y] = breakablebrick;
     }
 
     /**
