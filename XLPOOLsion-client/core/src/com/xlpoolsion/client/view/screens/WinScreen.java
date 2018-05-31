@@ -28,7 +28,7 @@ public class WinScreen extends StageScreen {
     protected void loadAssets() {
         xlpooLsionClient.getAssetManager().load("Victory_white1.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("Victory_white2.png", Texture.class);
-        xlpooLsionClient.getAssetManager().load("GreenBackground.png", Texture.class);
+        xlpooLsionClient.getAssetManager().load("VictoryBackground.png", Texture.class);
         xlpooLsionClient.getAssetManager().load("back-button-md.png", Texture.class);
         xlpooLsionClient.getAssetManager().finishLoading();
     }
@@ -52,7 +52,7 @@ public class WinScreen extends StageScreen {
     }
 
     private void addBackground() {
-        Image background = new Image((Texture) xlpooLsionClient.getAssetManager().get("GreenBackground.png"));
+        Image background = new Image((Texture) xlpooLsionClient.getAssetManager().get("VictoryBackground.png"));
         background.setWidth(stage.getWidth());
         background.setHeight(stage.getHeight());
         stage.addActor(background);

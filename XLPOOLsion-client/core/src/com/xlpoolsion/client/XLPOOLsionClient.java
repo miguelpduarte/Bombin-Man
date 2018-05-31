@@ -32,7 +32,7 @@ public class XLPOOLsionClient extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		setScreen(new ServerFullScreen(this));
+		setScreen(new WinScreen(this));
 	}
 
 	/**
