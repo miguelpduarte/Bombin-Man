@@ -190,6 +190,8 @@ public abstract class BaseLevelController {
             BombModel bomb = levelModel.createBomb(playerId);
             //No need to do anything with the declared body, as it is stored in the world
             new BombBody(world, bomb);
+            //Bomb placed on player, so it is over the bomb
+            player.setOverBomb(true);
         } else {
             System.out.println("Player " + playerId + " cannot place more bombs for now!");
         }

@@ -77,9 +77,15 @@ public class CollisionController implements ContactListener {
 
         if (bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof BombModel && ((BombModel)bodyB.getUserData()).isWalkable()) {
             enableBombCollisions(bodyB);
+            setNotOverBomb(bodyA);
         } else if (bodyB.getUserData() instanceof PlayerModel && bodyA.getUserData() instanceof  BombModel && ((BombModel)bodyA.getUserData()).isWalkable()) {
             enableBombCollisions(bodyA);
+            setNotOverBomb(bodyB);
         }
+    }
+
+    private void setNotOverBomb(Body playerBody) {
+        ((PlayerModel) playerBody.getUserData()).setOverBomb(false);
     }
 
     /**
