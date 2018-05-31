@@ -170,6 +170,10 @@ public abstract class BaseLevelController {
             new ExplosionBody(world, explosion);
         }
     }
+    public void createPowerUp(BreakableBrickModel brick) {
+        PowerUpModel powerUp = levelModel.createPowerUp(brick);
+        new PowerUpBody(world,powerUp);
+    }
 
     public BaseLevelModel getModel() {
         return levelModel;

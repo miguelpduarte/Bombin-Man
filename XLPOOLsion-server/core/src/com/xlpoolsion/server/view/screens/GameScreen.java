@@ -7,12 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
-import com.xlpoolsion.server.model.GameModel;
 import com.xlpoolsion.server.model.entities.*;
 import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.entities.*;
@@ -25,7 +23,7 @@ public class GameScreen extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = false;
+    private static final boolean DEBUG_PHYSICS = true;
 
     /**
      * A renderer used to debug the physical fixtures.
@@ -109,16 +107,25 @@ public class GameScreen extends ScreenAdapter {
             view.update(explosion);
             view.draw(xlpooLsionServer.getBatch());
         }
+
+        List<BreakableBrickModel> breakablebricks = GameController.getInstance().getLevelModel().getBreakableBricks();
+        for(BreakableBrickModel breakablebrick : breakablebricks) {
+            EntityView view = ViewFactory.getView(xlpooLsionServer, breakablebrick);
+            view.update(breakablebrick);
+            view.draw(xlpooLsionServer.getBatch());
+        }
+
         List<BrickModel> bricks = GameController.getInstance().getLevelModel().getBricks();
         for(BrickModel brick : bricks) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, brick);
             view.update(brick);
             view.draw(xlpooLsionServer.getBatch());
         }
-        List<BreakableBrickModel> breakablebricks = GameController.getInstance().getLevelModel().getBreakableBricks();
-        for(BreakableBrickModel breakablebrick : breakablebricks) {
-            EntityView view = ViewFactory.getView(xlpooLsionServer, breakablebrick);
-            view.update(breakablebrick);
+
+        List<PowerUpModel> powerUps = GameController.getInstance().getLevelModel().getPowerUps();
+        for(PowerUpModel powerUp : powerUps) {
+            EntityView view = ViewFactory.getView(xlpooLsionServer, powerUp);
+            view.update(powerUp);
             view.draw(xlpooLsionServer.getBatch());
         }
 

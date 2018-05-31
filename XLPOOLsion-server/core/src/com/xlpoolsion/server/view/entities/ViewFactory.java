@@ -27,6 +27,8 @@ public class ViewFactory {
             viewMap.put(model, new ExplosionView(xlpooLsionServer));
         } else if (model instanceof PlayerModel) {
             viewMap.put(model, new PlayerView(xlpooLsionServer));
+        } else if (model instanceof PowerUpModel) {
+            viewMap.put(model, new PowerUpView(xlpooLsionServer));
         }
     }
 

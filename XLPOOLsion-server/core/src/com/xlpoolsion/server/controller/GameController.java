@@ -7,6 +7,7 @@ import com.xlpoolsion.common.ServerToClientMessage;
 import com.xlpoolsion.server.controller.levels.BaseLevelController;
 import com.xlpoolsion.server.controller.levels.SimpleLevelController;
 import com.xlpoolsion.server.model.entities.BombModel;
+import com.xlpoolsion.server.model.entities.BreakableBrickModel;
 import com.xlpoolsion.server.model.levels.BaseLevelModel;
 import com.xlpoolsion.server.networking.NetworkRouter;
 
@@ -78,6 +79,10 @@ public class GameController {
         currentLevelController.placeBomb(playerId);
     }
 
+    public void createPowerUp(BreakableBrickModel brick){
+        currentLevelController.createPowerUp(brick);
+    }
+
     public void createExplosions(BombModel bomb) {
         currentLevelController.createExplosions(bomb);
     }
@@ -98,7 +103,7 @@ public class GameController {
         return currentLevelController.getWorld();
     }
 
-    private static final int MIN_CONNECTED_CLIENTS = 2;
+    private static final int MIN_CONNECTED_CLIENTS = 1;
 
     public void startGame(int level) {
         if(NetworkRouter.getInstance().getServer().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {

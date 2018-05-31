@@ -39,6 +39,7 @@ public abstract class BaseLevelModel {
     private ArrayList<ExplosionModel> explosions = new ArrayList<ExplosionModel>();
     private ArrayList<BrickModel> bricks = new ArrayList<BrickModel>();
     private ArrayList<BreakableBrickModel> breakableBricks = new ArrayList<BreakableBrickModel>();
+    private ArrayList<PowerUpModel> powerUps = new ArrayList<PowerUpModel>();
 
     public BaseLevelModel(boolean[] connectedPlayers, Vector2[] playerSpawns) {
         createPlayers(connectedPlayers, playerSpawns);
@@ -178,10 +179,15 @@ public abstract class BaseLevelModel {
             explosions.remove(model);
             explosionPool.free((ExplosionModel) model);
         } else if (model instanceof BreakableBrickModel) {
+            GameController.getInstance().createPowerUp((BreakableBrickModel) model);
             breakableBricks.remove(model);
         } else if (model instanceof PlayerModel) {
             players[((PlayerModel) model).getId()] = null;
         }
+        else if (model instanceof PowerUpModel) {
+            powerUps.remove(model);
+        }
+
     }
 
     /**
@@ -214,6 +220,21 @@ public abstract class BaseLevelModel {
         breakableBricks.add(breakablebrick);
     }
 
+    /**
+     * Creates a powerUp at the given coordinates and adds it to internal storage
+     *
+     * @param brick The Model that was destroid to give room for the powerUp
+     */
+    public PowerUpModel createPowerUp(BreakableBrickModel brick) {
+        PowerUpModel powerUp= new PowerUpModel(brick.getX(), brick.getY(), 0);
+
+        powerUp.setFlaggedForRemoval(false);
+        powerUp.setPosition(brick.getX(),brick.getY());
+
+        powerUps.add(powerUp);
+        return powerUp;
+    }
+
     public PlayerModel getPlayer(int playerId) {
         return players[playerId];
     }
@@ -232,5 +253,9 @@ public abstract class BaseLevelModel {
 
     public List<BrickModel> getBricks() {
         return bricks;
+    }
+
+    public List<PowerUpModel> getPowerUps() {
+        return powerUps;
     }
 }

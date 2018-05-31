@@ -42,6 +42,12 @@ public class PlayerModel extends EntityModel {
         return explosion_radius;
     }
 
+    public void speedUp(){
+        if(current_speed < 6.0f){
+            current_speed += 0.4f;
+        }
+    }
+
     //TODO: Change to increment maybe so that powerups are used directly without get?
     public void setExplosionRadius(int explosion_radius) {
         this.explosion_radius = explosion_radius;

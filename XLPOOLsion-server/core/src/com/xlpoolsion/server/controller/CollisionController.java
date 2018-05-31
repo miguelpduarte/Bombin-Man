@@ -2,10 +2,7 @@ package com.xlpoolsion.server.controller;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.xlpoolsion.server.model.entities.BombModel;
-import com.xlpoolsion.server.model.entities.BreakableBrickModel;
-import com.xlpoolsion.server.model.entities.ExplosionModel;
-import com.xlpoolsion.server.model.entities.PlayerModel;
+import com.xlpoolsion.server.model.entities.*;
 
 public class CollisionController implements ContactListener {
     private static CollisionController instance = null;
@@ -37,10 +34,21 @@ public class CollisionController implements ContactListener {
         } else if(bodyA.getUserData() instanceof ExplosionModel && bodyB.getUserData() instanceof BreakableBrickModel) {
             breakableBrickExplosionContact(bodyB, bodyA);
         }
+
+        if(bodyA.getUserData() instanceof PowerUpModel && bodyB.getUserData() instanceof PlayerModel) {
+            powerUpContact(bodyA,bodyB);
+        } else if(bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof PowerUpModel) {
+            powerUpContact(bodyB, bodyA);
+        }
     }
 
     private void breakableBrickExplosionContact(Body breakableBrickBody, Body explosionBody) {
         ((BreakableBrickModel) breakableBrickBody.getUserData()).setFlaggedForRemoval(true);
+    }
+
+    private void powerUpContact(Body powerUpBody,Body playerBody){
+        ((PlayerModel)playerBody.getUserData()).speedUp();
+        ((PowerUpModel)powerUpBody.getUserData()).setFlaggedForRemoval(true);
     }
 
     @Override
