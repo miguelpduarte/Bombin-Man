@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
+import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.view.ButtonFactory;
 
 public class WinScreen extends StageScreen {
@@ -73,6 +74,8 @@ public class WinScreen extends StageScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                GameController.getInstance().resetState();
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
             }
         });
         stage.addActor(backButton);

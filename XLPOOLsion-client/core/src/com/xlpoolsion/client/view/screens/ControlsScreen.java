@@ -112,10 +112,6 @@ public class ControlsScreen extends StageScreen {
         skin.add("default", simpleLblStyle);
     }
 
-    private long lastInputTime_ms = System.currentTimeMillis();
-    private static long MSG_SEND_THRESHOLD_MS = 73;
-    private static float KNOB_THRESHOLD = 0.4f;
-
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -136,6 +132,9 @@ public class ControlsScreen extends StageScreen {
         }
     }
 
+    private long lastInputTime_ms = System.currentTimeMillis();
+    private static final long MSG_SEND_THRESHOLD_MS = 30;
+
     private void sendInputMessages(float delta) {
         if(System.currentTimeMillis() - lastInputTime_ms > MSG_SEND_THRESHOLD_MS) {
             sendTouchpadMessages();
@@ -149,6 +148,8 @@ public class ControlsScreen extends StageScreen {
             NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.CONTROLLER_SHAKE));
         }
     }
+
+    private static final float KNOB_THRESHOLD = 0.4f;
 
     private void sendTouchpadMessages() {
         float x = touchpad.getKnobPercentX();

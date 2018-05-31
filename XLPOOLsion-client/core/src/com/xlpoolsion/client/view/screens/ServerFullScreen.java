@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
+import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.view.ButtonFactory;
 
 public class ServerFullScreen extends StageScreen {
@@ -18,11 +18,12 @@ public class ServerFullScreen extends StageScreen {
         super(xlpooLsionClient);
     }
 
-    private static final float FRAME_TIME = 0.6f;
+    private static final float FRAME_TIME = 0.25f;
     private float stateTime = 0;
     private Image serverFullImage;
 
     private Animation<Drawable> ServerFullAnim;
+
     @Override
     protected void loadAssets() {
         xlpooLsionClient.getAssetManager().load("ServerFull.png", Texture.class);
@@ -32,11 +33,17 @@ public class ServerFullScreen extends StageScreen {
         xlpooLsionClient.getAssetManager().finishLoading();
     }
     private void createAnimation() {
-        Drawable[] frames = new Drawable[4];
-        frames[0] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png")));
-        frames[1] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull2.png")));
-        frames[2] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png")));
-        frames[3] = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png")));
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull.png")));
+        Drawable drawable2 = new TextureRegionDrawable(new TextureRegion((Texture) xlpooLsionClient.getAssetManager().get("ServerFull2.png")));
+        Drawable[] frames = new Drawable[8];
+        frames[0] = drawable;
+        frames[1] = drawable2;
+        frames[2] = drawable;
+        frames[3] = drawable;
+        frames[4] = drawable;
+        frames[5] = drawable;
+        frames[6] = drawable;
+        frames[7] = drawable;
 
         ServerFullAnim = new Animation<Drawable>(FRAME_TIME, frames);
     }
@@ -70,6 +77,8 @@ public class ServerFullScreen extends StageScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                GameController.getInstance().resetState();
+                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
             }
         });
         stage.addActor(backButton);
@@ -80,6 +89,5 @@ public class ServerFullScreen extends StageScreen {
         super.render(delta);
         stateTime += delta;
         serverFullImage.setDrawable(ServerFullAnim.getKeyFrame(stateTime,true));
-
     }
 }
