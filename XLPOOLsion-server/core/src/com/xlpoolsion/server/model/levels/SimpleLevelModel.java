@@ -2,12 +2,10 @@ package com.xlpoolsion.server.model.levels;
 
 import com.badlogic.gdx.math.Vector2;
 
-import static com.xlpoolsion.server.controller.levels.BaseLevelController.*;
-
 public class SimpleLevelModel extends BaseLevelModel {
     public SimpleLevelModel(boolean[] connectedPlayers) {
         super(connectedPlayers, new Vector2[] {
-                new Vector2(20, 20), new Vector2(32, 35), new Vector2(12, 0), new Vector2(0, 12)
+                new Vector2(GRID_START_X_BRICKS + 1, GRID_END_Y_BRICKS - 1), new Vector2(GRID_END_X_BRICKS - 2, GRID_END_Y_BRICKS - 1), new Vector2(GRID_START_X_BRICKS + 1, GRID_START_Y_BRICKS + 1), new Vector2(GRID_END_X_BRICKS - 2, GRID_START_Y_BRICKS + 1)
         });
     }
 
@@ -15,15 +13,24 @@ public class SimpleLevelModel extends BaseLevelModel {
     protected void createBreakableBricks() {
         for(int i = GRID_START_Y_BRICKS + 1; i < GRID_END_Y_BRICKS - 1; ++i) {
             for(int j = GRID_START_X_BRICKS + 1; j < GRID_END_X_BRICKS - 1; ++j) {
-                if (i % 4 == 0) {
-                    //Linha em que tem fixos
-                    //Desenhar a nao por um a cada 4, começando a nao por
-                    if(j % 6 != 0) {
+                if(i == GRID_START_Y_BRICKS + 1 || i == GRID_END_Y_BRICKS - 2) {
+                    //Top and bottom lines
+                    if(j > GRID_START_X_BRICKS + 2 && j < GRID_END_X_BRICKS - 3) {
+                        createBreakableBrick(j, i);
+                    }
+                } else if(i == GRID_START_Y_BRICKS + 2 || i == GRID_END_Y_BRICKS - 3) {
+                    //Top-1 and bottom+1 lines
+                    if(j % 2 != 0 && j != GRID_START_X_BRICKS + 1 && j != GRID_END_X_BRICKS - 2) {
                         createBreakableBrick(j, i);
                     }
                 } else {
-                    //Linha sem fixos, desenhar espaçado
-                    if(j % 6 == 0) {
+                    if(i % 2 == 0) {
+                        //Line with solid bricks
+                        if(j % 2 != 0) {
+                            createBreakableBrick(j, i);
+                        }
+                    } else {
+                        //Line of full breakable bricks
                         createBreakableBrick(j, i);
                     }
                 }
@@ -42,15 +49,13 @@ public class SimpleLevelModel extends BaseLevelModel {
             }
         }
 
-        /*
-        for(int i = GRID_START_Y_BRICKS + 1; i < GRID_END_Y_BRICKS - 1; i += 4) {
-            for(int j = GRID_START_X_BRICKS + 1; j < GRID_END_X_BRICKS - 1; j += 6) {
-                createBrick(j, i);
+        //Inside crossed
+        for(int i = GRID_START_Y_BRICKS + 1; i < GRID_END_Y_BRICKS - 1; ++i) {
+            for(int j = GRID_START_X_BRICKS + 1; j < GRID_END_X_BRICKS - 1; ++j) {
+                if(i % 2 == 0 && j % 2 == 0) {
+                    createBrick(j, i);
+                }
             }
         }
-        */
-
-        //Debugging screen center
-        createBrick(LEVEL_WIDTH_BRICKS/2, LEVEL_HEIGHT_BRICKS/2);
     }
 }

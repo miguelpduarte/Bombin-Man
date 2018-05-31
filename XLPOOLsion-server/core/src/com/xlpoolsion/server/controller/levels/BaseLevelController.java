@@ -17,11 +17,11 @@ public abstract class BaseLevelController {
     /**
      * The level width in bricks
      */
-    public static final int LEVEL_WIDTH_BRICKS = 20;
+    public static final int LEVEL_WIDTH_BRICKS = 21;
     /**
      * The level height in bricks
      */
-    public static final int LEVEL_HEIGHT_BRICKS = 20;
+    public static final int LEVEL_HEIGHT_BRICKS = 21;
 
     /**
      * The level width in meters

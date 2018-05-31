@@ -40,6 +40,11 @@ public abstract class BaseLevelModel {
     private ArrayList<BreakableBrickModel> breakableBricks = new ArrayList<BreakableBrickModel>();
     private ArrayList<PowerUpModel> powerUps = new ArrayList<PowerUpModel>();
 
+    /**
+     * Constructs a Level Model with the indicated players that will be created in the indicated spawns. createBricks and createBreakableBricks are template methods
+     * @param connectedPlayers Boolean array to indicate which players are connected
+     * @param playerSpawns Array of player spawns. Coordinates are relative to the grid
+     */
     public BaseLevelModel(boolean[] connectedPlayers, Vector2[] playerSpawns) {
         createPlayers(connectedPlayers, playerSpawns);
         createBricks();
@@ -57,7 +62,7 @@ public abstract class BaseLevelModel {
 
         for(int i = 0; i < GameController.MAX_PLAYERS; ++i) {
             if(connectedPlayers[i]) {
-                players[i] = new PlayerModel(playerSpawns[i].x, playerSpawns[i].y, 0, i);
+                players[i] = new PlayerModel(playerSpawns[i].x * GRID_PADDING_X, playerSpawns[i].y * GRID_PADDING_Y, 0, i);
             }
         }
     }
