@@ -120,8 +120,7 @@ public class ControlsScreen extends StageScreen {
 
         switch (GameController.getInstance().getCurrentState()) {
             case LOST_CONNECTION:
-                System.out.println("Client lost connection detected in view");
-                xlpooLsionClient.setScreen(new MainMenuScreen(xlpooLsionClient));
+                xlpooLsionClient.setScreen(new LostConnectionScreen(xlpooLsionClient));
                 break;
             case WON:
                 xlpooLsionClient.setScreen(new WinScreen(xlpooLsionClient));
