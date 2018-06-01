@@ -66,7 +66,7 @@ public class CollisionController implements ContactListener {
             ((PowerDownModel) bodyA.getUserData()).setFlaggedForRemoval(true);
         }
         if(bodyA.getUserData() instanceof ExplosionModel && bodyB.getUserData() instanceof StunPowerModel) {
-            ((PowerUpModel) bodyB.getUserData()).setFlaggedForRemoval(true);
+            ((StunPowerModel) bodyB.getUserData()).setFlaggedForRemoval(true);
         } else if(bodyA.getUserData() instanceof StunPowerModel && bodyB.getUserData() instanceof ExplosionModel) {
             ((StunPowerModel) bodyA.getUserData()).setFlaggedForRemoval(true);
         }
