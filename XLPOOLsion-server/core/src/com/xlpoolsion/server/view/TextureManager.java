@@ -72,6 +72,10 @@ public class TextureManager {
         this.assetManager.load("7Text.png", Texture.class);
         this.assetManager.load("8Text.png", Texture.class);
         this.assetManager.load("9Text.png", Texture.class);
+        this.assetManager.load("PlayLobby.png", Texture.class);
+        this.assetManager.load("PlayLobby_down.png", Texture.class);
+        this.assetManager.load("ExitLobby.png", Texture.class);
+        this.assetManager.load("ExitLobby_down.png", Texture.class);
         //Temporary for stun power
         this.assetManager.load("red_cross_512.png", Texture.class);
         this.assetManager.load("StunningAnimation22x35.png", Texture.class);

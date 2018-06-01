@@ -157,8 +157,8 @@ public class LobbyScreen extends BaseScreen {
 
     private void createPlayButton() {
         Button playButton = ButtonFactory.makeButton(
-                xlpooLsionServer, "Wall.png", "SolidWall.png",
-                stage.getWidth() * 0.7f, stage.getHeight() * 0.4f, stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+                xlpooLsionServer, "PlayLobby.png", "PlayLobby_down.png",
+                stage.getWidth() * 0.7f, stage.getHeight() * 0.5f, stage.getWidth() * 0.12f, stage.getHeight() * 0.1f);
 
         playButton.addListener(new ClickListener() {
             @Override
@@ -172,8 +172,8 @@ public class LobbyScreen extends BaseScreen {
 
     private void createExitButton() {
         Button exitButton = ButtonFactory.makeButton(
-                xlpooLsionServer, "explosion.png", "badlogic.jpg",
-                stage.getWidth() * 0.7f, stage.getHeight() * 0.2f, stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+                xlpooLsionServer, "ExitLobby.png", "ExitLobby_down.png",
+                stage.getWidth() * 0.7f, stage.getHeight() * 0.32f, stage.getWidth() * 0.12f, stage.getHeight() * 0.1f);
 
         exitButton.addListener(new ClickListener() {
             @Override
