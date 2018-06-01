@@ -54,6 +54,24 @@ public class TextureManager {
         this.assetManager.load("PwrSpeedDown.png", Texture.class);
         this.assetManager.load("PwrBombUp.png", Texture.class);
         this.assetManager.load("PwrBombDown.png", Texture.class);
+        this.assetManager.load("UI_Box0.png", Texture.class);
+        this.assetManager.load("UI_Box1.png", Texture.class);
+        this.assetManager.load("UI_Box2.png", Texture.class);
+        this.assetManager.load("UI_Box3.png", Texture.class);
+        this.assetManager.load("UI_Box0_DC.png", Texture.class);
+        this.assetManager.load("UI_Box1_DC.png", Texture.class);
+        this.assetManager.load("UI_Box2_DC.png", Texture.class);
+        this.assetManager.load("UI_Box3_DC.png", Texture.class);
+        this.assetManager.load("0Text.png", Texture.class);
+        this.assetManager.load("1Text.png", Texture.class);
+        this.assetManager.load("2Text.png", Texture.class);
+        this.assetManager.load("3Text.png", Texture.class);
+        this.assetManager.load("4Text.png", Texture.class);
+        this.assetManager.load("5Text.png", Texture.class);
+        this.assetManager.load("6Text.png", Texture.class);
+        this.assetManager.load("7Text.png", Texture.class);
+        this.assetManager.load("8Text.png", Texture.class);
+        this.assetManager.load("9Text.png", Texture.class);
         //Temporary for stun power
         this.assetManager.load("red_cross_512.png", Texture.class);
         this.assetManager.finishLoading();

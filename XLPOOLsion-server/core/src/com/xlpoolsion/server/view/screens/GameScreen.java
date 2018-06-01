@@ -3,10 +3,15 @@ package com.xlpoolsion.server.view.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
@@ -14,9 +19,13 @@ import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.entities.*;
 import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.entities.EntityView;
+import com.xlpoolsion.server.view.entities.RadiusUpView;
 import com.xlpoolsion.server.view.entities.ViewFactory;
 
 import java.util.List;
+
+import static com.xlpoolsion.server.controller.levels.BaseLevelController.LEVEL_HEIGHT;
+import static com.xlpoolsion.server.controller.levels.BaseLevelController.LEVEL_WIDTH;
 
 public class GameScreen extends ScreenAdapter {
     /**
@@ -37,6 +46,12 @@ public class GameScreen extends ScreenAdapter {
 
     //Adjust according to the player height in the future
     public static final float PIXEL_TO_METER = 0.08f;
+
+    public static final float HUD_WIDTH = 160;
+    public static final float HUD_HEIGHT = 96;
+    public static final float HUD_GAP = 165;
+    public static final float SCALE_POWER = 1.5f;
+    public static final float HUD_POWER_SIZE = RadiusUpView.WIDTH / SCALE_POWER;
 
     private XLPOOLsionServer xlpooLsionServer;
     private Viewport viewport;
@@ -149,6 +164,79 @@ public class GameScreen extends ScreenAdapter {
             view.update(players[i]);
             view.draw(xlpooLsionServer.getBatch());
         }
+        drawHUD(GameController.getInstance().getLevelModel().getPlayers());
+    }
+
+    private void drawHUD(PlayerModel[] players) {
+        for(int i = 0; i< GameController.MAX_PLAYERS;i++){
+            float hud_x = ENTITY_VIEW_X_SHIFT - (LEVEL_WIDTH/2) / PIXEL_TO_METER + HUD_GAP/2 + i * HUD_GAP;
+            float hud_y = ENTITY_VIEW_Y_SHIFT + (LEVEL_WIDTH/2) / PIXEL_TO_METER + HUD_HEIGHT;
+
+            if(players[i] != null){
+                Texture uiBox = xlpooLsionServer.getAssetManager().get("UI_Box" + i + ".png");
+                Sprite uiSpriteBox = new Sprite(uiBox);
+                uiSpriteBox.setSize(HUD_WIDTH, HUD_HEIGHT);
+                uiSpriteBox.setCenter(hud_x, hud_y);
+                uiSpriteBox.setRotation(0);
+                uiSpriteBox.draw(xlpooLsionServer.getBatch());
+
+                drawPowerHud(PowerUpModel.PowerUpType.BombRadUp,hud_x + HUD_POWER_SIZE / 2, hud_y + HUD_POWER_SIZE);
+                drawPowerHud(PowerUpModel.PowerUpType.BombsUp,hud_x + HUD_POWER_SIZE / 2, hud_y );
+                drawPowerHud(PowerUpModel.PowerUpType.SpeedUp,hud_x + HUD_POWER_SIZE / 2, hud_y - HUD_POWER_SIZE);
+                drawAmount(players[i],hud_x,hud_y - HUD_POWER_SIZE);
+            } else {
+                Texture uiBox = xlpooLsionServer.getAssetManager().get("UI_Box" + i + "_DC.png");
+                Sprite uiSpriteBox = new Sprite(uiBox);
+                uiSpriteBox.setSize(HUD_WIDTH, HUD_HEIGHT);
+                uiSpriteBox.setCenter(hud_x, hud_y);
+                uiSpriteBox.setRotation(0);
+                uiSpriteBox.draw(xlpooLsionServer.getBatch());
+
+            }
+
+
+        }
+    }
+
+    private void drawAmount(PlayerModel player,float hud_x,float hud_y) {
+        int speedAmount = player.getSpeedChanger();
+        int bombAmount = player.getAllowedBombsChanger();
+        int radiusAmount = player.getExplosionChanger();
+
+        Texture[] amounts = new Texture[3];
+        amounts[0] = xlpooLsionServer.getAssetManager().get(speedAmount + "Text.png");
+        amounts[1] = xlpooLsionServer.getAssetManager().get(bombAmount + "Text.png");
+        amounts[2] = xlpooLsionServer.getAssetManager().get(radiusAmount + "Text.png");
+        for(int i=0;i<amounts.length;i++){
+            Sprite nrSprite = new Sprite(amounts[i]);
+            nrSprite.setSize(HUD_POWER_SIZE/2, HUD_POWER_SIZE);
+            nrSprite.setCenter(hud_x + HUD_POWER_SIZE * 2, hud_y + i * HUD_POWER_SIZE);
+            nrSprite.setRotation(0);
+            nrSprite.draw(xlpooLsionServer.getBatch());
+        }
+
+
+    }
+
+    private void drawPowerHud(PowerUpModel.PowerUpType power,float hud_x,float hud_y){
+        Texture powerUp = xlpooLsionServer.getAssetManager().get("PwrBombUp.png");
+        switch (power){
+            case BombsUp:
+                powerUp = xlpooLsionServer.getAssetManager().get("PwrBombUp.png");
+                break;
+            case SpeedUp:
+                powerUp = xlpooLsionServer.getAssetManager().get("PwrSpeedUp.png");
+                break;
+            case BombRadUp:
+                powerUp = xlpooLsionServer.getAssetManager().get("PwrRadiusUp.png");
+                break;
+        }
+        Sprite pwrSprite = new Sprite(powerUp);
+        pwrSprite.setSize(HUD_POWER_SIZE, HUD_POWER_SIZE);
+        pwrSprite.setCenter(hud_x + HUD_POWER_SIZE / 2, hud_y);
+        pwrSprite.setRotation(0);
+        pwrSprite.draw(xlpooLsionServer.getBatch());
+
     }
 
     private static final boolean usingMobile = true;

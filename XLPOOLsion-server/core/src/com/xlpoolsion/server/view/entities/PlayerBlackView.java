@@ -3,6 +3,8 @@ package com.xlpoolsion.server.view.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xlpoolsion.server.XLPOOLsionServer;
+import com.xlpoolsion.server.model.GameModel;
+import com.xlpoolsion.server.model.levels.BaseLevelModel;
 
 public class PlayerBlackView extends PlayerView {
     public PlayerBlackView(XLPOOLsionServer xlpooLsionServer) {

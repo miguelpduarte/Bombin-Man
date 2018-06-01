@@ -140,6 +140,18 @@ public class PlayerModel extends EntityModel {
         activeBombs--;
     }
 
+    public int getSpeedChanger() {
+        return speedChanger;
+    }
+
+    public int getExplosionChanger() {
+        return explosionChanger;
+    }
+
+    public int getAllowedBombsChanger() {
+        return allowedBombsChanger;
+    }
+
     public boolean isOverBomb() {
         return overBomb;
     }
