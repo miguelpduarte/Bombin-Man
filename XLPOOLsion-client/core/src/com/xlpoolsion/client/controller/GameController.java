@@ -15,9 +15,10 @@ public class GameController {
         currentState = STATE.SERVER_FULL;
     }
 
-    ///Use in back button to reset controller state
     public void resetState() {
         currentState = STATE.NOT_CONNECTED;
+        //Just to make sure
+        isStunned = false;
     }
 
     public void signalWonGame() {
@@ -30,6 +31,20 @@ public class GameController {
 
     public void signalLostConnection() {
         currentState = STATE.LOST_CONNECTION;
+    }
+
+    private boolean isStunned = false;
+
+    public void signalStunned() {
+        isStunned = true;
+    }
+
+    public void signalUnstunned() {
+        isStunned = false;
+    }
+
+    public boolean isStunned() {
+        return isStunned;
     }
 
     public enum STATE {

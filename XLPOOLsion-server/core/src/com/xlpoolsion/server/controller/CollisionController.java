@@ -46,6 +46,17 @@ public class CollisionController implements ContactListener {
         } else if(bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof PowerDownModel) {
             powerDownContact(bodyB, bodyA);
         }
+
+        if(bodyA.getUserData() instanceof StunPowerModel && bodyB.getUserData() instanceof PlayerModel) {
+            stunPowerContact(bodyA, bodyB);
+        } else if(bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof StunPowerModel) {
+            stunPowerContact(bodyB, bodyA);
+        }
+    }
+
+    private void stunPowerContact(Body stunPowerBody, Body playerBody) {
+        GameController.getInstance().playerStunnedOtherPlayers((PlayerModel) playerBody.getUserData());
+        ((StunPowerModel) stunPowerBody.getUserData()).setFlaggedForRemoval(true);
     }
 
     private void breakableBrickExplosionContact(Body breakableBrickBody, Body explosionBody) {

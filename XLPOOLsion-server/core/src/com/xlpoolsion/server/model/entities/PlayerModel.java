@@ -10,6 +10,7 @@ public class PlayerModel extends EntityModel {
 
     private boolean moving = false;
     private boolean overBomb = false;
+    private boolean stunned = false;
     private boolean dying = false;
     private float time_till_death = DYING_TIMEOUT;
     private Orientation currentOrientation = Orientation.DOWN;
@@ -47,6 +48,18 @@ public class PlayerModel extends EntityModel {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public void stun() {
+        stunned = true;
+    }
+
+    public void  unstun() {
+        stunned = false;
+    }
+
+    public boolean isStunned() {
+        return stunned;
     }
 
     public enum Orientation {

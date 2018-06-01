@@ -6,6 +6,8 @@ public class ServerToClientMessage implements Serializable {
     public enum MessageType {
         START_GAME,
         SERVER_FULL,
+        YOU_ARE_STUNNED,
+        YOU_ARE_NO_LONGER_STUNNED,
         YOU_WON,
         YOU_LOST
     }

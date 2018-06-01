@@ -26,5 +26,4 @@ public  class PowerUpModel extends EntityModel {
     public PowerUpType getType(){
         return type;
     }
-
 }

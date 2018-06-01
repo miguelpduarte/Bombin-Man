@@ -27,9 +27,18 @@ public class GameController {
         Gdx.app.exit();
     }
 
-    public void killPlayer(PlayerModel playerModel) {
+    void killPlayer(PlayerModel playerModel) {
         NetworkRouter.getInstance().sendToClient(playerModel.getId(), new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_LOST));
         playerModel.startDying();
+    }
+
+    void playerStunnedOtherPlayers(PlayerModel stunnerPlayer) {
+        currentLevelController.setAllStunnedExcept(stunnerPlayer);
+        NetworkRouter.getInstance().sendToAllExcept(stunnerPlayer.getId(), new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_ARE_STUNNED));
+    }
+
+    public void unstunPlayer(int playerId) {
+        currentLevelController.unstun(playerId);
     }
 
     public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME, ALL_PLAYERS_DISCONNECTED};
@@ -76,6 +85,10 @@ public class GameController {
 
     public void createPowerDown(BreakableBrickModel brick){
         currentLevelController.createPowerDown(brick);
+    }
+
+    public void createStunPower(BreakableBrickModel brick) {
+        currentLevelController.createStunPower(brick);
     }
 
     public void createExplosions(BombModel bomb) {

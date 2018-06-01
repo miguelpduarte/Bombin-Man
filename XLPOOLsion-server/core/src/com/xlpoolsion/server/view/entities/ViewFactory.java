@@ -31,6 +31,8 @@ public class ViewFactory {
             createPowerupView(xlpooLsionServer, model);
         } else if (model instanceof PowerDownModel) {
             createPowerDownView(xlpooLsionServer, model);
+        } else if (model instanceof StunPowerModel) {
+            viewMap.put(model, new StunPowerView(xlpooLsionServer));
         }
     }
 

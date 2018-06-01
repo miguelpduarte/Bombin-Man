@@ -116,7 +116,7 @@ public class ControlsScreen extends StageScreen {
     public void render(float delta) {
         super.render(delta);
 
-        sendInputMessages(delta);
+        sendInputMessages();
 
         switch (GameController.getInstance().getCurrentState()) {
             case LOST_CONNECTION:
@@ -130,22 +130,21 @@ public class ControlsScreen extends StageScreen {
                 xlpooLsionClient.setScreen(new LoseScreen(xlpooLsionClient));
                 break;
         }
+
+        if(GameController.getInstance().isStunned()) {
+            Gdx.input.vibrate(100);
+        } else {
+            Gdx.input.cancelVibrate();
+        }
     }
 
     private long lastInputTime_ms = System.currentTimeMillis();
     private static final long MSG_SEND_THRESHOLD_MS = 30;
 
-    private void sendInputMessages(float delta) {
+    private void sendInputMessages() {
         if(System.currentTimeMillis() - lastInputTime_ms > MSG_SEND_THRESHOLD_MS) {
             sendTouchpadMessages();
             sendPhoneShakeMessages();
-        }
-    }
-
-    private void sendPhoneShakeMessages() {
-        if(isShakingPhone()) {
-            Gdx.input.vibrate(100);
-            NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.CONTROLLER_SHAKE));
         }
     }
 
@@ -173,6 +172,12 @@ public class ControlsScreen extends StageScreen {
         Vector2 vec = new Vector2(x, y);
         NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.PLAYER_MOVE, vec));
         lastInputTime_ms = System.currentTimeMillis();
+    }
+
+    private void sendPhoneShakeMessages() {
+        if(GameController.getInstance().isStunned() && isShakingPhone()) {
+            NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.CONTROLLER_SHAKE));
+        }
     }
 
     private static final float SHAKE_THRESHOLD = 10.0f;

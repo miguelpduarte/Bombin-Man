@@ -41,6 +41,7 @@ public abstract class BaseLevelModel {
     private ArrayList<PowerUpModel> powerUps = new ArrayList<PowerUpModel>();
     private ArrayList<PowerDownModel> powerDowns = new ArrayList<PowerDownModel>();
     private EntityModel[][] brickMatrix = new EntityModel[GRID_END_X_BRICKS - GRID_START_X_BRICKS][GRID_END_Y_BRICKS - GRID_START_Y_BRICKS];
+    private ArrayList<StunPowerModel> stunPowers = new ArrayList<StunPowerModel>();
 
     /**
      * Constructs a Level Model with the indicated players that will be created in the indicated spawns. createBricks and createBreakableBricks are template methods
@@ -209,9 +210,6 @@ public abstract class BaseLevelModel {
         return explosion;
     }
 
-    private static final float POWERUP_CHANCE = 0.4f;
-    private static final float POWERDOWN_CHANCE = 0.1f;
-
     public void remove(EntityModel model) {
         //Destroying the no longer necessary view for this model
         ViewFactory.destroyView(model);
@@ -224,25 +222,34 @@ public abstract class BaseLevelModel {
             explosions.remove(model);
             explosionPool.free((ExplosionModel) model);
         } else if (model instanceof BreakableBrickModel) {
-            if(Math.random() < POWERUP_CHANCE){
-                GameController.getInstance().createPowerUp((BreakableBrickModel) model);
-            } else if(Math.random() < POWERDOWN_CHANCE){
-                GameController.getInstance().createPowerDown((BreakableBrickModel) model);
-            }
+            createPowersOnChance((BreakableBrickModel) model);
 
             //Deleting the breakable brick from the brick matrix and from the breakable brick arraylist
             brickMatrix[Math.round((model.getX() - GRID_START_X)/GRID_PADDING_X)][Math.round((model.getY() - GRID_START_Y)/GRID_PADDING_Y)] = null;
             breakableBricks.remove(model);
         } else if (model instanceof PlayerModel) {
             players[((PlayerModel) model).getId()] = null;
-        }
-        else if (model instanceof PowerUpModel) {
+        } else if (model instanceof PowerUpModel) {
             powerUps.remove(model);
-        }
-        else if (model instanceof PowerDownModel) {
+        } else if (model instanceof PowerDownModel) {
             powerDowns.remove(model);
+        } else if (model instanceof StunPowerModel) {
+            stunPowers.remove(model);
         }
+    }
 
+    private static final float POWERUP_CHANCE = 0;//0.4f;
+    private static final float POWERDOWN_CHANCE = 0;//0.1f;
+    private static final float STUNPOWER_CHANCE = 0.5f;//0.2f;
+
+    private void createPowersOnChance(BreakableBrickModel model) {
+        if(Math.random() < POWERUP_CHANCE){
+            GameController.getInstance().createPowerUp(model);
+        } else if(Math.random() < POWERDOWN_CHANCE){
+            GameController.getInstance().createPowerDown(model);
+        } else if(Math.random() < STUNPOWER_CHANCE) {
+            GameController.getInstance().createStunPower(model);
+        }
     }
 
     /**
@@ -289,11 +296,7 @@ public abstract class BaseLevelModel {
      * @param brick The Model that was destroid to give room for the powerUp
      */
     public PowerUpModel createPowerUp(BreakableBrickModel brick) {
-        PowerUpModel powerUp= new PowerUpModel(brick.getX(), brick.getY(), 0);
-
-        powerUp.setFlaggedForRemoval(false);
-        powerUp.setPosition(brick.getX(),brick.getY());
-
+        PowerUpModel powerUp = new PowerUpModel(brick.getX(), brick.getY(), 0);
         powerUps.add(powerUp);
         return powerUp;
     }
@@ -304,17 +307,28 @@ public abstract class BaseLevelModel {
      * @param brick The Model that was destroid to give room for the powerDown
      */
     public PowerDownModel createPowerDown(BreakableBrickModel brick) {
-        PowerDownModel powerDown= new PowerDownModel(brick.getX(), brick.getY(), 0);
-
-        powerDown.setFlaggedForRemoval(false);
-        powerDown.setPosition(brick.getX(),brick.getY());
-
+        PowerDownModel powerDown = new PowerDownModel(brick.getX(), brick.getY(), 0);
         powerDowns.add(powerDown);
         return powerDown;
     }
 
+    /**
+     * Creates a stunPower at the given coordinates and adds it to internal storage
+     * @param brick The destroyed brick where this power will appear
+     * @return The created stun power
+     */
+    public StunPowerModel createStunPower(BreakableBrickModel brick) {
+        StunPowerModel stunPower = new StunPowerModel(brick.getX(), brick.getY(), 0);
+        stunPowers.add(stunPower);
+        return stunPower;
+    }
+
     public PlayerModel getPlayer(int playerId) {
         return players[playerId];
+    }
+
+    public PlayerModel[] getPlayers() {
+        return players;
     }
 
     public List<BombModel> getBombs() {
@@ -336,7 +350,12 @@ public abstract class BaseLevelModel {
     public List<PowerUpModel> getPowerUps() {
         return powerUps;
     }
+
     public List<PowerDownModel> getPowerDowns() {
         return powerDowns;
+    }
+
+    public List<StunPowerModel> getStunPowers() {
+        return stunPowers;
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.controller.CollisionController;
+import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.controller.entities.*;
 import com.xlpoolsion.server.model.entities.*;
 import com.xlpoolsion.server.model.levels.BaseLevelModel;
@@ -123,7 +124,7 @@ public abstract class BaseLevelController {
 
 
     public void movePlayer(int playerId, Vector2 move_direction) {
-        if(move_direction.isZero()) {
+        if(move_direction.isZero() || levelModel.getPlayer(playerId).isStunned()) {
             stopPlayerX(playerId);
             stopPlayerY(playerId);
             setPlayerMoving(playerId, false);
@@ -184,7 +185,7 @@ public abstract class BaseLevelController {
     public void placeBomb(int playerId) {
         PlayerModel player = levelModel.getPlayer(playerId);
 
-        if(!player.isOverBomb() && player.incrementActiveBombs()) {
+        if(!player.isStunned() && !player.isOverBomb() && player.incrementActiveBombs()) {
             BombModel bomb = levelModel.createBomb(playerId);
             //No need to do anything with the declared body, as it is stored in the world
             new BombBody(world, bomb);
@@ -218,13 +219,20 @@ public abstract class BaseLevelController {
             new ExplosionBody(world, explosion);
         }
     }
+
     public void createPowerUp(BreakableBrickModel brick) {
         PowerUpModel powerUp = levelModel.createPowerUp(brick);
         new PowerUpBody(world,powerUp);
     }
+
     public void createPowerDown(BreakableBrickModel brick) {
         PowerDownModel powerDown = levelModel.createPowerDown(brick);
         new PowerDownBody(world,powerDown);
+    }
+
+    public void createStunPower(BreakableBrickModel brick) {
+        StunPowerModel stunPower = levelModel.createStunPower(brick);
+        new StunPowerBody(world, stunPower);
     }
 
     public BaseLevelModel getModel() {
@@ -235,6 +243,23 @@ public abstract class BaseLevelController {
         PlayerModel player = levelModel.getPlayer(playerId);
         if(player != null && !player.isDying()) {
             player.startDying();
+        }
+    }
+
+    public void setAllStunnedExcept(PlayerModel stunnerPlayer) {
+        PlayerModel[] players = levelModel.getPlayers();
+        for(int i = 0; i < GameController.MAX_PLAYERS; ++i) {
+            if(players[i] == null || players[i].getId() == stunnerPlayer.getId()) {
+                continue;
+            }
+            players[i].stun();
+        }
+    }
+
+    public void unstun(int playerId) {
+        PlayerModel player = levelModel.getPlayer(playerId);
+        if(player != null) {
+            player.unstun();
         }
     }
 }

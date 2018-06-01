@@ -102,16 +102,25 @@ public class GameScreen extends ScreenAdapter {
             view.update(explosion);
             view.draw(xlpooLsionServer.getBatch());
         }
+
         List<PowerUpModel> powerUps = GameController.getInstance().getLevelModel().getPowerUps();
         for(PowerUpModel powerUp : powerUps) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, powerUp);
             view.update(powerUp);
             view.draw(xlpooLsionServer.getBatch());
         }
+
         List<PowerDownModel> powerDowns = GameController.getInstance().getLevelModel().getPowerDowns();
         for(PowerDownModel powerDown : powerDowns) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, powerDown);
             view.update(powerDown);
+            view.draw(xlpooLsionServer.getBatch());
+        }
+
+        List<StunPowerModel> stunPowers = GameController.getInstance().getLevelModel().getStunPowers();
+        for(StunPowerModel stunPower : stunPowers) {
+            EntityView view = ViewFactory.getView(xlpooLsionServer, stunPower);
+            view.update(stunPower);
             view.draw(xlpooLsionServer.getBatch());
         }
 
@@ -131,13 +140,13 @@ public class GameScreen extends ScreenAdapter {
 
 
         //Drawing player in end so that he stays on top
+        PlayerModel[] players = GameController.getInstance().getLevelModel().getPlayers();
         for(int i = 0; i < GameController.MAX_PLAYERS; ++i) {
-            PlayerModel playerModel = GameController.getInstance().getLevelModel().getPlayer(i);
-            if(playerModel == null) {
+            if(players[i] == null) {
                 continue;
             }
-            EntityView view = ViewFactory.getView(xlpooLsionServer, playerModel);
-            view.update(playerModel);
+            EntityView view = ViewFactory.getView(xlpooLsionServer, players[i]);
+            view.update(players[i]);
             view.draw(xlpooLsionServer.getBatch());
         }
     }

@@ -30,7 +30,10 @@ public class NetworkRouter {
 
         switch (msg.messageType) {
             case CONTROLLER_SHAKE:
-                System.out.println("Player " + senderId + " shaked his phone! Unstun please!");
+                //System.out.println("Player " + senderId + " shaked his phone! Unstun please!");
+                //Marking player as no longer stunned and sending that same information to the client
+                GameController.getInstance().unstunPlayer(senderId);
+                sendToClient(senderId, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_ARE_NO_LONGER_STUNNED));
                 break;
             case PLAYER_MOVE:
                 GameController.getInstance().movePlayer(senderId, msg.move_direction);

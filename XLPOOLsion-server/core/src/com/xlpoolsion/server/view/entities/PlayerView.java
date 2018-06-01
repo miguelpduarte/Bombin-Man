@@ -28,6 +28,7 @@ public abstract class PlayerView extends EntityView {
 
     private boolean isMoving = false;
     private boolean isDying = false;
+    private boolean isStunned = false;
     private PlayerModel.Orientation orientation;
 
     public PlayerView(XLPOOLsionServer xlpooLsionServer) {
@@ -84,6 +85,7 @@ public abstract class PlayerView extends EntityView {
         super.update(model);
         isMoving = ((PlayerModel) model).isMoving();
         isDying = ((PlayerModel) model).isDying();
+        isStunned = ((PlayerModel) model).isStunned();
         orientation = ((PlayerModel) model).getCurrentOrientation();
     }
 

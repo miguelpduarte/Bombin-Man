@@ -27,19 +27,23 @@ public class NetworkRouter {
     void forwardMessage(ServerToClientMessage msg) {
         System.out.println("Router in client received message of type " + msg.messageType);
         switch (msg.messageType) {
+            case YOU_ARE_STUNNED:
+                GameController.getInstance().signalStunned();
+                break;
+            case YOU_ARE_NO_LONGER_STUNNED:
+                GameController.getInstance().signalUnstunned();
+                break;
             case START_GAME:
                 GameController.getInstance().startGame();
                 break;
             case YOU_WON:
                 System.out.println("This player won (in router)!!");
                 GameController.getInstance().signalWonGame();
-                //DONT FORGET THIS IS HERE, DONT CRASH IN SERVER PLEASE
                 endConnection();
                 break;
             case YOU_LOST:
                 System.out.println("This player lost (was killed by player " + 420 + ") - WIP");
                 GameController.getInstance().signalLostGame(420);
-                //DONT FORGET THIS IS HERE, DONT CRASH IN SERVER PLEASE
                 endConnection();
                 break;
         }
