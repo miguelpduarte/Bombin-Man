@@ -31,7 +31,7 @@ public class GameScreen extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
 
     /**
      * A renderer used to debug the physical fixtures.
@@ -104,6 +104,8 @@ public class GameScreen extends ScreenAdapter {
     public static final float ENTITY_VIEW_Y_SHIFT = Gdx.graphics.getHeight()/2;
 
     private void drawEntities() {
+        drawHUD(GameController.getInstance().getLevelModel().getPlayers());
+
         List<BombModel> bombs = GameController.getInstance().getLevelModel().getBombs();
         for(BombModel bomb : bombs) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, bomb);
@@ -164,7 +166,6 @@ public class GameScreen extends ScreenAdapter {
             view.update(players[i]);
             view.draw(xlpooLsionServer.getBatch());
         }
-        drawHUD(GameController.getInstance().getLevelModel().getPlayers());
     }
 
     private void drawHUD(PlayerModel[] players) {

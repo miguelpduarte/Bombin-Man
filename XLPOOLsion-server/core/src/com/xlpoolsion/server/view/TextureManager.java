@@ -74,6 +74,7 @@ public class TextureManager {
         this.assetManager.load("9Text.png", Texture.class);
         //Temporary for stun power
         this.assetManager.load("red_cross_512.png", Texture.class);
+        this.assetManager.load("StunningAnimation22x35.png", Texture.class);
         this.assetManager.finishLoading();
     }
 

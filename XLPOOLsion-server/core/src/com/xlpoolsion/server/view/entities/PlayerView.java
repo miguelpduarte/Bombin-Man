@@ -22,9 +22,11 @@ public abstract class PlayerView extends EntityView {
     protected Animation<TextureRegion> downAnim;
     protected Animation<TextureRegion> leftAnim;
     protected Animation<TextureRegion> deathAnim;
+    protected Animation<TextureRegion> stunAnim;
 
     private float stateTime = 0;
     private float deathTime = 0;
+    private float stunTime = 0;
 
     private boolean isMoving = false;
     private boolean isDying = false;
@@ -79,6 +81,12 @@ public abstract class PlayerView extends EntityView {
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
+    protected Animation<TextureRegion> createStunAnimation(TextureRegion[][] deathregion) {
+        TextureRegion[] frames = new TextureRegion[4];
+        System.arraycopy(deathregion[0], 0, frames, 0, 4);
+
+        return new Animation<TextureRegion>(FRAME_TIME, frames);
+    }
 
     @Override
     public void update(EntityModel model) {
@@ -95,7 +103,10 @@ public abstract class PlayerView extends EntityView {
         if(isDying){
             sprite.setRegion(deathAnim.getKeyFrame(deathTime, false));
             deathTime += Gdx.graphics.getDeltaTime();
-        }else if(isMoving) {
+        }else if(isStunned) {
+            sprite.setRegion(stunAnim.getKeyFrame(stunTime, true));
+            stunTime += Gdx.graphics.getDeltaTime();
+        } else if(isMoving) {
             setMovingAnimationFrame();
         } else {
             setStillAnimationFrame();
