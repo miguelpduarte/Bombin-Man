@@ -14,7 +14,7 @@ public class StunPowerView extends EntityView {
 
     @Override
     protected Sprite createSprite(XLPOOLsionServer xlpooLsionServer) {
-        Texture img = xlpooLsionServer.getAssetManager().get("red_cross_512.png");
+        Texture img = xlpooLsionServer.getAssetManager().get("StunPower.png");
         Sprite temp_sprite = new Sprite(img);
         temp_sprite.setSize(WIDTH, HEIGHT);
         return temp_sprite;
