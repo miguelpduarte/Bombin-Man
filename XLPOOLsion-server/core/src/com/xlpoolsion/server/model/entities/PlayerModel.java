@@ -5,8 +5,8 @@ import com.xlpoolsion.server.view.entities.PlayerView;
 import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;
 
 public class PlayerModel extends EntityModel {
-    public static final float WIDTH = 2.1f;
-    public static final float HEIGHT = PlayerView.HEIGHT * PIXEL_TO_METER;
+    public static final float WIDTH = 1.9f;
+    public static final float HEIGHT = PlayerView.HEIGHT * 0.8f * PIXEL_TO_METER;
 
     private boolean moving = false;
     private boolean overBomb = false;

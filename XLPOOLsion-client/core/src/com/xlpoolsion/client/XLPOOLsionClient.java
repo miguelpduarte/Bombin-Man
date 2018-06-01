@@ -3,6 +3,7 @@ package com.xlpoolsion.client;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.xlpoolsion.client.view.screens.ControlsScreen;
 import com.xlpoolsion.client.view.screens.MainMenuScreen;
 
 
