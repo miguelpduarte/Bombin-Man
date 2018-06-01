@@ -50,7 +50,7 @@ public class ControlsScreen extends StageScreen {
     private void createBombPlaceButton() {
         Button bombButton = ButtonFactory.makeButton(
                 xlpooLsionClient, "Bomb_up.png", "Bomb_down.png",
-                stage.getWidth() * 0.8f, stage.getHeight() * 0.4f, stage.getHeight() * 0.4f, stage.getHeight() * 0.4f
+                stage.getWidth() * 0.8f, stage.getHeight() * 0.3f, stage.getHeight() * 0.4f, stage.getHeight() * 0.4f
         );
         bombButton.addListener(new ClickListener() {
             @Override
@@ -68,7 +68,7 @@ public class ControlsScreen extends StageScreen {
         tpadStyle.background = trd1;
         tpadStyle.knob = trd2;
         touchpad = new Touchpad(2.0f, tpadStyle);
-        touchpad.setPosition(stage.getWidth() * 0.2f, stage.getHeight() * 0.3f, Align.center);
+        touchpad.setPosition(stage.getWidth() * 0.2f, stage.getHeight() * 0.2f, Align.center);
         touchpad.setWidth(stage.getHeight() * 0.5f);
         touchpad.setHeight(stage.getHeight() * 0.5f);
         touchpad.setVisible(true);
