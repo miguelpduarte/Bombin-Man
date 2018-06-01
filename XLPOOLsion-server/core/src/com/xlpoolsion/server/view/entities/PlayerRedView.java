@@ -13,14 +13,11 @@ public class PlayerRedView extends PlayerView {
         Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite_Red.png");
         TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 32);
 
-        Texture stuntextures = xlpooLsionServer.getAssetManager().get("StunningAnimation22x35.png");
-        TextureRegion[][] stunregion = TextureRegion.split(stuntextures, 22, 35);
-
         super.upAnim = createUpAnimation(fullregion);
         super.rightAnim = createRightAnimation(fullregion);
         super.downAnim = createDownAnimation(fullregion);
         super.leftAnim = createLeftAnimation(fullregion);
         super.deathAnim = createDeathAnimation(fullregion);
-        super.stunAnim = createStunAnimation(stunregion);
+        super.stunAnim = createStunAnimation(fullregion);
     }
 }

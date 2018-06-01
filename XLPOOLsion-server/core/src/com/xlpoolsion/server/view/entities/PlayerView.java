@@ -1,7 +1,6 @@
 package com.xlpoolsion.server.view.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -75,15 +74,15 @@ public abstract class PlayerView extends EntityView {
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
 
-    protected Animation<TextureRegion> createDeathAnimation(TextureRegion[][] deathregion) {
+    protected Animation<TextureRegion> createDeathAnimation(TextureRegion[][] fullregion) {
         TextureRegion[] frames = new TextureRegion[10];
-        System.arraycopy(deathregion[24], 0, frames, 0, 10);
+        System.arraycopy(fullregion[24], 0, frames, 0, 10);
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
-    protected Animation<TextureRegion> createStunAnimation(TextureRegion[][] deathregion) {
-        TextureRegion[] frames = new TextureRegion[4];
-        System.arraycopy(deathregion[0], 0, frames, 0, 4);
+    protected Animation<TextureRegion> createStunAnimation(TextureRegion[][] fullregion) {
+        TextureRegion[] frames = new TextureRegion[5];
+        System.arraycopy(fullregion[11], 0, frames, 0, 5);
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }
