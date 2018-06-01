@@ -200,6 +200,10 @@ public abstract class BaseLevelController {
         for (Body body : bodies) {
             if (((EntityModel)body.getUserData()).isFlaggedForRemoval()) {
                 levelModel.remove((EntityModel) body.getUserData());
+                //To ensure that there is no wrong access
+                if(body.getUserData() instanceof PlayerModel) {
+                    players[((PlayerModel) body.getUserData()).getId()] = null;
+                }
                 world.destroyBody(body);
             }
         }
