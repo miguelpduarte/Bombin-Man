@@ -16,7 +16,7 @@ public class PlayerModel extends EntityModel {
     private Orientation currentOrientation = Orientation.DOWN;
 
     public static final float DYING_TIMEOUT = 4.0f;
-    private static final float STARTING_SPEED = 4.4f;
+    private static final float STARTING_SPEED = 6f;
     private static final int STARTING_ALLOWED_BOMBS = 1;
     private static final int STARTING_EXPLOSION_RADIUS = 3;
     private static final int MAX_EXPLODING_BONUS = 6;
@@ -25,6 +25,8 @@ public class PlayerModel extends EntityModel {
     private static final int MAX_SPEED_BONUS = 6;
     private static final int MAX_SPEED_PENALTY = -2;
     private static final int MAX_BOMBS_PENALTY = 1;
+    private static final float SPEED_INCREMENT = 0.6f;
+
     private int activeBombs = 0;
     private int id;
 
@@ -39,7 +41,7 @@ public class PlayerModel extends EntityModel {
     }
 
     public float getCurrentSpeed() {
-        return STARTING_SPEED + speedChanger;
+        return STARTING_SPEED + (speedChanger * SPEED_INCREMENT);
     }
 
     public boolean isMoving() {
