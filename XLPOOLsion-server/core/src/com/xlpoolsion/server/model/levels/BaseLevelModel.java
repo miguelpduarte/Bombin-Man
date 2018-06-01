@@ -238,9 +238,9 @@ public abstract class BaseLevelModel {
         }
     }
 
-    private static final float POWERUP_CHANCE = 0;//0.4f;
-    private static final float POWERDOWN_CHANCE = 0;//0.1f;
-    private static final float STUNPOWER_CHANCE = 0.5f;//0.2f;
+    private static final float POWERUP_CHANCE = 0.4f;
+    private static final float POWERDOWN_CHANCE = 0.1f;
+    private static final float STUNPOWER_CHANCE = 0.2f;
 
     private void createPowersOnChance(BreakableBrickModel model) {
         if(Math.random() < POWERUP_CHANCE){
