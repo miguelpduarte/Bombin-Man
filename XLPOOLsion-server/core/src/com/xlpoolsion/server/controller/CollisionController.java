@@ -83,7 +83,7 @@ public class CollisionController implements ContactListener {
     }
 
     private void addRandomBonus(Body playerBody) {
-        switch ((int) Math.random() * 3) {
+        switch ((int) (Math.random() * 3f)) {
             case 0:
                 ((PlayerModel) playerBody.getUserData()).speedUp();
                 break;
@@ -116,7 +116,7 @@ public class CollisionController implements ContactListener {
     }
 
     private void addRandomPenalty(Body playerBody) {
-        switch ((int) Math.random() * 3) {
+        switch ((int) (Math.random() * 3f)) {
             case 0:
                 ((PlayerModel) playerBody.getUserData()).speedDown();
                 break;
