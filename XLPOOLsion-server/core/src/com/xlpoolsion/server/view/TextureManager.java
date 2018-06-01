@@ -80,6 +80,7 @@ public class TextureManager {
         this.assetManager.load("ExitLobby_down.png", Texture.class);
         this.assetManager.load("StunPower.png", Texture.class);
         this.assetManager.load("StunningAnimation22x35.png", Texture.class);
+        this.assetManager.load("Background1920x1920.jpg", Texture.class);
         this.assetManager.finishLoading();
     }
 

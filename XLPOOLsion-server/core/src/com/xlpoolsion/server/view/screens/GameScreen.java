@@ -110,6 +110,7 @@ public class GameScreen extends ScreenAdapter {
     public static final float ENTITY_VIEW_Y_SHIFT = Gdx.graphics.getHeight()/2;
 
     private void drawEntities() {
+        drawBackground();
         drawHUD(GameController.getInstance().getLevelModel().getPlayers());
 
         List<BombModel> bombs = GameController.getInstance().getLevelModel().getBombs();
@@ -172,6 +173,14 @@ public class GameScreen extends ScreenAdapter {
             view.update(players[i]);
             view.draw(xlpooLsionServer.getBatch());
         }
+    }
+
+    private void drawBackground() {
+        Texture backgroundTex = xlpooLsionServer.getAssetManager().get("Background1920x1920.jpg");
+        Sprite background = new Sprite(backgroundTex);
+        background.setSize(1920, 1920);
+        background.draw(xlpooLsionServer.getBatch());
+
     }
 
     private static final float HUD_WIDTH = 160;
