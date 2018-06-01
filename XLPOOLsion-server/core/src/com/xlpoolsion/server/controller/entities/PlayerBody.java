@@ -32,20 +32,20 @@ public class PlayerBody extends EntityBody {
         polyShape.dispose();
     }
 
-    public void moveUp() {
-        body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed());
+    public void moveUp(float speedFactor) {
+        body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor);
     }
 
-    public void moveDown() {
-        body.setLinearVelocity(body.getLinearVelocity().x, -((PlayerModel) body.getUserData()).getCurrentSpeed());
+    public void moveDown(float speedFactor) {
+        body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor);
     }
 
-    public void moveLeft() {
-        body.setLinearVelocity(-((PlayerModel) body.getUserData()).getCurrentSpeed(), body.getLinearVelocity().y);
+    public void moveLeft(float speedFactor) {
+        body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor, body.getLinearVelocity().y);
     }
 
-    public void moveRight() {
-        body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed(), body.getLinearVelocity().y);
+    public void moveRight(float speedFactor) {
+        body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor, body.getLinearVelocity().y);
     }
 
     public void stopX() {

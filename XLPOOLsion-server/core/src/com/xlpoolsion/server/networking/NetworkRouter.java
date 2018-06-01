@@ -1,6 +1,5 @@
 package com.xlpoolsion.server.networking;
 
-import com.badlogic.gdx.Gdx;
 import com.xlpoolsion.common.ClientToServerMessage;
 import com.xlpoolsion.common.ServerToClientMessage;
 import com.xlpoolsion.server.controller.GameController;
@@ -29,10 +28,19 @@ public class NetworkRouter {
             return;
         }
 
-        if(msg.messageType == ClientToServerMessage.MessageType.PLAYER_MOVE) {
-            GameController.getInstance().movePlayer(senderId, msg.move_direction, Gdx.graphics.getDeltaTime());
-        } else if(msg.messageType == ClientToServerMessage.MessageType.PRESSED_PLACE_BOMB) {
-            GameController.getInstance().placeBomb(senderId);
+        switch (msg.messageType) {
+            case CONTROLLER_SHAKE:
+                System.out.println("Player " + senderId + " shaked his phone! Unstun please!");
+                break;
+            case PLAYER_MOVE:
+                GameController.getInstance().movePlayer(senderId, msg.move_direction);
+                break;
+            case PRESSED_PLACE_BOMB:
+                GameController.getInstance().placeBomb(senderId);
+                break;
+            case PRESSED_GRAB_BOMB:
+                System.out.println("Grabbing bombs is WIP!");
+                break;
         }
     }
 

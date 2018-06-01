@@ -142,7 +142,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private static boolean usingMobile = true;
+    private static final boolean usingMobile = true;
 
     private void handleInputs(float delta) {
         if(usingMobile) {
@@ -163,7 +163,7 @@ public class GameScreen extends ScreenAdapter {
             move_dir.x = -1;
         }
 
-        GameController.getInstance().movePlayer(0, move_dir, delta);
+        GameController.getInstance().movePlayer(0, move_dir);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             GameController.getInstance().placeBomb(0);

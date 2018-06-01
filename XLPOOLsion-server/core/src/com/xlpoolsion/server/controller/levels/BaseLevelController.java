@@ -122,10 +122,10 @@ public abstract class BaseLevelController {
     }
 
 
-    public void movePlayer(int playerId, Vector2 move_direction, float delta) {
+    public void movePlayer(int playerId, Vector2 move_direction) {
         if(move_direction.isZero()) {
-            stopPlayerX(playerId, delta);
-            stopPlayerY(playerId, delta);
+            stopPlayerX(playerId);
+            stopPlayerY(playerId);
             setPlayerMoving(playerId, false);
             return;
         }
@@ -133,47 +133,47 @@ public abstract class BaseLevelController {
         setPlayerMoving(playerId, true);
 
         if(move_direction.x > 0) {
-            movePlayerRight(playerId, delta);
+            movePlayerRight(playerId, move_direction.x);
         } else if(move_direction.x != 0) {
-            movePlayerLeft(playerId, delta);
+            movePlayerLeft(playerId, move_direction.x);
         } else {
-            stopPlayerX(playerId, delta);
+            stopPlayerX(playerId);
         }
 
         if(move_direction.y > 0) {
-            movePlayerUp(playerId, delta);
+            movePlayerUp(playerId, move_direction.y);
         } else if(move_direction.y != 0) {
-            movePlayerDown(playerId, delta);
+            movePlayerDown(playerId, move_direction.y);
         } else {
-            stopPlayerY(playerId, delta);
+            stopPlayerY(playerId);
         }
     }
 
-    private void movePlayerUp(int playerId, float delta) {
-        players[playerId].moveUp();
+    private void movePlayerUp(int playerId, float moveFactor) {
+        players[playerId].moveUp(moveFactor);
         ((PlayerModel) players[playerId].getUserData()).setOrientation(PlayerModel.Orientation.UP);
     }
 
-    private void movePlayerDown(int playerId, float delta) {
-        players[playerId].moveDown();
+    private void movePlayerDown(int playerId, float moveFactor) {
+        players[playerId].moveDown(moveFactor);
         ((PlayerModel) players[playerId].getUserData()).setOrientation(PlayerModel.Orientation.DOWN);
     }
 
-    private void movePlayerLeft(int playerId, float delta) {
-        players[playerId].moveLeft();
+    private void movePlayerLeft(int playerId, float moveFactor) {
+        players[playerId].moveLeft(moveFactor);
         ((PlayerModel) players[playerId].getUserData()).setOrientation(PlayerModel.Orientation.LEFT);
     }
 
-    private void movePlayerRight(int playerId, float delta) {
-        players[playerId].moveRight();
+    private void movePlayerRight(int playerId, float moveFactor) {
+        players[playerId].moveRight(moveFactor);
         ((PlayerModel) players[playerId].getUserData()).setOrientation(PlayerModel.Orientation.RIGHT);
     }
 
-    private void stopPlayerX(int playerId, float delta) {
+    private void stopPlayerX(int playerId) {
         players[playerId].stopX();
     }
 
-    private void stopPlayerY(int playerId, float delta) {
+    private void stopPlayerY(int playerId) {
         players[playerId].stopY();
     }
 

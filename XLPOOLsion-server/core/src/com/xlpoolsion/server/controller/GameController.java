@@ -62,8 +62,8 @@ public class GameController {
         }
     }
 
-    public void movePlayer(int playerId, Vector2 move_direction, float delta) {
-        currentLevelController.movePlayer(playerId, move_direction, delta);
+    public void movePlayer(int playerId, Vector2 move_direction) {
+        currentLevelController.movePlayer(playerId, move_direction);
     }
 
     public void placeBomb(int playerId) {
