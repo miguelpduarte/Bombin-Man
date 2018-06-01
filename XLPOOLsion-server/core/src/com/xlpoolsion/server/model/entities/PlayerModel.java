@@ -68,6 +68,7 @@ public class PlayerModel extends EntityModel {
         DOWN,
         LEFT
     }
+
     public boolean isDying(){
         return dying;
     }
@@ -99,7 +100,7 @@ public class PlayerModel extends EntityModel {
     }
 
     public void speedDown() {
-        if (speedChanger > -MAX_SPEED_PENALTY) {
+        if (speedChanger > MAX_SPEED_PENALTY) {
             speedChanger--;
         }
     }
