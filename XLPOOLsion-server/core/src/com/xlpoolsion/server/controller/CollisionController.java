@@ -2,6 +2,7 @@ package com.xlpoolsion.server.controller;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.xlpoolsion.server.controller.entities.PlayerBody;
 import com.xlpoolsion.server.model.entities.*;
 
 public class CollisionController implements ContactListener {
@@ -107,8 +108,26 @@ public class CollisionController implements ContactListener {
             case BombRadDown:
                 ((PlayerModel) playerBody.getUserData()).radiusDown();
                 break;
+            case RandomDown:
+                addRandomPenalty(playerBody);
+                break;
         }
         ((PowerDownModel)powerDownBody.getUserData()).setFlaggedForRemoval(true);
+    }
+
+    private void addRandomPenalty(Body playerBody) {
+        switch ((int) Math.random() * 3) {
+            case 0:
+                ((PlayerModel) playerBody.getUserData()).speedDown();
+                break;
+            case 1:
+                ((PlayerModel) playerBody.getUserData()).radiusDown();
+                break;
+            case 2:
+                ((PlayerModel) playerBody.getUserData()).decreaseAllowedBombs();
+                break;
+
+        }
     }
 
     @Override

@@ -81,6 +81,9 @@ public class ViewFactory {
             case BombsDown:
                 viewMap.put(model, new BombDownView(xlpooLsionServer));
                 break;
+            case RandomDown:
+                viewMap.put(model, new RandomPowerDownView(xlpooLsionServer));
+                break;
         }
     }
 

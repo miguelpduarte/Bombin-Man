@@ -12,6 +12,7 @@ public  class PowerDownModel extends EntityModel {
         SpeedDown,
         BombRadDown,
         BombsDown,
+        RandomDown,
     }
 
     public static final float WIDTH = SpeedDownView.WIDTH * PIXEL_TO_METER;
