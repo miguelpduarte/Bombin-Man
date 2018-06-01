@@ -149,22 +149,28 @@ public class ControlsScreen extends StageScreen {
         }
     }
 
-    private static final float KNOB_THRESHOLD = 0f;
+    private static final float KNOB_THRESHOLD = 0.2f;
     private static final float KNOB_SCALE = 1.4f;
 
     private void sendTouchpadMessages() {
-        float x = touchpad.getKnobPercentX();
-        float y = touchpad.getKnobPercentY();
+        //Scaling up the movement so it feels more responsive but not letting it go over 1 (or -1, depending in the direction - signal of original value)
+        float x = touchpad.getKnobPercentX() * KNOB_SCALE;
+        float y = touchpad.getKnobPercentY() * KNOB_SCALE;
         if(Math.abs(x) < KNOB_THRESHOLD) {
             x = 0;
         }
         if(Math.abs(y) < KNOB_THRESHOLD) {
             y = 0;
         }
+        if(Math.abs(x) > 1) {
+            x = Math.signum(x);
+        }
+        if(Math.abs(y) > 1) {
+            y = Math.signum(y);
+        }
         //System.out.println("X: " + touchpad.getKnobPercentX());
         //System.out.println("Y: " + touchpad.getKnobPercentY());
-        //Scaling up the movement so it feels more responsive but not letting it go over 1
-        Vector2 vec = new Vector2(Math.min(x * KNOB_SCALE, 1f), Math.min(y * KNOB_SCALE, 1f));
+        Vector2 vec = new Vector2(x, y);
         NetworkRouter.getInstance().sendToServer(new ClientToServerMessage(ClientToServerMessage.MessageType.PLAYER_MOVE, vec));
         lastInputTime_ms = System.currentTimeMillis();
     }
