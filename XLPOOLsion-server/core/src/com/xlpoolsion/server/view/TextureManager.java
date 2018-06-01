@@ -54,6 +54,7 @@ public class TextureManager {
         this.assetManager.load("PwrSpeedDown.png", Texture.class);
         this.assetManager.load("PwrBombUp.png", Texture.class);
         this.assetManager.load("PwrBombDown.png", Texture.class);
+        this.assetManager.load("PwrRandomUp.png", Texture.class);
         this.assetManager.load("UI_Box00.png", Texture.class);
         this.assetManager.load("UI_Box01.png", Texture.class);
         this.assetManager.load("UI_Box02.png", Texture.class);

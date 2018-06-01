@@ -74,8 +74,26 @@ public class CollisionController implements ContactListener {
             case BombsUp:
                 ((PlayerModel) playerBody.getUserData()).increaseAllowedBombs();
                 break;
+            case RandomUp:
+                addRandomBonus(playerBody);
+                break;
         }
         ((PowerUpModel)powerUpBody.getUserData()).setFlaggedForRemoval(true);
+    }
+
+    private void addRandomBonus(Body playerBody) {
+        switch ((int) Math.random() * 3) {
+            case 0:
+                ((PlayerModel) playerBody.getUserData()).speedUp();
+                break;
+            case 1:
+                ((PlayerModel) playerBody.getUserData()).radiusUp();
+                break;
+            case 2:
+                ((PlayerModel) playerBody.getUserData()).increaseAllowedBombs();
+                break;
+
+        }
     }
 
     private void powerDownContact(Body powerDownBody,Body playerBody){

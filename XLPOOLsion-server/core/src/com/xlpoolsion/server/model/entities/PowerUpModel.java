@@ -11,6 +11,7 @@ public  class PowerUpModel extends EntityModel {
         SpeedUp,
         BombRadUp,
         BombsUp,
+        RandomUp,
     }
 
     public static final float WIDTH = SpeedUpView.WIDTH * PIXEL_TO_METER;

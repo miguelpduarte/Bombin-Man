@@ -65,6 +65,8 @@ public class ViewFactory {
             case BombsUp:
                 viewMap.put(model, new BombUpView(xlpooLsionServer));
                 break;
+            case RandomUp:
+                viewMap.put(model, new RandomPowerUpView(xlpooLsionServer));
         }
     }
 
