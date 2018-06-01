@@ -1,6 +1,7 @@
 package com.xlpoolsion.server.networking;
 
 import com.xlpoolsion.common.ServerToClientMessage;
+import com.xlpoolsion.server.controller.GameController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -39,6 +40,14 @@ public class MultithreadedServer {
                         Socket socket = svSocket.accept();
                         System.out.println("Created socket: " + socket.getInetAddress().getHostAddress());
 
+                        if(GameController.getInstance().getCurrentState() == GameController.STATE.PLAYING) {
+                            //If server is playing, there can be no connections added for safety reasons
+                            System.out.println("Attempted to connect while server is playing");
+                            //Opening a client error communicator that will tell the client the server was full and wait for an ACK, or resolve on timeout or disconnect
+                            new ClientErrorCommunicator(socket);
+                            continue;
+                        }
+
                         int index = getFirstAvailableIndex();
                         if (index == -1) {
                             //Max n clients reached, signal that to client
@@ -48,7 +57,6 @@ public class MultithreadedServer {
                             continue;
                         }
 
-                        //TODO: Add restrictions here -> Same client cannot connect twice, limit max number of connections, etc
                         clientManagers[index] = new ClientManager(socket, index);
                         System.out.println("Client " + index + " connected");
                     } catch (SocketException e) {
