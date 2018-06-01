@@ -3,6 +3,7 @@ package com.xlpoolsion.server.controller;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.controller.entities.PlayerBody;
+import com.xlpoolsion.server.controller.entities.PowerUpBody;
 import com.xlpoolsion.server.model.entities.*;
 
 public class CollisionController implements ContactListener {
@@ -52,6 +53,22 @@ public class CollisionController implements ContactListener {
             stunPowerContact(bodyA, bodyB);
         } else if(bodyA.getUserData() instanceof PlayerModel && bodyB.getUserData() instanceof StunPowerModel) {
             stunPowerContact(bodyB, bodyA);
+        }
+
+        if(bodyA.getUserData() instanceof ExplosionModel && bodyB.getUserData() instanceof PowerUpModel) {
+            ((PowerUpModel) bodyB.getUserData()).setFlaggedForRemoval(true);
+        } else if(bodyA.getUserData() instanceof PowerUpModel && bodyB.getUserData() instanceof ExplosionModel) {
+            ((PowerUpModel) bodyA.getUserData()).setFlaggedForRemoval(true);
+        }
+        if(bodyA.getUserData() instanceof ExplosionModel && bodyB.getUserData() instanceof PowerDownModel) {
+            ((PowerUpModel) bodyB.getUserData()).setFlaggedForRemoval(true);
+        } else if(bodyA.getUserData() instanceof PowerDownModel && bodyB.getUserData() instanceof ExplosionModel) {
+            ((PowerDownModel) bodyA.getUserData()).setFlaggedForRemoval(true);
+        }
+        if(bodyA.getUserData() instanceof ExplosionModel && bodyB.getUserData() instanceof StunPowerModel) {
+            ((PowerUpModel) bodyB.getUserData()).setFlaggedForRemoval(true);
+        } else if(bodyA.getUserData() instanceof StunPowerModel && bodyB.getUserData() instanceof ExplosionModel) {
+            ((StunPowerModel) bodyA.getUserData()).setFlaggedForRemoval(true);
         }
     }
 

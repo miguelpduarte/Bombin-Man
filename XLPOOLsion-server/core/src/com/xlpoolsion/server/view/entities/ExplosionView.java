@@ -64,8 +64,8 @@ public class ExplosionView extends EntityView {
 
     @Override
     public void update(EntityModel model) {
-        super.update(model);
         direction = ((ExplosionModel)model).getDirection();
+        super.update(model);
         if(((ExplosionModel) model).getTimeToDecay() < 0) {
             sprite.setAlpha(0f);
         } else {
