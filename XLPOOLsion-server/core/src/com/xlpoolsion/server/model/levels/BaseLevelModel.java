@@ -330,7 +330,7 @@ public abstract class BaseLevelModel {
     public PlayerModel[] getPlayers() {
         return players;
     }
-    
+
     public List<BombModel> getBombs() {
         return bombs;
     }

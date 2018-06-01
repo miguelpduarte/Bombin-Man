@@ -168,24 +168,24 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void drawHUD(PlayerModel[] players) {
-        for(int i = 0; i< GameController.MAX_PLAYERS;i++){
-            float hud_x = ENTITY_VIEW_X_SHIFT - (LEVEL_WIDTH/2) / PIXEL_TO_METER + HUD_GAP/2 + i * HUD_GAP;
-            float hud_y = ENTITY_VIEW_Y_SHIFT + (LEVEL_WIDTH/2) / PIXEL_TO_METER + HUD_HEIGHT;
+        for (int i = 0; i < GameController.MAX_PLAYERS; i++) {
+            float hud_x = ENTITY_VIEW_X_SHIFT - (LEVEL_WIDTH / 2) / PIXEL_TO_METER + HUD_GAP / 2 + i * HUD_GAP;
+            float hud_y = ENTITY_VIEW_Y_SHIFT + (LEVEL_WIDTH / 2) / PIXEL_TO_METER + HUD_HEIGHT;
 
-            if(players[i] != null){
-                Texture uiBox = xlpooLsionServer.getAssetManager().get("UI_Box" + i + ".png");
+            if (players[i] != null) {
+                Texture uiBox = xlpooLsionServer.getAssetManager().get("UI_Box0" + i + ".png");
                 Sprite uiSpriteBox = new Sprite(uiBox);
                 uiSpriteBox.setSize(HUD_WIDTH, HUD_HEIGHT);
                 uiSpriteBox.setCenter(hud_x, hud_y);
                 uiSpriteBox.setRotation(0);
                 uiSpriteBox.draw(xlpooLsionServer.getBatch());
 
-                drawPowerHud(PowerUpModel.PowerUpType.BombRadUp,hud_x + HUD_POWER_SIZE / 2, hud_y + HUD_POWER_SIZE);
-                drawPowerHud(PowerUpModel.PowerUpType.BombsUp,hud_x + HUD_POWER_SIZE / 2, hud_y );
-                drawPowerHud(PowerUpModel.PowerUpType.SpeedUp,hud_x + HUD_POWER_SIZE / 2, hud_y - HUD_POWER_SIZE);
-                drawAmount(players[i],hud_x,hud_y - HUD_POWER_SIZE);
+                drawPowerHud(PowerUpModel.PowerUpType.BombRadUp, hud_x + HUD_POWER_SIZE / 2, hud_y + HUD_POWER_SIZE);
+                drawPowerHud(PowerUpModel.PowerUpType.BombsUp, hud_x + HUD_POWER_SIZE / 2, hud_y);
+                drawPowerHud(PowerUpModel.PowerUpType.SpeedUp, hud_x + HUD_POWER_SIZE / 2, hud_y - HUD_POWER_SIZE);
+                drawAmount(players[i], hud_x, hud_y - HUD_POWER_SIZE);
             } else {
-                Texture uiBox = xlpooLsionServer.getAssetManager().get("UI_Box" + i + "_DC.png");
+                Texture uiBox = xlpooLsionServer.getAssetManager().get("UI_Box0" + i + "DC.png");
                 Sprite uiSpriteBox = new Sprite(uiBox);
                 uiSpriteBox.setSize(HUD_WIDTH, HUD_HEIGHT);
                 uiSpriteBox.setCenter(hud_x, hud_y);
