@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.PowerDownModel;
-import com.xlpoolsion.server.model.entities.PowerUpModel;
 
 public class PowerDownBody extends EntityBody{
     public PowerDownBody(World world, EntityModel model) {

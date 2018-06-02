@@ -2,8 +2,6 @@ package com.xlpoolsion.server.controller;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.xlpoolsion.server.controller.entities.PlayerBody;
-import com.xlpoolsion.server.controller.entities.PowerUpBody;
 import com.xlpoolsion.server.model.entities.*;
 
 public class CollisionController implements ContactListener {

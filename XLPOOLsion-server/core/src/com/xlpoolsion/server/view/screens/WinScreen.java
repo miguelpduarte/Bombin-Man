@@ -6,7 +6,7 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 
 public class WinScreen extends BaseScreen {
     public WinScreen(XLPOOLsionServer xlpooLsionServer) {
-        super(xlpooLsionServer, Type.Lobby);
+        super(xlpooLsionServer, Type.Win_Screen);
     }
 
     @Override

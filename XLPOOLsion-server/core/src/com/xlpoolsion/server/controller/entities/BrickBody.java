@@ -4,9 +4,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.BrickModel;
-import com.xlpoolsion.server.model.entities.EntityModel;
 
 public class BrickBody extends  EntityBody {
 

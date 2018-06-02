@@ -2,7 +2,6 @@ package com.xlpoolsion.server.model.entities;
 
 
 import com.xlpoolsion.server.view.entities.SpeedDownView;
-import com.xlpoolsion.server.view.entities.SpeedUpView;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 import static com.xlpoolsion.server.view.screens.GameScreen.PIXEL_TO_METER;

@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.entities.*;
-import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.entities.EntityView;
 import com.xlpoolsion.server.view.entities.RadiusUpView;
 import com.xlpoolsion.server.view.entities.ViewFactory;

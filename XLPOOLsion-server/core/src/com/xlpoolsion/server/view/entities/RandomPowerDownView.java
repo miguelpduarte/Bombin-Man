@@ -3,7 +3,6 @@ package com.xlpoolsion.server.view.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.xlpoolsion.server.XLPOOLsionServer;
-import com.xlpoolsion.server.model.entities.PowerUpModel;
 
 public class RandomPowerDownView extends EntityView{
     public static final float WIDTH = 32;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.xlpoolsion.server.XLPOOLsionServer;
 
 public abstract class BaseScreen extends ScreenAdapter {
-    public enum Type {Lobby, Clients_Disconnected};
+    public enum Type {Lobby, Win_Screen};
 
     private Type type;
     protected Stage stage;
