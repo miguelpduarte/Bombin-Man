@@ -1,8 +1,7 @@
 package com.xlpoolsion.server.view.entities;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xlpoolsion.server.XLPOOLsionServer;
+import com.xlpoolsion.server.view.TextureManager;
 
 public class PlayerRedView extends PlayerView {
     public PlayerRedView(XLPOOLsionServer xlpooLsionServer) {
@@ -10,14 +9,11 @@ public class PlayerRedView extends PlayerView {
     }
 
      void createAnimations(XLPOOLsionServer xlpooLsionServer) {
-        Texture alltextures = xlpooLsionServer.getAssetManager().get("Bomberman_sprite_Red.png");
-        TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 32);
-
-        super.upAnim = createUpAnimation(fullregion);
-        super.rightAnim = createRightAnimation(fullregion);
-        super.downAnim = createDownAnimation(fullregion);
-        super.leftAnim = createLeftAnimation(fullregion);
-        super.deathAnim = createDeathAnimation(fullregion);
-        super.stunAnim = createStunAnimation(fullregion);
+         super.upAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.RED, TextureManager.PlayerAnimType.UP);
+         super.rightAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.RED, TextureManager.PlayerAnimType.RIGHT);
+         super.downAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.RED, TextureManager.PlayerAnimType.DOWN);
+         super.leftAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.RED, TextureManager.PlayerAnimType.LEFT);
+         super.deathAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.RED, TextureManager.PlayerAnimType.DEATH);
+         super.stunAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.RED, TextureManager.PlayerAnimType.STUN);
     }
 }

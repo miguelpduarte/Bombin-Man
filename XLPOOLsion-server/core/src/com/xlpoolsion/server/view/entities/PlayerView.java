@@ -11,7 +11,7 @@ import com.xlpoolsion.server.model.entities.PlayerModel;
 
 public abstract class PlayerView extends EntityView {
 
-    private static final float FRAME_TIME = 0.13f;
+    public static final float FRAME_TIME = 0.13f;
 
     public static final float WIDTH = 32;
     public static final float HEIGHT = 64;
@@ -45,47 +45,6 @@ public abstract class PlayerView extends EntityView {
     }
 
     abstract void createAnimations(XLPOOLsionServer xlpooLsionServer);
-
-    protected Animation<TextureRegion> createUpAnimation(TextureRegion[][] fullregion) {
-        TextureRegion[] frames = new TextureRegion[3];
-        System.arraycopy(fullregion[0], 0, frames, 0, 3);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
-
-    protected Animation<TextureRegion> createRightAnimation(TextureRegion[][] fullregion) {
-        TextureRegion[] frames = new TextureRegion[3];
-        System.arraycopy(fullregion[1], 0, frames, 0, 3);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
-
-    protected Animation<TextureRegion> createDownAnimation(TextureRegion[][] fullregion) {
-        TextureRegion[] frames = new TextureRegion[3];
-        System.arraycopy(fullregion[2], 0, frames, 0, 3);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
-
-    protected Animation<TextureRegion> createLeftAnimation(TextureRegion[][] fullregion) {
-        TextureRegion[] frames = new TextureRegion[3];
-        System.arraycopy(fullregion[3], 0, frames, 0, 3);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
-
-    protected Animation<TextureRegion> createDeathAnimation(TextureRegion[][] fullregion) {
-        TextureRegion[] frames = new TextureRegion[10];
-        System.arraycopy(fullregion[24], 0, frames, 0, 10);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
-    protected Animation<TextureRegion> createStunAnimation(TextureRegion[][] fullregion) {
-        TextureRegion[] frames = new TextureRegion[5];
-        System.arraycopy(fullregion[11], 0, frames, 0, 5);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
 
     @Override
     public void update(EntityModel model) {
