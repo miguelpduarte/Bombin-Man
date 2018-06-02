@@ -88,7 +88,8 @@ public abstract class BaseLevelController {
         //Checking win condition
         if(levelModel.getNrAlivePlayers() < MIN_CONNECTED_CLIENTS) {
             System.out.println("\nTEMPORARILY SAYING PLAYER 0 WON THE GAME, ALWAYS. TO CHANGE!!!!!!\n");
-            GameController.getInstance().wonGame(0);
+            levelModel.addWinnerToPlayersInfo();
+            GameController.getInstance().wonGame(levelModel.getWinner());
             //return;
         }
 

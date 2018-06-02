@@ -10,7 +10,6 @@ import com.xlpoolsion.server.model.entities.BombModel;
 import com.xlpoolsion.server.model.entities.BreakableBrickModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.model.levels.BaseLevelModel;
-import com.xlpoolsion.server.networking.MultithreadedServer;
 import com.xlpoolsion.server.networking.NetworkRouter;
 
 import static com.xlpoolsion.server.networking.MultithreadedServer.MAX_CLIENTS;
@@ -52,14 +51,6 @@ public class GameController {
         NetworkRouter.getInstance().sendToClient(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_WON));
         System.out.println("Don't forget to delete stuff!!!!");
         currentState = STATE.PLAYER_WON_GAME;
-    }
-
-    public void startServer() {
-        NetworkRouter.getInstance().setServer(new MultithreadedServer());
-    }
-
-    public boolean[] getConnectedClients() {
-        return NetworkRouter.getInstance().getConnectedClients();
     }
 
     public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME};
@@ -132,7 +123,7 @@ public class GameController {
         return currentLevelController.getWorld();
     }
 
-    public static final int MIN_CONNECTED_CLIENTS = 1;
+    public static final int MIN_CONNECTED_CLIENTS = 2;
 
     public void startGame(int level) {
         if(NetworkRouter.getInstance().getServer().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {

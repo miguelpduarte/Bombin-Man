@@ -34,7 +34,7 @@ public class LobbyScreen extends BaseScreen {
     public LobbyScreen(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer, Type.Lobby);
 
-        GameController.getInstance().startServer();
+        NetworkRouter.getInstance().setServer(new MultithreadedServer());
     }
 
     @Override
@@ -195,7 +195,7 @@ public class LobbyScreen extends BaseScreen {
                 break;
         }
 
-        updatePlayerStatusImages(GameController.getInstance().getConnectedClients());
+        updatePlayerStatusImages(NetworkRouter.getInstance().getConnectedClients());
     }
 
     private void updatePlayerStatusImages(boolean[] connectedClients) {

@@ -13,6 +13,7 @@ import static com.xlpoolsion.server.controller.levels.BaseLevelController.*;
 
 public abstract class BaseLevelModel {
     private PlayerModel[] players = new PlayerModel[GameController.MAX_PLAYERS];
+    private ArrayList<PlayerModel> playersLastInfo = new ArrayList<PlayerModel>();
 
     /**
      * A pool of bombs
@@ -110,6 +111,7 @@ public abstract class BaseLevelModel {
             if(playerModel != null){
                 if(playerModel.isDying()){
                     if(playerModel.decreaseTimeTillDeath(delta)){
+                        playersLastInfo.add(playerModel);
                         playerModel.setFlaggedForRemoval(true);
                     }
                 }
@@ -241,7 +243,7 @@ public abstract class BaseLevelModel {
 
     private static final float POWERUP_CHANCE = 0.4f;
     private static final float POWERDOWN_CHANCE = 0.1f;
-    private static final float STUNPOWER_CHANCE = 0.2f;
+    private static final float STUNPOWER_CHANCE = 0.1f;
 
     private void createPowersOnChance(BreakableBrickModel model) {
         if(Math.random() < POWERUP_CHANCE){
@@ -332,6 +334,10 @@ public abstract class BaseLevelModel {
         return players;
     }
 
+    public ArrayList<PlayerModel> getPlayersLastInfo() {
+        return playersLastInfo;
+    }
+
     public List<BombModel> getBombs() {
         return bombs;
     }
@@ -368,5 +374,25 @@ public abstract class BaseLevelModel {
             }
         }
         return n_players;
+    }
+
+    public int getWinner(){
+        int id=0;
+        for(PlayerModel player : players) {
+            if(player != null) {
+               id = player.getId();
+            }
+        }
+        return id;
+    }
+    public void addWinnerToPlayersInfo(){
+        for(PlayerModel player : players) {
+            if(player != null) {
+               if(!playersLastInfo.contains(player)) {
+                   playersLastInfo.add(player);
+               }
+               return;
+            }
+        }
     }
 }
