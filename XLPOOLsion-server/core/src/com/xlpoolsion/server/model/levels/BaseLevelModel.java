@@ -147,7 +147,7 @@ public abstract class BaseLevelModel {
 
         //Creating Center
         Vector2 origin = new Vector2(bomb.getX(), bomb.getY());
-        temp_explosions.add(createSingleExplosion(origin,ExplosionModel.Direction.Center));
+        temp_explosions.add(createSingleExplosion(origin, ExplosionModel.Direction.Center));
 
         //Creating Up
         List<ExplosionModel> upExplosions = createExplosionHelper(origin, new Vector2(0, GRID_PADDING_Y), explosion_radius,ExplosionModel.Direction.Vertical);
@@ -178,7 +178,7 @@ public abstract class BaseLevelModel {
             tempvec.mulAdd(shift, i);
             if((fetchedBrick = getBrickAt(tempvec.x, tempvec.y)) == null) {
                 //No brick, continue creating explosions
-                explosions.add(createSingleExplosion(tempvec,direction));
+                explosions.add(createSingleExplosion(tempvec, direction));
             } else {
                 //Found brick, stop creating explosions, and if brick is destroyable mark it for destruction
                 //(explosions destroy adjacent bricks but do not propagate there)

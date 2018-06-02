@@ -80,6 +80,7 @@ public class ExplosionView extends EntityView {
         switch (direction){
             case Center:
                 sprite.setRegion(centerAnim.getKeyFrame(stateTime,false));
+                break;
             case Vertical:
                 sprite.setRegion(verticalAnim.getKeyFrame(stateTime,false));
                 break;
