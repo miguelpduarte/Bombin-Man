@@ -38,7 +38,7 @@ public abstract class BaseLevelController {
     private PlayerBody[] players = new PlayerBody[MAX_PLAYERS];
     private BaseLevelModel levelModel;
 
-    public BaseLevelController(boolean[] connectedPlayers, BaseLevelModel levelModel) {
+    BaseLevelController(boolean[] connectedPlayers, BaseLevelModel levelModel) {
         world = new World(new Vector2(0, 0), true);
         this.levelModel = levelModel;
 
@@ -79,12 +79,17 @@ public abstract class BaseLevelController {
     private static final int VELOCITY_ITERATIONS = 6;
     private static final int POSITION_ITERATIONS = 2;
 
+    /**
+     * Game Ticking function during playing. Updates game world (collisions, etc) and game model (bomb ticks, explosion ticks, etc)
+     * @param delta Time since the last frame render
+     */
     public void update(float delta) {
         levelModel.update(delta);
         //Checking win condition
         if(levelModel.getNrAlivePlayers() < MIN_CONNECTED_CLIENTS) {
             System.out.println("\nTEMPORARILY SAYING PLAYER 0 WON THE GAME, ALWAYS. TO CHANGE!!!!!!\n");
             GameController.getInstance().wonGame(0);
+            //return;
         }
 
         // fixed time step
@@ -217,12 +222,16 @@ public abstract class BaseLevelController {
 
     /**
      * Used for debug physics camera
-     * @return
+     * @return The currently used world
      */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * Creates explosions relative to the passed bomb
+     * @param bomb Bomb that exploded
+     */
     public void createExplosions(BombModel bomb) {
         List<ExplosionModel> explosions = levelModel.createExplosions(bomb);
         for(ExplosionModel explosion : explosions) {
@@ -230,25 +239,45 @@ public abstract class BaseLevelController {
         }
     }
 
+    /**
+     * Creates a power up based on the given breakable brick model
+     * @param brick The brick that was broken and where the power will appear
+     */
     public void createPowerUp(BreakableBrickModel brick) {
         PowerUpModel powerUp = levelModel.createPowerUp(brick);
         new PowerUpBody(world,powerUp);
     }
 
+    /**
+     * Creates a power down based on the given breakable brick model
+     * @param brick The brick that was broken and where the power will appear
+     */
     public void createPowerDown(BreakableBrickModel brick) {
         PowerDownModel powerDown = levelModel.createPowerDown(brick);
         new PowerDownBody(world,powerDown);
     }
 
+    /**
+     * Creates a stun power based on the given breakable brick model
+     * @param brick The brick that was broken and where the power will appear
+     */
     public void createStunPower(BreakableBrickModel brick) {
         StunPowerModel stunPower = levelModel.createStunPower(brick);
         new StunPowerBody(world, stunPower);
     }
 
+    /**
+     * Getter function for the corresponding level model
+     * @return The associated level model
+     */
     public BaseLevelModel getModel() {
         return levelModel;
     }
 
+    /**
+     * Informs the level controller that a certain player disconnected. Kills the player in the game, effectively
+     * @param playerId The player that has disconnected
+     */
     public void informPlayerDisconnect(int playerId) {
         PlayerModel player = levelModel.getPlayer(playerId);
         if(player != null && !player.isDying()) {
@@ -256,6 +285,10 @@ public abstract class BaseLevelController {
         }
     }
 
+    /**
+     * Marks all players except the passed one to be stunned. For use on pickup of StunPower
+     * @param stunnerPlayer The player to not stun, for it was the causer of the stunning
+     */
     public void setAllStunnedExcept(PlayerModel stunnerPlayer) {
         PlayerModel[] players = levelModel.getPlayers();
         for(int i = 0; i < GameController.MAX_PLAYERS; ++i) {
@@ -266,6 +299,10 @@ public abstract class BaseLevelController {
         }
     }
 
+    /**
+     * Removes the stunned status effect from a certain player
+     * @param playerId The id of the player to unstun
+     */
     public void unstun(int playerId) {
         PlayerModel player = levelModel.getPlayer(playerId);
         if(player != null) {
