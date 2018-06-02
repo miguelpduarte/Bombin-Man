@@ -26,4 +26,7 @@ public class WinScreen extends BaseScreen {
         background.setZIndex(0);
         stage.addActor(background);
     }
+
+    //Função de click do botão de back deve mudar o estado para lobby screen de novo (state reset) -> Para ter a certeza tentar kickar todos os players?
+    //Já deverão estar kickados by then, mesmo a win message fecha a ligação
 }

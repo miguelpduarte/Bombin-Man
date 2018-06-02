@@ -90,12 +90,16 @@ public class GameScreen extends ScreenAdapter {
 
         GameController.getInstance().update(delta);
 
+        checkStateTransition();
+
         Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         xlpooLsionServer.getBatch().setProjectionMatrix(viewport.getCamera().combined);
 
         xlpooLsionServer.getBatch().begin();
+        drawBackground();
+        drawHUD(GameController.getInstance().getLevelModel().getPlayers());
         drawEntities();
         xlpooLsionServer.getBatch().end();
 
@@ -106,13 +110,18 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    private void checkStateTransition() {
+        switch (GameController.getInstance().getCurrentState()) {
+            case PLAYER_WON_GAME:
+                xlpooLsionServer.setScreen(new WinScreen(xlpooLsionServer));
+                break;
+        }
+    }
+
     public static final float ENTITY_VIEW_X_SHIFT = Gdx.graphics.getWidth()/2;
     public static final float ENTITY_VIEW_Y_SHIFT = Gdx.graphics.getHeight()/2;
 
     private void drawEntities() {
-        drawBackground();
-        drawHUD(GameController.getInstance().getLevelModel().getPlayers());
-
         List<BombModel> bombs = GameController.getInstance().getLevelModel().getBombs();
         for(BombModel bomb : bombs) {
             EntityView view = ViewFactory.getView(xlpooLsionServer, bomb);
@@ -295,7 +304,6 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        //TODO: Move to transition to another screen
-        NetworkRouter.getInstance().closeServer();
+        main_size20.dispose();
     }
 }

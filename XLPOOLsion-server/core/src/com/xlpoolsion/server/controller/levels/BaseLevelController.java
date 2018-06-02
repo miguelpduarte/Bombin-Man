@@ -13,6 +13,7 @@ import com.xlpoolsion.server.model.levels.BaseLevelModel;
 import java.util.List;
 
 import static com.xlpoolsion.server.controller.GameController.MAX_PLAYERS;
+import static com.xlpoolsion.server.controller.GameController.MIN_CONNECTED_CLIENTS;
 
 public abstract class BaseLevelController {
     /**
@@ -80,6 +81,11 @@ public abstract class BaseLevelController {
 
     public void update(float delta) {
         levelModel.update(delta);
+        //Checking win condition
+        if(levelModel.getNrAlivePlayers() < MIN_CONNECTED_CLIENTS) {
+            System.out.println("\nTEMPORARILY SAYING PLAYER 0 WON THE GAME, ALWAYS. TO CHANGE!!!!!!\n");
+            GameController.getInstance().wonGame(0);
+        }
 
         // fixed time step
         // max frame time to avoid spiral of death (on slow devices)

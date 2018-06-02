@@ -41,7 +41,17 @@ public class GameController {
         currentLevelController.unstun(playerId);
     }
 
-    public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME, ALL_PLAYERS_DISCONNECTED};
+    public void wonGame(int winner_id) {
+        /*
+        currentLevelController.destroy();
+        currentLevelController = null;
+        */
+        NetworkRouter.getInstance().sendToClient(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_WON));
+        System.out.println("Don't forget to delete stuff!!!!");
+        currentState = STATE.PLAYER_WON_GAME;
+    }
+
+    public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME};
 
     private STATE currentState;
 
@@ -111,7 +121,7 @@ public class GameController {
         return currentLevelController.getWorld();
     }
 
-    private static final int MIN_CONNECTED_CLIENTS = 1;
+    public static final int MIN_CONNECTED_CLIENTS = 1;
 
     public void startGame(int level) {
         if(NetworkRouter.getInstance().getServer().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {

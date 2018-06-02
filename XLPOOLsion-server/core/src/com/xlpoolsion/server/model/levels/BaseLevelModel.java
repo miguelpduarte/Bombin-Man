@@ -359,4 +359,14 @@ public abstract class BaseLevelModel {
     public List<StunPowerModel> getStunPowers() {
         return stunPowers;
     }
+
+    public int getNrAlivePlayers() {
+        int n_players = 0;
+        for(PlayerModel player : players) {
+            if(player != null) {
+                n_players++;
+            }
+        }
+        return n_players;
+    }
 }

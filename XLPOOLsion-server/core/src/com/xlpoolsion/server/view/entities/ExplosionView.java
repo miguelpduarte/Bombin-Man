@@ -32,6 +32,7 @@ public class ExplosionView extends EntityView {
         temp_sprite.setSize(WIDTH, HEIGHT);
         return temp_sprite;
     }
+
     void createAnimations(XLPOOLsionServer xlpooLsionServer) {
         Texture alltextures = xlpooLsionServer.getAssetManager().get("ExplosionAnimation.png");
         TextureRegion[][] fullregion = TextureRegion.split(alltextures, 16, 16);
