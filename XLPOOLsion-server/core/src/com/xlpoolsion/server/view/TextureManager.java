@@ -195,7 +195,7 @@ public class TextureManager {
     private void createVictoryAnimation(PlayerColor color) {
         TextureRegion[] frames = new TextureRegion[3];
         System.arraycopy(fullPlayerSpritesSplit.get(color)[27], 0, frames, 0, 3);
-        playerAnimations.get(color).put(PlayerAnimType.VICTORY, new Animation<TextureRegion>(PlayerView.FRAME_TIME, frames));
+        playerAnimations.get(color).put(PlayerAnimType.VICTORY, new Animation<TextureRegion>(PlayerView.FRAME_TIME * 3f, frames));
     }
 
     private void createBombAnimation() {
