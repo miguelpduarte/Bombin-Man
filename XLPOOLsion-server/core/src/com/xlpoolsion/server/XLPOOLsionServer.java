@@ -55,7 +55,6 @@ public class XLPOOLsionServer extends Game {
 	 * Returns the sprite batch used to improve drawing performance.
 	 *
 	 * @return the sprite batch
-	 * @return
 	 */
 	public SpriteBatch getBatch() {
 		return batch;
@@ -65,7 +64,6 @@ public class XLPOOLsionServer extends Game {
 	 * Returns the asset manager used to load all textures.
 	 *
 	 * @return the asset manager
-	 * @return
 	 */
 	public AssetManager getAssetManager() {
 		return assetManager;
@@ -75,7 +73,6 @@ public class XLPOOLsionServer extends Game {
 	 * Returns the texture manager used to handle all textures and sounds.
 	 *
 	 * @return the texture manager
-	 * @return
 	 */
 	public TextureManager getTextureManager() {
 		return textureManager;

@@ -13,7 +13,7 @@ public class RandomPowerUpView extends EntityView{
 
     /**
      * Creates a random power up view
-     * @param xlpooLsionServer
+     * @param xlpooLsionServer The game the view belongs to
      */
     public RandomPowerUpView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);

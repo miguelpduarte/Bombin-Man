@@ -16,7 +16,7 @@ public class ViewFactory {
      * Returns the View corresponding to the give model
      * @param xlpooLsionServer The game the views belong to
      * @param model The Model for which the view will be returned
-     * @return
+     * @return The view correspondent to the model
      */
     public static EntityView getView(XLPOOLsionServer xlpooLsionServer, EntityModel model) {
         if(!viewMap.containsKey(model)) {

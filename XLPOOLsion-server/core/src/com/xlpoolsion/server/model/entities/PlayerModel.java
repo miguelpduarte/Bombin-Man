@@ -109,7 +109,7 @@ public class PlayerModel extends EntityModel {
 
     /**
      * Returns whether the player's death process has started or not
-     * @return
+     * @return True if the death process is on going
      */
     public boolean isDying(){
         return dying;

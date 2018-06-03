@@ -10,7 +10,7 @@ import java.net.SocketException;
 
 /**
  * Multithreaded Server used for the game communications. Listens for connections in a separate thread (to not block the main thread used for the game) and
- * for each new connection passes the socket to a {@link .ClientManager} or {@link .ClientErrorCommunicator}, depending on the current status, that will handle
+ * for each new connection passes the socket to a ClientManager or ClientErrorCommunicator, depending on the current status, that will handle
  * client communications.
  */
 public class MultithreadedServer {

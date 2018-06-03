@@ -61,7 +61,7 @@ public class TextureManager {
 
     /**
      * Creates the manager used to manage all textures and animations
-     * @param assetManager
+     * @param assetManager The asset manager used
      */
     public TextureManager(AssetManager assetManager) {
         this.assetManager = assetManager;

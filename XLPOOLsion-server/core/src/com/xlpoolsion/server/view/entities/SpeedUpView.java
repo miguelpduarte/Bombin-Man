@@ -13,7 +13,7 @@ public class SpeedUpView extends EntityView{
 
     /**
      * Creates a speed power up view
-     * @param xlpooLsionServer
+     * @param xlpooLsionServer The game the view belongs to
      */
     public SpeedUpView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);

@@ -13,7 +13,7 @@ public class StunPowerView extends EntityView {
 
     /**
      * Creates a stun power view
-     * @param xlpooLsionServer
+     * @param xlpooLsionServer The game the view belongs to
      */
     public StunPowerView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);

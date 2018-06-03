@@ -152,7 +152,7 @@ public abstract class BaseLevelModel {
 
     /**
      * Creates an explosion at the bomb coordinates, with the associated player radius
-     *
+     * @param bomb The bomb responsible for the explosions
      * @return The created ExplosionModels
      */
     public List<ExplosionModel> createExplosions(BombModel bomb) {
@@ -322,6 +322,7 @@ public abstract class BaseLevelModel {
      * Creates a powerUp at the given coordinates and adds it to internal storage
      *
      * @param brick The Model that was destroid to give room for the powerUp
+     * @return The model of the power up created
      */
     public PowerUpModel createPowerUp(BreakableBrickModel brick) {
         PowerUpModel powerUp = new PowerUpModel(brick.getX(), brick.getY(), 0);
@@ -333,6 +334,7 @@ public abstract class BaseLevelModel {
      * Creates a powerDown at the given coordinates and adds it to internal storage
      *
      * @param brick The Model that was destroid to give room for the powerDown
+     * @return The model of the power down created
      */
     public PowerDownModel createPowerDown(BreakableBrickModel brick) {
         PowerDownModel powerDown = new PowerDownModel(brick.getX(), brick.getY(), 0);

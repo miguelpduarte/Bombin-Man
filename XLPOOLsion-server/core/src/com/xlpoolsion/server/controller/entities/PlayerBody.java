@@ -43,7 +43,7 @@ public class PlayerBody extends EntityBody {
 
     /**
      * Makes the player move up by changing its vertical velocity
-     * @param speedFactor
+     * @param speedFactor the value of the speed
      */
     public void moveUp(float speedFactor) {
         body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor);
@@ -51,7 +51,7 @@ public class PlayerBody extends EntityBody {
 
     /**
      * Makes the player move down by changing its vertical velocity
-     * @param speedFactor
+     * @param speedFactor the value of the speed
      */
     public void moveDown(float speedFactor) {
         body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor);
@@ -59,7 +59,7 @@ public class PlayerBody extends EntityBody {
 
     /**
      * Makes the player move left by changing its horizontal velocity
-     * @param speedFactor
+     * @param speedFactor the value of the speed
      */
     public void moveLeft(float speedFactor) {
         body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor, body.getLinearVelocity().y);
@@ -67,7 +67,7 @@ public class PlayerBody extends EntityBody {
 
     /**
      * Makes the player move right by changing its horizontal velocity
-     * @param speedFactor
+     * @param speedFactor the value of the speed
      */
     public void moveRight(float speedFactor) {
         body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor, body.getLinearVelocity().y);

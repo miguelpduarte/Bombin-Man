@@ -232,7 +232,7 @@ public class GameController {
 
     /**
      * Just for debug purposes (Debug Camera)
-     * @return
+     * @return The world of the game
      */
     public World getWorld() {
         return currentLevelController.getWorld();

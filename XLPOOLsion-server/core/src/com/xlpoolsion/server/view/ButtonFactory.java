@@ -20,7 +20,7 @@ public class ButtonFactory {
      * @param y Y Position of the button
      * @param width Width of the button
      * @param height Height of the button
-     * @return
+     * @return The button with the correct Characteristics
      */
     public static Button makeButton(XLPOOLsionServer xlpooLsionServer, String upImagePath, String downImagePath, float x, float y, float width, float height) {
         Button.ButtonStyle bs = new Button.ButtonStyle();

@@ -13,7 +13,7 @@ public class RandomPowerDownView extends EntityView{
 
     /**
      * Creates a random power down view
-     * @param xlpooLsionServer
+     * @param xlpooLsionServer The game the view belongs to
      */
     public RandomPowerDownView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);

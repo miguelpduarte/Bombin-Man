@@ -5,7 +5,7 @@ import com.xlpoolsion.common.ServerToClientMessage;
 import com.xlpoolsion.server.controller.GameController;
 
 /**
- * Singleton class responsible for routing messages to and from the GameController, using a {@link .MutlithreadedServer}.
+ * Singleton class responsible for routing messages to and from the GameController, using a MutlithreadedServer.
  */
 public class NetworkRouter {
     private static NetworkRouter instance = null;
