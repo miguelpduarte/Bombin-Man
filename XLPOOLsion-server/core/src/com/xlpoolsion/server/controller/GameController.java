@@ -46,17 +46,19 @@ public class GameController {
     private ArrayList<PlayerModel> savedPlayersLastInfo;
 
     public void wonGame(int winner_id) {
+        currentState = STATE.PLAYER_WON_GAME;
         //Saving players last info before everything is deleted
-        savedPlayersLastInfo = currentLevelController.getModel().getPlayersLastInfo();
+        ArrayList<PlayerModel> temp = currentLevelController.getModel().getPlayersLastInfo();
+        savedPlayersLastInfo = new ArrayList<PlayerModel>();
+        savedPlayersLastInfo.addAll(temp);
 
         currentLevelController.destroy();
         currentLevelController = null;
-        
+
         //Safety
         NetworkRouter.getInstance().sendToAllExcept(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_LOST));
 
         NetworkRouter.getInstance().sendToClient(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_WON));
-        currentState = STATE.PLAYER_WON_GAME;
     }
 
     public ArrayList<PlayerModel> getPlayersLastInfo() {

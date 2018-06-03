@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.server.XLPOOLsionServer;
-import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.view.ButtonFactory;
 import com.xlpoolsion.server.view.TextureManager;
