@@ -65,7 +65,16 @@ public class GameController {
         return savedPlayersLastInfo;
     }
 
-    public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME};
+    public void resetGame() {
+        for(PlayerModel playerModel : savedPlayersLastInfo) {
+            playerModel = null;
+        }
+        savedPlayersLastInfo.clear();
+        savedPlayersLastInfo = null;
+        currentState = STATE.LOBBY;
+    }
+
+    public enum STATE {LOBBY, PLAYING, PLAYER_WON_GAME};
 
     private STATE currentState;
 
@@ -73,7 +82,7 @@ public class GameController {
     public static final int MAX_PLAYERS = MAX_CLIENTS;
 
     private GameController() {
-        currentState = STATE.WAITING_FOR_CONNECTIONS;
+        currentState = STATE.LOBBY;
     }
 
     public static GameController getInstance() {

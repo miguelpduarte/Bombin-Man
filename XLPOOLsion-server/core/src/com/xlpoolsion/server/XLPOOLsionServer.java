@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.xlpoolsion.server.networking.MultithreadedServer;
 import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.TextureManager;
 import com.xlpoolsion.server.view.screens.LobbyScreen;
@@ -30,6 +31,9 @@ public class XLPOOLsionServer extends Game {
 		assetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 
 		textureManager = new TextureManager(assetManager);
+
+		//Starting server for networking
+		NetworkRouter.getInstance().setServer(new MultithreadedServer());
 
 		//Video configs
 		Gdx.graphics.setWindowedMode(1920, 1080);
@@ -57,6 +61,7 @@ public class XLPOOLsionServer extends Game {
 	public void dispose () {
 		batch.dispose();
 		assetManager.dispose();
+		//Closing server
 		NetworkRouter.getInstance().closeServer();
 	}
 }

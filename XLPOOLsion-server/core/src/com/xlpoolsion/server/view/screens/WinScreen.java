@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.server.XLPOOLsionServer;
+import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.view.ButtonFactory;
 import com.xlpoolsion.server.view.TextureManager;
@@ -162,7 +163,7 @@ public class WinScreen extends BaseScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                GameController.getInstance().resetGame();
             }
         });
         stage.addActor(backButton);
@@ -299,6 +300,12 @@ public class WinScreen extends BaseScreen {
         //I just wish I didn't have to do this
         winnerImage.setDrawable(new TextureRegionDrawable(winnerAnimation.getKeyFrame(stateTime,true)));
         winnerImage2.setDrawable(new TextureRegionDrawable(winnerAnimation.getKeyFrame(stateTime,true)));
+
+        switch (GameController.getInstance().getCurrentState()) {
+            case LOBBY:
+                xlpooLsionServer.setScreen(new LobbyScreen(xlpooLsionServer));
+                break;
+        }
     }
 //Função de click do botão de back deve mudar o estado para lobby screen de novo (state reset) -> Para ter a certeza tentar kickar todos os players?
     //Já deverão estar kickados by then, mesmo a win message fecha a ligação
