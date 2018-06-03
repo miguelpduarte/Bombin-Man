@@ -85,7 +85,8 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        minRadius = new Label("Player " + getMinRadiusPlayer() + " doesnt think size matters so he only caught " + playersLastInfo.get(getMinRadiusPlayer()).getExplosionChanger() + " fire powerUps ", lb_style);
+        int id = getMinRadiusPlayer();
+        minRadius = new Label("Player " + id + " doesnt think size matters so he only caught " + getPlayer(id).getExplosionChanger() + " fire powerUps ", lb_style);
         minRadius.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 5* Y_GAP, Align.left);
         stage.addActor(minRadius);
     }
@@ -95,7 +96,8 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        minBombsLabel = new Label("Player " + getMinBombsPlayer() + " keeps it short and simple he only needed " + playersLastInfo.get(getMinBombsPlayer()).getAllowedBombsChanger() + " BombsUp powerUps ", lb_style);
+        int id = getMinBombsPlayer();
+        minBombsLabel = new Label("Player " + id + " keeps it short and simple he only needed " + getPlayer(id).getAllowedBombsChanger() + " BombsUp powerUps ", lb_style);
         minBombsLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 4* Y_GAP, Align.left);
         stage.addActor(minBombsLabel);
     }
@@ -105,7 +107,8 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        minSpeed = new Label("Player " + getMinSpeedPlayer() + " likes to take it slow with only " + playersLastInfo.get(getMinSpeedPlayer()).getSpeedChanger() + " speed PowerUps.", lb_style);
+        int id = getMinSpeedPlayer();
+        minSpeed = new Label("Player " + id + " likes to take it slow with only " + getPlayer(id).getSpeedChanger() + " speed PowerUps.", lb_style);
         minSpeed.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 6* Y_GAP, Align.left);
         stage.addActor(minSpeed);
     }
@@ -115,7 +118,8 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        mostRadiusLabelText = new Label("Player " + getMostRadiusPlayer() + " is on fire with " + playersLastInfo.get(getMostRadiusPlayer()).getExplosionChanger() + " BombsUp PowerUps.", lb_style);
+        int id = getMostRadiusPlayer();
+        mostRadiusLabelText = new Label("Player " + id + " is on fire with " + getPlayer(id).getExplosionChanger() + " BombsUp PowerUps.", lb_style);
         mostRadiusLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 3* Y_GAP, Align.left);
         stage.addActor(mostRadiusLabelText);
     }
@@ -125,7 +129,8 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        mostBombsLabelText = new Label("Player " + getMostBombsPlayer() + " prefers quantity over quality with " + playersLastInfo.get(getMostBombsPlayer()).getAllowedBombsChanger() + " BombsUp PowerUps.", lb_style);
+        int id = getMostBombsPlayer();
+        mostBombsLabelText = new Label("Player " + id + " prefers quantity over quality with " + getPlayer(id).getAllowedBombsChanger() + " BombsUp PowerUps.", lb_style);
         mostBombsLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 2* Y_GAP, Align.left);
         stage.addActor(mostBombsLabelText);
     }
@@ -135,7 +140,8 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        mostSpeedLabelText = new Label("Player " + getMostSpeedPlayer() + " loves speed and collected " + playersLastInfo.get(getMostSpeedPlayer()).getSpeedChanger() + " Speed PowerUps.", lb_style);
+        int id = getMostSpeedPlayer();
+        mostSpeedLabelText = new Label("Player " + id + " loves speed and collected " + getPlayer(id).getSpeedChanger() + " Speed PowerUps.", lb_style);
         mostSpeedLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - Y_GAP, Align.left);
         stage.addActor(mostSpeedLabelText);
     }
@@ -161,6 +167,15 @@ public class WinScreen extends BaseScreen {
             }
         });
         stage.addActor(backButton);
+    }
+
+    private PlayerModel getPlayer(int id){
+        for (PlayerModel player : playersLastInfo) {
+            if (player.getId() == id) {
+                return player;
+            }
+        }
+        return null;
     }
 
     private String getWinnerText(){
