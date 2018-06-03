@@ -5,6 +5,7 @@ import com.xlpoolsion.server.model.entities.PowerUpModel;
 import org.junit.Test;
 
 public class PowersModelTests {
+    //To verify if it is created one power up of every type eventually
     @Test(timeout = 1000)
     public void testRandomPowerUp(){
         boolean[] allPowers = new boolean[4];
@@ -27,7 +28,7 @@ public class PowersModelTests {
 
         }
     }
-
+    //To verify if it is created one power down of every type eventually
     @Test(timeout = 1000)
     public void testRandomPowerDown(){
         boolean[] allPowers = new boolean[4];
