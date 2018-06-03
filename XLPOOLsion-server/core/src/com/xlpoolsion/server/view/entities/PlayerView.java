@@ -9,6 +9,9 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
+/**
+ * An abstract view used to create the base for all players
+ */
 public abstract class PlayerView extends EntityView {
 
     public static final float FRAME_TIME = 0.13f;
@@ -32,6 +35,10 @@ public abstract class PlayerView extends EntityView {
     private boolean isStunned = false;
     private PlayerModel.Orientation orientation;
 
+    /**
+     * Creates a view for the player
+     * @param xlpooLsionServer The game this view belongs to
+     */
     public PlayerView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);
     }
@@ -44,6 +51,10 @@ public abstract class PlayerView extends EntityView {
         return temp_sprite;
     }
 
+    /**
+     * Abstract method to create the animations for the player, different players will have different coloured animations
+     * @param xlpooLsionServer The game these animations belong to
+     */
     abstract void createAnimations(XLPOOLsionServer xlpooLsionServer);
 
     @Override

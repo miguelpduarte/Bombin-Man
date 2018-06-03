@@ -6,13 +6,24 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.xlpoolsion.server.XLPOOLsionServer;
 
+/**
+ * Abstract class used for screens
+ */
 public abstract class BaseScreen extends ScreenAdapter {
+    /**
+     * The type of screen
+     */
     public enum Type {Lobby, Win_Screen};
 
     private Type type;
     protected Stage stage;
     protected final XLPOOLsionServer xlpooLsionServer;
 
+    /**
+     * Creates a base screen with a corresponding type
+     * @param xlpooLsionServer The game this screen belongs to
+     * @param screenType The type of the screen
+     */
     public BaseScreen(XLPOOLsionServer xlpooLsionServer, Type screenType) {
         this.xlpooLsionServer = xlpooLsionServer;
         this.type = screenType;

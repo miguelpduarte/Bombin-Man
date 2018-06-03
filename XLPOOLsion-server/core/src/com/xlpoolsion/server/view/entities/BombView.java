@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xlpoolsion.server.XLPOOLsionServer;
 
+/**
+ * A view representing a bomb
+ */
 public class BombView extends EntityView {
     public static final float FRAME_TIME = 0.25f;
 
@@ -16,6 +19,10 @@ public class BombView extends EntityView {
     private Animation<TextureRegion> explodingAnimation;
     private float stateTime = 0f;
 
+    /**
+     * Creates a bomb view
+     * @param xlpooLsionServer The game this view belongs to
+     */
     public BombView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);
     }

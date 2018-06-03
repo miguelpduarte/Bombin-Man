@@ -22,6 +22,9 @@ import com.xlpoolsion.server.view.TextureManager;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Screen used to show the achievements during the game and the winner
+ */
 public class WinScreen extends BaseScreen {
     private Animation<TextureRegion> winnerAnimation;
     private float stateTime = 0;
@@ -33,6 +36,11 @@ public class WinScreen extends BaseScreen {
 
     public final float Y_GAP = stage.getHeight()/10.91f;
 
+    /**
+     * Creates the Winning screen
+     * @param xlpooLsionServer The game this screen belongs to
+     * @param playersLastInfo The last saved information from the players
+     */
     public WinScreen(XLPOOLsionServer xlpooLsionServer, ArrayList<PlayerModel> playersLastInfo) {
         super(xlpooLsionServer, Type.Win_Screen);
         this.playersLastInfo = playersLastInfo;

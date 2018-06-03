@@ -6,9 +6,18 @@ import com.xlpoolsion.server.model.entities.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Factory used to create all views
+ */
 public class ViewFactory {
     private static Map<EntityModel, EntityView> viewMap = new HashMap<EntityModel, EntityView>();
 
+    /**
+     * Returns the View corresponding to the give model
+     * @param xlpooLsionServer The game the views belong to
+     * @param model The Model for which the view will be returned
+     * @return
+     */
     public static EntityView getView(XLPOOLsionServer xlpooLsionServer, EntityModel model) {
         if(!viewMap.containsKey(model)) {
             createView(xlpooLsionServer, model);
@@ -16,6 +25,11 @@ public class ViewFactory {
         return viewMap.get(model);
     }
 
+    /**
+     * Creates a view for the correct subclass based on the model
+     * @param xlpooLsionServer The game the views will belong to
+     * @param model The model based on which the view will be chosen
+     */
     private static void createView(XLPOOLsionServer xlpooLsionServer, EntityModel model) {
         if (model instanceof BombModel) {
             viewMap.put(model, new BombView(xlpooLsionServer));
@@ -87,6 +101,10 @@ public class ViewFactory {
         }
     }
 
+    /**
+     * Destroys the view correspondent to the model
+     * @param model The model based on which the view will be destroyed
+     */
     public static void destroyView(EntityModel model) {
         viewMap.remove(model);
     }

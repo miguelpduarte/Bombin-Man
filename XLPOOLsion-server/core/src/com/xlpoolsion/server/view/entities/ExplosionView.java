@@ -9,11 +9,18 @@ import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.ExplosionModel;
 
+/**
+ * A view representing an explosion
+ */
 public class ExplosionView extends EntityView {
     public static final float WIDTH = 32;
     public static final float HEIGHT = 32;
     public static final float FRAME_TIME = 0.2f;
 
+    /**
+     * Creates an explosion view
+     * @param xlpooLsionServer The game this view belongs to
+     */
     public ExplosionView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);
     }
@@ -32,6 +39,10 @@ public class ExplosionView extends EntityView {
         return temp_sprite;
     }
 
+    /**
+     * Creates the animations for the different types of explosions
+     * @param xlpooLsionServer The game these animations belong to
+     */
     void createAnimations(XLPOOLsionServer xlpooLsionServer) {
         centerAnim = xlpooLsionServer.getTextureManager().getExplosionAnimation(ExplosionModel.Direction.Center);
         verticalAnim = xlpooLsionServer.getTextureManager().getExplosionAnimation(ExplosionModel.Direction.Vertical);

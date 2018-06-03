@@ -25,6 +25,9 @@ import java.util.List;
 
 import static com.xlpoolsion.server.controller.levels.BaseLevelController.LEVEL_WIDTH;
 
+/**
+ * Screen used during the main gameplay
+ */
 public class GameScreen extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
@@ -50,6 +53,10 @@ public class GameScreen extends ScreenAdapter {
 
     private BitmapFont main_size20;
 
+    /**
+     * Creates the main game screen
+     * @param xlpooLsionServer The game this screen belongs to
+     */
     public GameScreen(XLPOOLsionServer xlpooLsionServer) {
         this.xlpooLsionServer = xlpooLsionServer;
 

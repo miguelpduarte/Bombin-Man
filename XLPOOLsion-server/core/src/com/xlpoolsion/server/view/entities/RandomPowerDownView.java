@@ -4,10 +4,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.xlpoolsion.server.XLPOOLsionServer;
 
+/**
+ * A view representing a random power down
+ */
 public class RandomPowerDownView extends EntityView{
     public static final float WIDTH = 32;
     public static final float HEIGHT = 32;
 
+    /**
+     * Creates a random power down view
+     * @param xlpooLsionServer
+     */
     public RandomPowerDownView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);
     }

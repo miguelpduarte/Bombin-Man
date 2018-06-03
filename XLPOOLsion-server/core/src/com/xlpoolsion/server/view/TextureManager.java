@@ -12,6 +12,9 @@ import com.xlpoolsion.server.view.entities.PlayerView;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * Class in charge of loading all assets and creating animations
+ */
 public class TextureManager {
     private AssetManager assetManager;
     private Texture fullBombSpritesTexture;
@@ -19,6 +22,9 @@ public class TextureManager {
     private Animation<TextureRegion> bombAnimation;
     private TextureRegion[][] explosionsSpritesSplit;
 
+    /**
+     * Enum used to define the different types of animations
+     */
     public enum PlayerAnimType {
         UP,
         RIGHT,
@@ -29,6 +35,9 @@ public class TextureManager {
         VICTORY
     }
 
+    /**
+     * Enum used to define the different type of player colors
+     */
     public enum PlayerColor {
         WHITE,
         BLUE,
@@ -50,6 +59,10 @@ public class TextureManager {
     //Actual fully fledged map
     private EnumMap<PlayerColor, EnumMap<PlayerAnimType, Animation<TextureRegion> >> playerAnimations = new EnumMap<PlayerColor, EnumMap<PlayerAnimType, Animation<TextureRegion>>>(PlayerColor.class);
 
+    /**
+     * Creates the manager used to manage all textures and animations
+     * @param assetManager
+     */
     public TextureManager(AssetManager assetManager) {
         this.assetManager = assetManager;
         allocateMap();
@@ -58,6 +71,9 @@ public class TextureManager {
         buildAnimations();
     }
 
+    /**
+     * Creates a map with the different types of animations
+     */
     private void allocateMap() {
         playerAnimations.put(PlayerColor.WHITE, whitePlayerAnimations);
         playerAnimations.put(PlayerColor.BLUE, bluePlayerAnimations);

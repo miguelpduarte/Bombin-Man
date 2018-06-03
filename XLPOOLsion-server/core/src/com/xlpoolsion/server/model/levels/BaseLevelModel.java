@@ -184,6 +184,14 @@ public abstract class BaseLevelModel {
         return temp_explosions;
     }
 
+    /**
+     * Helps the creation of explosions, verifies if the explosion can be created (if it is not over a brick) if so creates it
+     * @param origin The center of the explosion
+     * @param shift The space in the grid corresponding to a square
+     * @param explosionRadius The radius of the explosion from the origin
+     * @param direction The type of explosion (Horizontal Vertical or Center)
+     * @return
+     */
     private List<ExplosionModel> createExplosionHelper(Vector2 origin, Vector2 shift, int explosionRadius,ExplosionModel.Direction direction) {
         ArrayList<ExplosionModel> explosions = new ArrayList<ExplosionModel>();
         EntityModel fetchedBrick;

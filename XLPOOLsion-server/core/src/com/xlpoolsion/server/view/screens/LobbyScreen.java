@@ -20,6 +20,9 @@ import com.xlpoolsion.server.networking.NetworkInfo;
 import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.ButtonFactory;
 
+/**
+ * The first screen showed to the user used to wait for the clients to connect
+ */
 public class LobbyScreen extends BaseScreen {
     private BitmapFont main_size50;
     private BitmapFont bold_size50;
@@ -30,6 +33,10 @@ public class LobbyScreen extends BaseScreen {
     private Image[] playerStatusImages;
     private Label[] playerStatusLabels;
 
+    /**
+     * Creates the Lobby screen
+     * @param xlpooLsionServer The game this screen belongs to
+     */
     public LobbyScreen(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer, Type.Lobby);
     }

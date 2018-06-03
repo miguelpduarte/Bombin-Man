@@ -3,11 +3,18 @@ package com.xlpoolsion.server.view.entities;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.view.TextureManager;
 
+/**
+ * A View used to create the animations for the white player
+ */
 public class PlayerWhiteView extends PlayerView {
     public PlayerWhiteView(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer);
     }
 
+    /**
+     * Create White player animations
+     * @param xlpooLsionServer The game these animations belong to
+     */
      void createAnimations(XLPOOLsionServer xlpooLsionServer) {
         super.upAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.WHITE, TextureManager.PlayerAnimType.UP);
         super.rightAnim = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.WHITE, TextureManager.PlayerAnimType.RIGHT);

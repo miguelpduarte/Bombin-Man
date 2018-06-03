@@ -15,11 +15,17 @@ import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.TextureManager;
 import com.xlpoolsion.server.view.screens.LobbyScreen;
 
+/**
+ * The game main class
+ */
 public class XLPOOLsionServer extends Game {
 	SpriteBatch batch;
 	AssetManager assetManager;
 	TextureManager textureManager;
 
+	/**
+	 * Creates the game. Initializes the sprite batch and asset manager.
+	 */
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -45,18 +51,39 @@ public class XLPOOLsionServer extends Game {
 		setScreen(new LobbyScreen(this));
 	}
 
+	/**
+	 * Returns the sprite batch used to improve drawing performance.
+	 *
+	 * @return the sprite batch
+	 * @return
+	 */
 	public SpriteBatch getBatch() {
 		return batch;
 	}
 
+	/**
+	 * Returns the asset manager used to load all textures.
+	 *
+	 * @return the asset manager
+	 * @return
+	 */
 	public AssetManager getAssetManager() {
 		return assetManager;
 	}
 
+	/**
+	 * Returns the texture manager used to handle all textures and sounds.
+	 *
+	 * @return the texture manager
+	 * @return
+	 */
 	public TextureManager getTextureManager() {
 		return textureManager;
 	}
 
+	/**
+	 * Disposes of all assets.
+	 */
 	@Override
 	public void dispose () {
 		batch.dispose();
