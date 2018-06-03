@@ -55,7 +55,6 @@ public class WinScreen extends BaseScreen {
         loadFonts();
         xlpooLsionServer.getAssetManager().load("WinningScreenBackground.png", Texture.class);
         xlpooLsionServer.getAssetManager().finishLoading();
-        //Get based on the winner player when that is implemented later -> see ViewFactory switch case for player, do something similar
         winnerAnimation = xlpooLsionServer.getTextureManager().getPlayerAnimation(TextureManager.PlayerColor.WHITE, TextureManager.PlayerAnimType.VICTORY);
         createFonts();
     }
@@ -315,6 +314,4 @@ public class WinScreen extends BaseScreen {
                 break;
         }
     }
-//Função de click do botão de back deve mudar o estado para lobby screen de novo (state reset) -> Para ter a certeza tentar kickar todos os players?
-    //Já deverão estar kickados by then, mesmo a win message fecha a ligação
 }

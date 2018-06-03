@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.networking.NetworkInfo;
-import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.ButtonFactory;
 
 /**
@@ -80,11 +79,6 @@ public class LobbyScreen extends BaseScreen {
         candl_bold_50px.fontFileName = "fonts/Champagne & Limousines Bold.ttf";
         candl_bold_50px.fontParameters.size = 50;
         xlpooLsionServer.getAssetManager().load("bold_size50.ttf", BitmapFont.class, candl_bold_50px);
-
-        /*FreetypeFontLoader.FreeTypeFontLoaderParameter size2Params = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        size2Params.fontFileName = "data/arial.ttf";
-        size2Params.fontParameters.size = 20;
-        manager.load("size20.ttf", BitmapFont.class, size2Params);*/
     }
 
     @Override

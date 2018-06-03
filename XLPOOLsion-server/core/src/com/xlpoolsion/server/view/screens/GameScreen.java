@@ -72,9 +72,6 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void loadAssets() {
-        ///Moved to TextureManager
-        //this.xlpooLsionServer.getAssetManager().load("badlogic.jpg", Texture.class);
-        //this.xlpooLsionServer.getAssetManager().finishLoading();
         loadFont();
     }
 
@@ -245,8 +242,6 @@ public class GameScreen extends ScreenAdapter {
         };
 
         for(int i = 0; i < amounts.length; i++){
-            //nrSprite.setSize(HUD_POWER_SIZE/2, HUD_POWER_SIZE);
-            //nrSprite.setCenter(hud_x + HUD_POWER_SIZE * 2, hud_y + i * HUD_POWER_SIZE);
             main_size20.draw(xlpooLsionServer.getBatch(), "" + amounts[i],
                     hud_x + HUD_POWER_SIZE, hud_y + i * HUD_POWER_SIZE + HUD_POWER_SIZE/4,
                     HUD_POWER_SIZE*2, Align.center, false);

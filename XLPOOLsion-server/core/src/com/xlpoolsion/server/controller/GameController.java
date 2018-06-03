@@ -252,7 +252,6 @@ public class GameController {
             System.out.println("Can't start the game without at least " + MIN_CONNECTED_CLIENTS + " clients");
             return;
         } else {
-            //This will in fact be another thing, as this will be abstract
             currentLevelController = new SimpleLevelController(NetworkRouter.getInstance().getConnectedClients());
             NetworkRouter.getInstance().sendToAll(new ServerToClientMessage(ServerToClientMessage.MessageType.START_GAME));
             currentState = STATE.PLAYING;

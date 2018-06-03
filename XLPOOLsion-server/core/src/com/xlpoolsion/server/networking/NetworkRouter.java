@@ -36,11 +36,7 @@ public class NetworkRouter {
      * @param msg The message to forward
      */
     void forwardMessage(int senderId, ClientToServerMessage msg) {
-        //System.out.println("Router received message of type " + msg.messageType);
-
-        //TEMPORARY
         if(GameController.getInstance().getCurrentState() != GameController.STATE.PLAYING) {
-            //To prevent null pointer exceptions by doing what wouldnt be done anyway
             return;
         }
 

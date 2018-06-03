@@ -53,7 +53,6 @@ class ClientManager {
                     try {
                         msg = (ClientToServerMessage) obj_in.readObject();
                         if (msg == null) {
-                            //System.out.println("Message was null, continuing");
                             continue;
                         }
 
@@ -61,7 +60,6 @@ class ClientManager {
                         //Socket was closed but thread is still running, terminate it
                         return;
                     } catch (EOFException e) {
-                        //e.printStackTrace();
                         System.out.println("Client " + clientId + " disconnected");
                         NetworkRouter.getInstance().informPlayerDisconnect(clientId);
                         closeConnection();
