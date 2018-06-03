@@ -31,7 +31,7 @@ public class WinScreen extends BaseScreen {
     private BitmapFont main_size30;
     private Label winnerLabelText;
 
-    public static final float Y_GAP = 99;
+    public final float Y_GAP = stage.getHeight()/10.91f;
 
     public WinScreen(XLPOOLsionServer xlpooLsionServer, ArrayList<PlayerModel> playersLastInfo) {
         super(xlpooLsionServer, Type.Win_Screen);
