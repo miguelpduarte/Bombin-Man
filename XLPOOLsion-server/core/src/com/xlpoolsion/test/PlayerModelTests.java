@@ -151,4 +151,23 @@ public class PlayerModelTests {
         playerModel.increaseAllowedBombs();
         assertEquals(10, playerModel.getAllowedBombsChanger());
     }
+
+    @Test
+    public void playerBombLimitTest() {
+        PlayerModel playerModel = new PlayerModel(0, 0, 0, 0);
+
+        //Initally can only place one bomb
+        assertTrue(playerModel.incrementActiveBombs());
+        assertFalse(playerModel.incrementActiveBombs());
+        playerModel.decrementActiveBombs();
+        assertTrue(playerModel.incrementActiveBombs());
+        playerModel.decrementActiveBombs();
+
+        //Adding one bomb powerup
+        playerModel.increaseAllowedBombs();
+        assertTrue(playerModel.incrementActiveBombs());
+        assertTrue(playerModel.incrementActiveBombs());
+        assertFalse(playerModel.incrementActiveBombs());
+        assertEquals(1, playerModel.getAllowedBombsChanger());
+    }
 }
