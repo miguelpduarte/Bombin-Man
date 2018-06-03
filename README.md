@@ -27,3 +27,8 @@ https://web.fe.up.pt/~up201606298/LPOO_second_delivery/
 
 ## User Manual
 ![Link to User Manual](deliverables/User_Manual.pdf "User Manual PDF")
+## Full UML's 
+![Link to Server UML](deliverables/ServerFullUML.png "Server Full UML")
+
+
+![Link to Android UML](deliverables/AndroidFullUML.png "Android Full UML")
