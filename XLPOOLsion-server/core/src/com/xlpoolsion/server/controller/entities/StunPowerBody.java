@@ -11,6 +11,13 @@ import com.xlpoolsion.server.model.entities.StunPowerModel;
  * A concrete representation of an EntityBody representing a StunPower
  */
 public class StunPowerBody extends EntityBody {
+    /**
+     * Constructs a StunPower body according to
+     * a StunPower model.
+     *
+     * @param world the physical world this stun power belongs to.
+     * @param model the model representing this stun power.
+     */
     public StunPowerBody(World world, EntityModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);
 

@@ -11,6 +11,13 @@ import com.xlpoolsion.server.model.entities.PowerUpModel;
  * A concrete representation of an EntityBody representing a PowerUp
  */
 public class PowerUpBody extends EntityBody{
+    /**
+     * Constructs a PowerUp body according to
+     * a PowerUp model.
+     *
+     * @param world the physical world this power up belongs to.
+     * @param model the model representing this power up.
+     */
     public PowerUpBody(World world, EntityModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);
 

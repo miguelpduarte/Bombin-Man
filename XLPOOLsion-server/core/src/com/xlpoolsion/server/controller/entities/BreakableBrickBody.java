@@ -9,6 +9,13 @@ import com.xlpoolsion.server.model.entities.BreakableBrickModel;
  * A concrete representation of an EntityBody representing a Breakable Brick.
  */
 public class BreakableBrickBody extends EntityBody {
+    /**
+     * Constructs a BreakableBrick body according to
+     * a BreakableBrick model.
+     *
+     * @param world the physical world this breakable brick belongs to.
+     * @param model the model representing this breakable brick.
+     */
     public BreakableBrickBody(World world, BreakableBrickModel model) {
         super(world, model, BodyDef.BodyType.StaticBody);
 

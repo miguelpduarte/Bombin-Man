@@ -16,6 +16,13 @@ public class EntityBody {
      */
     final Body body;
 
+    /**
+     * Constructs a body representing a model in a certain world.
+     *
+     * @param world The world this body lives on.
+     * @param model The model representing the body.
+     * @param bodyType The Type of Body
+     */
     EntityBody(World world, EntityModel model, BodyDef.BodyType bodyType) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;

@@ -11,7 +11,13 @@ import com.xlpoolsion.server.model.entities.PlayerModel;
  * A concrete representation of an EntityBody representing a Player.
  */
 public class PlayerBody extends EntityBody {
-
+    /**
+     * Constructs a Player body according to
+     * a Player model.
+     *
+     * @param world the physical world this player belongs to.
+     * @param model the model representing this player.
+     */
     public PlayerBody(World world, PlayerModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);
 

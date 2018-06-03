@@ -11,7 +11,13 @@ import com.xlpoolsion.server.model.entities.BrickModel;
  */
 public class BrickBody extends  EntityBody {
 
-
+    /**
+     * Constructs a Brick body according to
+     * a Brick model.
+     *
+     * @param world the physical world this brick belongs to.
+     * @param model the model representing this brick.
+     */
     public BrickBody(World world, BrickModel model) {
         super(world, model, BodyDef.BodyType.StaticBody);
 

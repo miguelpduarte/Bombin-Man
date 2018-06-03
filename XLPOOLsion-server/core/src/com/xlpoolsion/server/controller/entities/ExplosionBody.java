@@ -11,6 +11,13 @@ import com.xlpoolsion.server.model.entities.ExplosionModel;
  * A concrete representation of an EntityBody representing an Explosion
  */
 public class ExplosionBody extends EntityBody {
+    /**
+     * Constructs an Explosion body according to
+     * an Explosion model.
+     *
+     * @param world the physical world this explosion belongs to.
+     * @param model the model representing this explosion.
+     */
     public ExplosionBody(World world, EntityModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);
 

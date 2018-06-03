@@ -11,6 +11,13 @@ import com.xlpoolsion.server.model.entities.PowerDownModel;
  * A concrete representation of an EntityBody representing a PowerDown
  */
 public class PowerDownBody extends EntityBody{
+    /**
+     * Constructs a PowerDown body according to
+     * a PowerDown model.
+     *
+     * @param world the physical world this power down belongs to.
+     * @param model the model representing this power down.
+     */
     public PowerDownBody(World world, EntityModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);
 

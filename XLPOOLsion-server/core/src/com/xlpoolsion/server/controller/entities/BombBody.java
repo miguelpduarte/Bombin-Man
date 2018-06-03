@@ -7,7 +7,13 @@ import com.xlpoolsion.server.model.entities.BombModel;
  *  A concrete representation of an EntityBody representing a bomb.
  */
 public class BombBody extends EntityBody {
-
+    /**
+     * Constructs a Bomb body according to
+     * a Bomb model.
+     *
+     * @param world the physical world this bomb belongs to.
+     * @param model the model representing this bomb.
+     */
     public BombBody(World world, BombModel model) {
         super(world, model, BodyDef.BodyType.StaticBody);
 
