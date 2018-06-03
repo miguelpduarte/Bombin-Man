@@ -1,6 +1,11 @@
 # Bombin' Man
 Second project developed in the LPOO course unit.
 
+**Contributors:**
+* Miguel Duarte, up201606298, @miguelpduarte
+* António Cruz, up201603526, @AntoniooCruz
+* Group 4 of Class 1
+
 ## Full project source-code, including unit tests
 The source code is in this repository, under the XLPOOLsion-client and XLPOOLsion-server directories.
 
