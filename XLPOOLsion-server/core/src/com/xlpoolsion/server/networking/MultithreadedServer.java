@@ -8,13 +8,33 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * Multithreaded Server used for the game communications. Listens for connections in a separate thread (to not block the main thread used for the game) and
+ * for each new connection passes the socket to a {@link .ClientManager} or {@link .ClientErrorCommunicator}, depending on the current status, that will handle
+ * client communications.
+ */
 public class MultithreadedServer {
+    /**
+     * The maximum number of clients that can connect to the game
+     */
     public static int MAX_CLIENTS = 4;
 
+    /**
+     * The server socket to use for communications
+     */
     private ServerSocket svSocket;
+    /**
+     * The {@link .ClientManager}s responsible for handling client communications
+     */
     private ClientManager[] clientManagers = new ClientManager[MAX_CLIENTS];
+    /**
+     * The thread in which we will listen for connections
+     */
     private Thread connectionListeningThread;
 
+    /**
+     * Creates a new MultithreadedServer
+     */
     public MultithreadedServer() {
         System.out.println("Creating server in IP: " + NetworkInfo.getInstance().getServerIP() + " at port " + NetworkInfo.getInstance().getServerPort());
         try {
@@ -72,6 +92,10 @@ public class MultithreadedServer {
         connectionListeningThread.start();
     }
 
+    /**
+     * Gets the first available index in the clientManagers array, in which the new ClientManager will be inserted.
+     * @return Returns the first available index in the clientManagers array, or -1 in case it is full.
+     */
     private int getFirstAvailableIndex() {
         for (int i = 0; i < clientManagers.length; ++i) {
             if (clientManagers[i] == null) {
@@ -81,7 +105,11 @@ public class MultithreadedServer {
         return -1;
     }
 
-    public void broadcast(ServerToClientMessage msg) {
+    /**
+     * Forwards the passed message to all the connected clients
+     * @param msg Message to forward to all the clients
+     */
+    void broadcast(ServerToClientMessage msg) {
         for (int i = 0; i < clientManagers.length; ++i) {
             if (clientManagers[i] != null) {
                 clientManagers[i].sendMessage(msg);
@@ -89,7 +117,12 @@ public class MultithreadedServer {
         }
     }
 
-    public void sendToAllExcept(int clientId, ServerToClientMessage msg) {
+    /**
+     * Forwards the passed message to all but the client with the given id
+     * @param clientId Id of the client to not send the message to
+     * @param msg Message to send
+     */
+    void sendToAllExcept(int clientId, ServerToClientMessage msg) {
         for(int i = 0; i < clientManagers.length; ++i) {
             if(i == clientId) {
                 continue;
@@ -100,19 +133,31 @@ public class MultithreadedServer {
         }
     }
 
-    public void sendToClient(int clientId, ServerToClientMessage msg) {
+    /**
+     * Forwards the passed message to the specified client
+     * @param clientId Id of the client to send the message to
+     * @param msg Message to send
+     */
+    void sendToClient(int clientId, ServerToClientMessage msg) {
         if (clientId < MAX_CLIENTS && clientManagers[clientId] != null) {
             clientManagers[clientId].sendMessage(msg);
         }
     }
 
-    public void removeClient(int clientId) {
+    /**
+     * Removes a client from the internal array
+     * @param clientId Id of the client to remove
+     */
+    void removeClient(int clientId) {
         if (clientId < MAX_CLIENTS) {
             clientManagers[clientId] = null;
         }
     }
 
-    public void closeServer() {
+    /**
+     * Closes the server, by first closing the connection with each client as well
+     */
+    void closeServer() {
         for (ClientManager clientManager : clientManagers) {
             if (clientManager != null) {
                 clientManager.closeConnection();
@@ -128,7 +173,11 @@ public class MultithreadedServer {
         }
     }
 
-    public int getNConnectedClients() {
+    /**
+     * Gets the number of connected clients
+     * @return Returns the number of connected clients
+     */
+    int getNConnectedClients() {
         int res = 0;
         for (ClientManager clientManager : clientManagers) {
             if (clientManager != null) {
@@ -138,7 +187,11 @@ public class MultithreadedServer {
         return res;
     }
 
-    public boolean[] getConnectedClients() {
+    /**
+     * Returns an array representative of the current client connections
+     * @return Returns an array that represents the current client connections. Each index represents the client with the corresponding id, being true if he is connected of false if not.
+     */
+    boolean[] getConnectedClients() {
         boolean[] res = new boolean[MAX_CLIENTS];
         for(int i = 0; i < clientManagers.length; ++i) {
             if(clientManagers[i] != null) {

@@ -7,9 +7,17 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+/**
+ * Singleton class responsible for fetching information about the current network access
+ */
 public class NetworkInfo {
-
+    /**
+     * The server localhost LAN IP
+     */
     private String serverIP;
+    /**
+     * The port used for communication between clients and server
+     */
     private static final int serverPort = 9876;
 
     private static NetworkInfo instance = null;
@@ -85,7 +93,13 @@ public class NetworkInfo {
         }
     }
 
+    /**
+     * Server to ping in order to get the current IP (deprecated)
+     */
     private static final String IP_VERIFICATION_URL = "google.com";
+    /**
+     * Port through which to ping in order to get the current IP (deprecated)
+     */
     private static final int IP_VERIFICATION_PORT = 80;
 
     /**
@@ -105,14 +119,26 @@ public class NetworkInfo {
         }
     }
 
+    /**
+     * Gets the server IP
+     * @return Returns the current server localhost LAN IP
+     */
     public String getServerIP() {
         return serverIP;
     }
 
+    /**
+     * Gets the port to be used by the server
+     * @return The server port to be used for the game
+     */
     int getServerPort() {
         return serverPort;
     }
 
+    /**
+     * Gets the current singleton instance of the NetworkInfo
+     * @return The current singleton instance of this class
+     */
     public static NetworkInfo getInstance() {
         if(instance == null) {
             instance = new NetworkInfo();
