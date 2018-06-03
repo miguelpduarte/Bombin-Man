@@ -93,6 +93,10 @@ public abstract class BaseLevelModel {
         return bomb;
     }
 
+    /**
+     * Updates the game by setting for removal the bodies that should be removed
+     * @param delta The size of this physics step in seconds.
+     */
     public void update(float delta) {
         for (BombModel bomb : bombs) {
             if (bomb.decreaseTimeToExplosion(delta)) {
@@ -130,6 +134,12 @@ public abstract class BaseLevelModel {
     static final float GRID_PADDING_X = BrickModel.WIDTH;
     static final float GRID_PADDING_Y = BrickModel.HEIGHT;
 
+    /**
+     * Places the bomb in the closest square of the grid
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return
+     */
     private Vector2 snapBombToGrid(float x, float y) {
         int x_k = (int) ((x - GRID_START_X)/GRID_PADDING_X);
         int y_k = (int) ((y - GRID_START_Y)/GRID_PADDING_Y);
@@ -213,6 +223,10 @@ public abstract class BaseLevelModel {
         return explosion;
     }
 
+    /**
+     * Deals with the removal
+     * @param model Model to be removed
+     */
     public void remove(EntityModel model) {
         //Destroying the no longer necessary view for this model
         ViewFactory.destroyView(model);
