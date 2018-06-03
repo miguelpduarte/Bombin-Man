@@ -17,6 +17,9 @@ import com.xlpoolsion.client.view.ButtonFactory;
 
 import java.io.IOException;
 
+/**
+ * Screen shown when the player is typing the ip to connect
+ */
 public class ConnectScreen extends StageScreen {
     private Image textBoxImage;
 
@@ -36,10 +39,18 @@ public class ConnectScreen extends StageScreen {
 
     private String connectIp = "";
 
+    /**
+     * Creates a connect screen
+     * @param xlpooLsionClient The game the screen belongs to
+     */
     public ConnectScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
 
+    /**
+     * Changes the screen once the player is connected
+     * @param delta The time passed
+     */
     @Override
     public void render(float delta) {
         super.render(delta);

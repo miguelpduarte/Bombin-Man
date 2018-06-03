@@ -9,7 +9,14 @@ import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.view.ButtonFactory;
 
+/**
+ * Screen shown after losing connection
+ */
 public class LostConnectionScreen extends StageScreen {
+    /**
+     * Creates a lost connection screen
+     * @param xlpooLsionClient The game this screen belongs to
+     */
     public LostConnectionScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }

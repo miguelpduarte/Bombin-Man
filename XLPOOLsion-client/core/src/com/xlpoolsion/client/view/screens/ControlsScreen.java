@@ -23,11 +23,18 @@ import com.xlpoolsion.client.networking.NetworkRouter;
 import com.xlpoolsion.client.view.ButtonFactory;
 import com.xlpoolsion.common.ClientToServerMessage;
 
+/**
+ * The screen showed when the main gameplay is on going, used to control the player
+ */
 public class ControlsScreen extends StageScreen {
     private Skin skin;
 
     private Touchpad touchpad;
 
+    /**
+     * Creates a control screen
+     * @param xlpooLsionClient The game the screen belongs to
+     */
     public ControlsScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
@@ -112,6 +119,10 @@ public class ControlsScreen extends StageScreen {
         skin.add("default", simpleLblStyle);
     }
 
+    /**
+     * Changes screen based on the current state
+     * @param delta The time passed
+     */
     @Override
     public void render(float delta) {
         super.render(delta);

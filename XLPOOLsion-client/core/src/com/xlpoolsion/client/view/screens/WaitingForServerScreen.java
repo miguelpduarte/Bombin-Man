@@ -10,7 +10,14 @@ import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.controller.GameController;
 
+/**
+ * Screen shown when the client is waiting for the server to start
+ */
 public class WaitingForServerScreen extends StageScreen {
+    /**
+     * Creates a waiting for server screen
+     * @param xlpooLsionClient The game this screen belongs to
+     */
     public WaitingForServerScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
@@ -62,6 +69,10 @@ public class WaitingForServerScreen extends StageScreen {
         stage.addActor(loadingImage);
     }
 
+    /**
+     * Changes screen based on the current state and updates animations
+     * @param delta the time passed
+     */
     @Override
     public void render(float delta) {
         super.render(delta);

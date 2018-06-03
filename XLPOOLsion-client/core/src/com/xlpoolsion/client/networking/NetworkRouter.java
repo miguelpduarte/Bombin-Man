@@ -5,7 +5,7 @@ import com.xlpoolsion.common.ClientToServerMessage;
 import com.xlpoolsion.common.ServerToClientMessage;
 
 /**
- * Singleton class responsible for routing messages to and from the GameController, using a {@link .Connection}.
+ * Singleton class responsible for routing messages to and from the GameController, using a Connection.
  */
 public class NetworkRouter {
     private static NetworkRouter instance = null;
@@ -59,8 +59,7 @@ public class NetworkRouter {
                 endConnection();
                 break;
             case YOU_LOST:
-                System.out.println("This player lost (was killed by player " + 420 + ") - WIP");
-                GameController.getInstance().signalLostGame(420);
+                GameController.getInstance().signalLostGame();
                 endConnection();
                 break;
         }

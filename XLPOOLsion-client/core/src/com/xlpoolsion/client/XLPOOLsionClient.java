@@ -5,7 +5,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xlpoolsion.client.view.screens.MainMenuScreen;
 
-
+/**
+ * The main class of the game
+ */
 public class XLPOOLsionClient extends Game {
 	private SpriteBatch batch;
 	private AssetManager assetManager;

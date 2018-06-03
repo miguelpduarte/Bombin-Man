@@ -14,7 +14,14 @@ import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.view.ButtonFactory;
 
+/**
+ * The screen shown after losing
+ */
 public class LoseScreen extends StageScreen {
+    /**
+     * Creates a losing screen
+     * @param xlpooLsionClient The game this screen belongs to
+     */
     public LoseScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
@@ -83,6 +90,10 @@ public class LoseScreen extends StageScreen {
         stage.addActor(backButton);
     }
 
+    /**
+     * Updates the animation
+     * @param delta the time passed
+     */
     @Override
     public void render(float delta) {
         super.render(delta);

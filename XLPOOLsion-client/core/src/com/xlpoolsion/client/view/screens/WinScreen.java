@@ -14,7 +14,14 @@ import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.view.ButtonFactory;
 
+/**
+ * The screen shown when the client wins
+ */
 public class WinScreen extends StageScreen {
+    /**
+     * Creates a win screen
+     * @param xlpooLsionClient The game this screen belongs to
+     */
     public WinScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
@@ -81,6 +88,10 @@ public class WinScreen extends StageScreen {
         stage.addActor(backButton);
     }
 
+    /**
+     * Updates the victory animation
+     * @param delta the time passed
+     */
     @Override
     public void render(float delta) {
         super.render(delta);

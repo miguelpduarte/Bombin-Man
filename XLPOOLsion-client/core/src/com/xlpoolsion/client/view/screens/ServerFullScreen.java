@@ -13,7 +13,14 @@ import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.client.view.ButtonFactory;
 
+/**
+ * Screen that is shown when the server is full
+ */
 public class ServerFullScreen extends StageScreen {
+    /**
+     * Creates a server full screen
+     * @param xlpooLsionClient The game this screen belongs to
+     */
     public ServerFullScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
@@ -84,6 +91,10 @@ public class ServerFullScreen extends StageScreen {
         stage.addActor(backButton);
     }
 
+    /**
+     * Updates the animation
+     * @param delta the time passed
+     */
     @Override
     public void render(float delta) {
         super.render(delta);

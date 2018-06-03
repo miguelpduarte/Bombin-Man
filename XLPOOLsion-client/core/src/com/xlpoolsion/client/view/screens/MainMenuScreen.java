@@ -9,7 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.xlpoolsion.client.XLPOOLsionClient;
 import com.xlpoolsion.client.view.ButtonFactory;
 
+/**
+ * First screen shown
+ */
 public class MainMenuScreen extends StageScreen {
+    /**
+     * Creates a Main menu screen
+     * @param xlpooLsionClient The game this screen belongs to
+     */
     public MainMenuScreen(XLPOOLsionClient xlpooLsionClient) {
         super(xlpooLsionClient);
     }
