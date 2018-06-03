@@ -207,8 +207,7 @@ public class ConnectScreen extends StageScreen {
                 System.out.println("Attempting to connect to ip: " + parsedIP);
                 if(parsedIP != null) {
                     try {
-                        //TODO: Move port number to protocol class
-                        NetworkRouter.getInstance().setConnection(new Connection(parsedIP, 9876));
+                        NetworkRouter.getInstance().setConnection(new Connection(parsedIP));
                     } catch (IOException e) {
                         System.out.println("Couldn't connect to server");
                         e.printStackTrace();

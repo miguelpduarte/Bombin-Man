@@ -11,16 +11,29 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * Represents a client to server connection
+ */
 public class Connection {
     private Socket socket;
     private ObjectInputStream obj_in;
     private ObjectOutputStream obj_out;
-    //Port 9876
-
+    /**
+     * The predefined server communication port
+     */
+    private static final int server_port = 9876;
+    /**
+     * The thread in which to listen for messages (read is blocking)
+     */
     private Thread messageListeningThread;
 
-    public Connection(String ip, int port) throws IOException {
-        socket = new Socket(ip, port);
+    /**
+     * Opens a connection to the server in the given IP
+     * @param ip IP to connect to
+     * @throws IOException In case the connection to the server was unsuccessful
+     */
+    public Connection(String ip) throws IOException {
+        socket = new Socket(ip, server_port);
         try {
             socket.setTcpNoDelay(true);
         } catch(SocketException e) {
@@ -100,6 +113,10 @@ public class Connection {
         }
     }
 
+    /**
+     * Sends the given message to the server, flushing the output stream
+     * @param msg Message to send to the server
+     */
     public void sendMessage(ClientToServerMessage msg) {
         try {
             obj_out.writeObject(msg);
@@ -109,11 +126,19 @@ public class Connection {
         }
     }
 
-    public void close() {
+    /**
+     * Closes the connection to the server
+     */
+    void close() {
         closeSocket();
         messageListeningThread.interrupt();
     }
 
+    /**
+     * Parses a zero-padded IP to one in the correct format
+     * @param connectIp IP to parse
+     * @return Parsed IP, for example 192168001016 becomes 192.168.1.16
+     */
     public static String parseIP(String connectIp) {
         if(connectIp.length() != 12) {
             return null;

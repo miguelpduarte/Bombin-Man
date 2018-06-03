@@ -4,13 +4,23 @@ import com.xlpoolsion.client.controller.GameController;
 import com.xlpoolsion.common.ClientToServerMessage;
 import com.xlpoolsion.common.ServerToClientMessage;
 
+/**
+ * Singleton class responsible for routing messages to and from the GameController, using a {@link .Connection}.
+ */
 public class NetworkRouter {
     private static NetworkRouter instance = null;
+    /**
+     * Current connection to the server
+     */
     private Connection connection = null;
 
     private NetworkRouter() {
     }
 
+    /**
+     * Returns the current NetworkRouter singleton instance
+     * @return The current singleton instance of this class
+     */
     public static NetworkRouter getInstance() {
         if(instance == null) {
             instance = new NetworkRouter();
@@ -18,14 +28,21 @@ public class NetworkRouter {
         return instance;
     }
 
+    /**
+     * Sets the current connection to the given one, after terminating the current one, if it exists
+     * @param connection The new connection to use
+     */
     public void setConnection(Connection connection) {
         //To ensure that no duplicate connections are attempted
         endConnection();
         this.connection = connection;
     }
 
+    /**
+     * Forwards a server message to the GameController, after doing the correct preprocessing
+     * @param msg The server message to process and send to the GameController
+     */
     void forwardMessage(ServerToClientMessage msg) {
-        System.out.println("Router in client received message of type " + msg.messageType);
         switch (msg.messageType) {
             case YOU_ARE_STUNNED:
                 GameController.getInstance().signalStunned();
@@ -49,8 +66,11 @@ public class NetworkRouter {
         }
     }
 
+    /**
+     * Routes a message to the server
+     * @param msg Message to send to the server
+     */
     public void sendToServer(ClientToServerMessage msg) {
-        //System.out.println("Sending message of type " + msg.messageType);
         if(connection == null) {
             System.out.println("Not connected");
             return;
@@ -59,7 +79,10 @@ public class NetworkRouter {
         connection.sendMessage(msg);
     }
 
-    public void endConnection() {
+    /**
+     * Terminates the current connection, if it exists
+     */
+    private void endConnection() {
         if(connection != null) {
             connection.close();
             connection = null;
@@ -70,7 +93,6 @@ public class NetworkRouter {
      * To be used by the Connection, to signal it closed itself due to errors or server full/game end and thus network router should simply stop using it
      */
     public void terminateConnection() {
-        //Connection already closed itself
         connection = null;
     }
 }
