@@ -10,6 +10,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * Responsible for managing the connection to a certain client, through its respective Socket
+ */
 class ClientManager {
     private final Socket socket;
     private ObjectInputStream obj_in;
