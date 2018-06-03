@@ -46,5 +46,18 @@ public class GeneralModelTests {
         breakableBrickModel.setFlaggedForRemoval(true);
         assertTrue(breakableBrickModel.isFlaggedForRemoval());
         assertEquals(6, breakableBrickModel.getX(), 0.0001f);
+        assertEquals(2.5f, breakableBrickModel.getY(), 0.0001f);
+        assertEquals(1.1f, breakableBrickModel.getRotation(), 0.0001f);
+    }
+
+    @Test
+    public void stunPowerTest() {
+        StunPowerModel stunPowerModel = new StunPowerModel(5, 4, 3);
+        assertFalse(stunPowerModel.isFlaggedForRemoval());
+        stunPowerModel.setFlaggedForRemoval(true);
+        assertTrue(stunPowerModel.isFlaggedForRemoval());
+        assertEquals(5f, stunPowerModel.getX(), 0.0001f);
+        assertEquals(4, stunPowerModel.getY(), 0.0001f);
+        assertEquals(3, stunPowerModel.getRotation(), 0.0001f);
     }
 }
