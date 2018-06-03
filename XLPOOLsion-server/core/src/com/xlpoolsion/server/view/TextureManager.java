@@ -238,6 +238,7 @@ public class TextureManager {
         this.assetManager.load("Background1920x1920.jpg", Texture.class);
         this.assetManager.load("ExplosionAnimation.png", Texture.class);
         this.assetManager.load("WinningScreenBackground.png", Texture.class);
+        this.assetManager.load("back-button-md.png", Texture.class);
         this.assetManager.finishLoading();
     }
 

@@ -7,12 +7,17 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.server.XLPOOLsionServer;
+import com.xlpoolsion.server.controller.GameController;
 import com.xlpoolsion.server.model.entities.PlayerModel;
+import com.xlpoolsion.server.view.ButtonFactory;
 import com.xlpoolsion.server.view.TextureManager;
 
 import java.util.ArrayList;
@@ -73,6 +78,7 @@ public class WinScreen extends BaseScreen {
         createMinBombsLabelText();
         createMinRadiusLabelText();
         createMinSpeedLabelText();
+        createBackButton();
     }
 
     private void createMinRadiusLabelText() {
@@ -142,6 +148,20 @@ public class WinScreen extends BaseScreen {
         winnerLabelText = new Label(getWinnerText(), lb_style);
         winnerLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f, Align.left);
         stage.addActor(winnerLabelText);
+    }
+
+    private void createBackButton() {
+        Button backButton = ButtonFactory.makeButton(
+                xlpooLsionServer, "back-button-md.png", "back-button-md.png",
+                stage.getWidth() * 0.9f, stage.getHeight() * 0.15f, stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        stage.addActor(backButton);
     }
     private String getWinnerText(){
         return "Player " + playersLastInfo.get(0).getId() + " is the Winner Congratulations!";
