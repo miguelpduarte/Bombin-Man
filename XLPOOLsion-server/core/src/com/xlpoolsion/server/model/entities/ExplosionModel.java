@@ -18,7 +18,7 @@ public class ExplosionModel extends EntityModel {
         Center,
     }
 
-    private float time_to_decay;
+    private float time_to_decay = EXPLOSION_DECAY_TIME;
 
     /**
      * Creates a new Explosion model in a certain position and having a certain rotation.
