@@ -12,6 +12,8 @@ import com.xlpoolsion.server.model.entities.PlayerModel;
 import com.xlpoolsion.server.model.levels.BaseLevelModel;
 import com.xlpoolsion.server.networking.NetworkRouter;
 
+import java.util.ArrayList;
+
 import static com.xlpoolsion.server.networking.MultithreadedServer.MAX_CLIENTS;
 
 public class GameController {
@@ -41,16 +43,27 @@ public class GameController {
         currentLevelController.unstun(playerId);
     }
 
+    private ArrayList<PlayerModel> savedPlayersLastInfo;
+
     public void wonGame(int winner_id) {
+        //Saving players last info before everything is deleted
+        savedPlayersLastInfo = currentLevelController.getModel().getPlayersLastInfo();
+
         /*
         currentLevelController.destroy();
         currentLevelController = null;
         */
+        
         //Safety
         NetworkRouter.getInstance().sendToAllExcept(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_LOST));
+
         NetworkRouter.getInstance().sendToClient(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_WON));
         System.out.println("Don't forget to delete stuff!!!!");
         currentState = STATE.PLAYER_WON_GAME;
+    }
+
+    public ArrayList<PlayerModel> getPlayersLastInfo() {
+        return savedPlayersLastInfo;
     }
 
     public enum STATE {WAITING_FOR_CONNECTIONS, PLAYING, PLAYER_WON_GAME};

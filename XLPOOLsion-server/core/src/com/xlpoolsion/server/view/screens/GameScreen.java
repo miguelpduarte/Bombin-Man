@@ -112,7 +112,7 @@ public class GameScreen extends ScreenAdapter {
     private void checkStateTransition() {
         switch (GameController.getInstance().getCurrentState()) {
             case PLAYER_WON_GAME:
-                xlpooLsionServer.setScreen(new WinScreen(xlpooLsionServer,GameController.getInstance().getLevelModel().getPlayersLastInfo()));
+                xlpooLsionServer.setScreen(new WinScreen(xlpooLsionServer, GameController.getInstance().getPlayersLastInfo()));
                 break;
         }
     }

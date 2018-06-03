@@ -1,6 +1,5 @@
 package com.xlpoolsion.server.view.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -126,7 +125,7 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        mostBombsLabelText = new Label("Player " + getMostBombsPlayer() + " preferes quantity over quality with " + playersLastInfo.get(getMostBombsPlayer()).getAllowedBombsChanger() + " BombsUp PowerUps.", lb_style);
+        mostBombsLabelText = new Label("Player " + getMostBombsPlayer() + " prefers quantity over quality with " + playersLastInfo.get(getMostBombsPlayer()).getAllowedBombsChanger() + " BombsUp PowerUps.", lb_style);
         mostBombsLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 2* Y_GAP, Align.left);
         stage.addActor(mostBombsLabelText);
     }
@@ -163,8 +162,9 @@ public class WinScreen extends BaseScreen {
         });
         stage.addActor(backButton);
     }
+
     private String getWinnerText(){
-        return "Player " + playersLastInfo.get(0).getId() + " is the Winner Congratulations!";
+        return "Player " + playersLastInfo.get(0).getId() + " is the Winner! Congratulations!";
     }
 
     private int getMostSpeedPlayer() {
