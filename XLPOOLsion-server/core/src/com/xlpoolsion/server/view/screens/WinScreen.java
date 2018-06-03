@@ -104,7 +104,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMinBombsPlayer();
-        minBombsLabel = new Label("More bombs more problems... Player " + (id + 1) + " only needs " + getPlayer(id).getAllowedBombsChanger() + " bombs up power ups.", lb_style);
+        minBombsLabel = new Label("More bombs more problems... Player " + (id + 1) + " only needs " + getPlayer(id).getAllowedBombsChanger() + " bombs power ups.", lb_style);
         minBombsLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 4* Y_GAP, Align.left);
         stage.addActor(minBombsLabel);
     }
@@ -126,7 +126,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMostRadiusPlayer();
-        mostRadiusLabelText = new Label("Take off you jacket! Player " + (id + 1) + " is turning the heat up with " + getPlayer(id).getExplosionChanger() + " fire power ups.", lb_style);
+        mostRadiusLabelText = new Label("Take off your jacket! Player " + (id + 1) + " is turning the heat up with " + getPlayer(id).getExplosionChanger() + " fire power ups.", lb_style);
         mostRadiusLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 3* Y_GAP, Align.left);
         stage.addActor(mostRadiusLabelText);
     }
@@ -137,7 +137,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMostBombsPlayer();
-        mostBombsLabelText = new Label("Player " + (id + 1) + " prefers quantity over quality with " + getPlayer(id).getAllowedBombsChanger() + " bombs up power ups.", lb_style);
+        mostBombsLabelText = new Label("Player " + (id + 1) + " prefers quantity over quality with " + getPlayer(id).getAllowedBombsChanger() + " bombs power ups.", lb_style);
         mostBombsLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 2* Y_GAP, Align.left);
         stage.addActor(mostBombsLabelText);
     }
