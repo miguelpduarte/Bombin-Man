@@ -2,6 +2,9 @@ package com.xlpoolsion.server.model.levels;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * A concrete representation of the BaseLevelModel used to change the bricks that define the level
+ */
 public class SimpleLevelModel extends BaseLevelModel {
     public SimpleLevelModel(boolean[] connectedPlayers) {
         super(connectedPlayers, new Vector2[] {

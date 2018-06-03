@@ -11,6 +11,9 @@ import java.util.List;
 
 import static com.xlpoolsion.server.controller.levels.BaseLevelController.*;
 
+/**
+ * The model with the levels information
+ */
 public abstract class BaseLevelModel {
     private PlayerModel[] players = new PlayerModel[GameController.MAX_PLAYERS];
     private ArrayList<PlayerModel> playersLastInfo = new ArrayList<PlayerModel>();
