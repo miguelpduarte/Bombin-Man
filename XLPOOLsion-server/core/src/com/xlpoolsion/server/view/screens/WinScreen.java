@@ -86,7 +86,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMinRadiusPlayer();
-        minRadius = new Label("Player " + id + " doesnt think size matters so he only caught " + getPlayer(id).getExplosionChanger() + " fire powerUps ", lb_style);
+        minRadius = new Label("Player " + (id + 1) + " doesnt think size matters so he only caught " + getPlayer(id).getExplosionChanger() + " fire power ups.", lb_style);
         minRadius.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 5* Y_GAP, Align.left);
         stage.addActor(minRadius);
     }
@@ -97,7 +97,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMinBombsPlayer();
-        minBombsLabel = new Label("Player " + id + " keeps it short and simple he only needed " + getPlayer(id).getAllowedBombsChanger() + " BombsUp powerUps ", lb_style);
+        minBombsLabel = new Label("More bombs more problems... Player " + (id + 1) + " only needs " + getPlayer(id).getAllowedBombsChanger() + " bombs up power ups.", lb_style);
         minBombsLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 4* Y_GAP, Align.left);
         stage.addActor(minBombsLabel);
     }
@@ -108,7 +108,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMinSpeedPlayer();
-        minSpeed = new Label("Player " + id + " likes to take it slow with only " + getPlayer(id).getSpeedChanger() + " speed PowerUps.", lb_style);
+        minSpeed = new Label("Player " + (id + 1) + " likes to take it slow with only " + getPlayer(id).getSpeedChanger() + " speed power ups.", lb_style);
         minSpeed.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 6* Y_GAP, Align.left);
         stage.addActor(minSpeed);
     }
@@ -119,7 +119,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMostRadiusPlayer();
-        mostRadiusLabelText = new Label("Player " + id + " is on fire with " + getPlayer(id).getExplosionChanger() + " BombsUp PowerUps.", lb_style);
+        mostRadiusLabelText = new Label("Take off you jacket! Player " + (id + 1) + " is turning the heat up with " + getPlayer(id).getExplosionChanger() + " fire power ups.", lb_style);
         mostRadiusLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 3* Y_GAP, Align.left);
         stage.addActor(mostRadiusLabelText);
     }
@@ -130,7 +130,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMostBombsPlayer();
-        mostBombsLabelText = new Label("Player " + id + " prefers quantity over quality with " + getPlayer(id).getAllowedBombsChanger() + " BombsUp PowerUps.", lb_style);
+        mostBombsLabelText = new Label("Player " + (id + 1) + " prefers quantity over quality with " + getPlayer(id).getAllowedBombsChanger() + " bombs up power ups.", lb_style);
         mostBombsLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 2* Y_GAP, Align.left);
         stage.addActor(mostBombsLabelText);
     }
@@ -141,7 +141,7 @@ public class WinScreen extends BaseScreen {
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
         int id = getMostSpeedPlayer();
-        mostSpeedLabelText = new Label("Player " + id + " loves speed and collected " + getPlayer(id).getSpeedChanger() + " Speed PowerUps.", lb_style);
+        mostSpeedLabelText = new Label("Gotta go fast! Player " + (id + 1) + " collected " + getPlayer(id).getSpeedChanger() + " speed power ups.", lb_style);
         mostSpeedLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - Y_GAP, Align.left);
         stage.addActor(mostSpeedLabelText);
     }
@@ -179,7 +179,7 @@ public class WinScreen extends BaseScreen {
     }
 
     private String getWinnerText(){
-        return "Player " + playersLastInfo.get(0).getId() + " is the Winner! Congratulations!";
+        return "Player " + (playersLastInfo.get(0).getId() + 1) + " is the Winner! Congratulations!";
     }
 
     private int getMostSpeedPlayer() {
