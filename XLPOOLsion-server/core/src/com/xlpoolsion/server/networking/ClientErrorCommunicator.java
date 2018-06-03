@@ -14,15 +14,18 @@ import java.net.SocketTimeoutException;
 /**
  * Communicates an error to the client and awaits for its acknowledgement, or for a timeout
  */
-public class ClientErrorCommunicator {
+class ClientErrorCommunicator {
     private final Socket socket;
     private ObjectInputStream obj_in;
     private ObjectOutputStream obj_out;
     private Thread messagePollingThread;
 
+    /**
+     * The time (in milliseconds) to wait for the client response until timing out
+     */
     private static final int SOCKET_TIMEOUT_MS = 5000;
 
-    public ClientErrorCommunicator(Socket socket) {
+    ClientErrorCommunicator(Socket socket) {
         this.socket = socket;
         try {
             socket.setTcpNoDelay(true);
@@ -44,6 +47,9 @@ public class ClientErrorCommunicator {
         }
     }
 
+    /**
+     * Starts polling for client response in separate thread (read is blocking)
+     */
     private void pollForMessages() {
         messagePollingThread = new Thread(new Runnable() {
             @Override
@@ -86,6 +92,10 @@ public class ClientErrorCommunicator {
         messagePollingThread.start();
     }
 
+    /**
+     * Sends the given message to the client and flushes the output stream
+     * @param msg Message to send to the client
+     */
     private void sendMessage(ServerToClientMessage msg) {
         try {
             obj_out.writeObject(msg);
@@ -102,6 +112,7 @@ public class ClientErrorCommunicator {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
     }
 }

@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class ClientManager {
+class ClientManager {
     private final Socket socket;
     private ObjectInputStream obj_in;
     private ObjectOutputStream obj_out;
@@ -80,6 +80,10 @@ public class ClientManager {
         messagePollingThread.start();
     }
 
+    /**
+     * Sends the given message to the client and flushes the output stream
+     * @param msg Message to send to the client
+     */
     void sendMessage(ServerToClientMessage msg) {
         try {
             obj_out.writeObject(msg);
@@ -99,12 +103,11 @@ public class ClientManager {
         }
     }
 
+    /**
+     * Closes the current client connection
+     */
     void closeConnection() {
         messagePollingThread.interrupt();
         closeSocket();
-    }
-
-    public int getId() {
-        return clientId;
     }
 }
