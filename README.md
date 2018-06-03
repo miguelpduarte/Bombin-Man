@@ -5,7 +5,7 @@ Second project developed in the LPOO course unit.
 The source code is in this repository, under the XLPOOLsion-client and XLPOOLsion-server directories.
 
 ## Platform-specific executable file
-* Android: ![Android APK](deliverables/executables/Bombin'\ Man.apk?raw=true "Android APK")
+* Android: ![Android APK](deliverables/executables/Bombin'_Man.apk?raw=true "Android APK")
 * Desktop: There were problems with building, as explained in a previously sent e-mail
 
 ## Javadoc documentation files
@@ -26,4 +26,4 @@ https://web.fe.up.pt/~up201606298/LPOO_second_delivery/
 ![Link to Development Documentation](deliverables/Development_Documentation.pdf "Development Documentation")
 
 ## User Manual
-![Link to User Manual](deliverables/User\ Manual.pdf "User Manual PDF")
+![Link to User Manual](deliverables/User_Manual.pdf "User Manual PDF")
