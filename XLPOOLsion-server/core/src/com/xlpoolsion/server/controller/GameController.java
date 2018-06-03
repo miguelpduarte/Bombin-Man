@@ -49,16 +49,13 @@ public class GameController {
         //Saving players last info before everything is deleted
         savedPlayersLastInfo = currentLevelController.getModel().getPlayersLastInfo();
 
-        /*
         currentLevelController.destroy();
         currentLevelController = null;
-        */
         
         //Safety
         NetworkRouter.getInstance().sendToAllExcept(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_LOST));
 
         NetworkRouter.getInstance().sendToClient(winner_id, new ServerToClientMessage(ServerToClientMessage.MessageType.YOU_WON));
-        System.out.println("Don't forget to delete stuff!!!!");
         currentState = STATE.PLAYER_WON_GAME;
     }
 

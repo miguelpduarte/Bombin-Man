@@ -39,9 +39,9 @@ public abstract class BaseLevelModel {
     private ArrayList<ExplosionModel> explosions = new ArrayList<ExplosionModel>();
     private ArrayList<BrickModel> bricks = new ArrayList<BrickModel>();
     private ArrayList<BreakableBrickModel> breakableBricks = new ArrayList<BreakableBrickModel>();
+    private EntityModel[][] brickMatrix = new EntityModel[GRID_END_X_BRICKS - GRID_START_X_BRICKS][GRID_END_Y_BRICKS - GRID_START_Y_BRICKS];
     private ArrayList<PowerUpModel> powerUps = new ArrayList<PowerUpModel>();
     private ArrayList<PowerDownModel> powerDowns = new ArrayList<PowerDownModel>();
-    private EntityModel[][] brickMatrix = new EntityModel[GRID_END_X_BRICKS - GRID_START_X_BRICKS][GRID_END_Y_BRICKS - GRID_START_Y_BRICKS];
     private ArrayList<StunPowerModel> stunPowers = new ArrayList<StunPowerModel>();
 
     /**
@@ -394,5 +394,89 @@ public abstract class BaseLevelModel {
                return;
             }
         }
+    }
+
+    /**
+     * Destroys all internal data saved, to be collected by the GC (as much as possible)
+     */
+    public void destroy() {
+        destroyPlayers();
+        destroyBombs();
+        destroyExplosions();
+        destroyBricks();
+        destroyPowers();
+    }
+
+    private void destroyPowers() {
+        for(PowerUpModel powerUp : powerUps) {
+            powerUp = null;
+        }
+        powerUps.clear();
+        powerUps = null;
+
+        for(PowerDownModel powerDown : powerDowns) {
+            powerDown = null;
+        }
+        powerDowns.clear();
+        powerDowns = null;
+
+        for(StunPowerModel stunPower : stunPowers) {
+            stunPower = null;
+        }
+        stunPowers.clear();
+        stunPowers = null;
+    }
+
+    private void destroyBricks() {
+        for(BrickModel brick : bricks) {
+            brick = null;
+        }
+        bricks.clear();
+        bricks = null;
+
+        for(BreakableBrickModel breakableBrick : breakableBricks) {
+            breakableBrick = null;
+        }
+        breakableBricks.clear();
+        breakableBricks = null;
+
+        for(int i = 0; i < brickMatrix.length; ++i) {
+            for(int j = 0; j < brickMatrix[i].length; ++j) {
+                brickMatrix[i][j] = null;
+            }
+            brickMatrix[i] = null;
+        }
+        brickMatrix = null;
+    }
+
+    private void destroyExplosions() {
+        for(ExplosionModel explosionModel : explosions) {
+            explosionPool.free(explosionModel);
+            explosionModel = null;
+        }
+        explosions.clear();
+        explosions = null;
+        explosionPool.clear();
+        explosionPool = null;
+    }
+
+    private void destroyBombs() {
+        for(BombModel bomb : bombs) {
+            bombPool.free(bomb);
+            bomb = null;
+        }
+        bombs.clear();
+        bombs = null;
+        bombPool.clear();
+        bombPool = null;
+    }
+
+    private void destroyPlayers() {
+        for(PlayerModel player : players) {
+            player = null;
+        }
+        players = null;
+        playersLastInfo.clear();
+        playersLastInfo = null;
     }
 }

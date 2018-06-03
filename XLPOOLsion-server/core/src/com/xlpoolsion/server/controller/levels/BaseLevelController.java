@@ -310,4 +310,18 @@ public abstract class BaseLevelController {
             player.unstun();
         }
     }
+
+    /**
+     * Marks everything for disposal by the GC (as much as possible)
+     */
+    public void destroy() {
+        levelModel.destroy();
+        levelModel = null;
+        for(PlayerBody player : players) {
+            player = null;
+        }
+        players = null;
+
+        world.dispose();
+    }
 }
