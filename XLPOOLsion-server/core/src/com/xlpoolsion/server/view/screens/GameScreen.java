@@ -29,7 +29,7 @@ public class GameScreen extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = true;
+    private static final boolean DEBUG_PHYSICS = false;
 
     /**
      * A renderer used to debug the physical fixtures.
@@ -89,7 +89,9 @@ public class GameScreen extends ScreenAdapter {
 
         GameController.getInstance().update(delta);
 
-        checkStateTransition();
+        if(checkStateTransition()) {
+            return;
+        }
 
         Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -109,12 +111,14 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private void checkStateTransition() {
+    private boolean checkStateTransition() {
         switch (GameController.getInstance().getCurrentState()) {
             case PLAYER_WON_GAME:
                 xlpooLsionServer.setScreen(new WinScreen(xlpooLsionServer, GameController.getInstance().getPlayersLastInfo()));
-                break;
+                return true;
         }
+
+        return false;
     }
 
     public static final float ENTITY_VIEW_X_SHIFT = Gdx.graphics.getWidth()/2;

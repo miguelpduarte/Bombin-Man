@@ -87,10 +87,9 @@ public abstract class BaseLevelController {
         levelModel.update(delta);
         //Checking win condition
         if(levelModel.getNrAlivePlayers() < MIN_CONNECTED_CLIENTS) {
-            System.out.println("\nTEMPORARILY SAYING PLAYER 0 WON THE GAME, ALWAYS. TO CHANGE!!!!!!\n");
             levelModel.addWinnerToPlayersInfo();
             GameController.getInstance().wonGame(levelModel.getWinner());
-            //return;
+            return;
         }
 
         // fixed time step
@@ -309,5 +308,19 @@ public abstract class BaseLevelController {
         if(player != null) {
             player.unstun();
         }
+    }
+
+    /**
+     * Marks everything for disposal by the GC (as much as possible)
+     */
+    public void destroy() {
+        levelModel.destroy();
+        levelModel = null;
+        for(PlayerBody player : players) {
+            player = null;
+        }
+        players = null;
+
+        world.dispose();
     }
 }

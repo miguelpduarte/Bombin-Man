@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.xlpoolsion.server.XLPOOLsionServer;
 import com.xlpoolsion.server.controller.GameController;
-import com.xlpoolsion.server.networking.MultithreadedServer;
 import com.xlpoolsion.server.networking.NetworkInfo;
 import com.xlpoolsion.server.networking.NetworkRouter;
 import com.xlpoolsion.server.view.ButtonFactory;
@@ -33,8 +32,6 @@ public class LobbyScreen extends BaseScreen {
 
     public LobbyScreen(XLPOOLsionServer xlpooLsionServer) {
         super(xlpooLsionServer, Type.Lobby);
-
-        NetworkRouter.getInstance().setServer(new MultithreadedServer());
     }
 
     @Override
