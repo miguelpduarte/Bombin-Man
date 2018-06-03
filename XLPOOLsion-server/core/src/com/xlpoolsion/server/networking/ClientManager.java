@@ -62,7 +62,7 @@ public class ClientManager {
                         System.out.println("Client " + clientId + " disconnected");
                         NetworkRouter.getInstance().informPlayerDisconnect(clientId);
                         closeConnection();
-                        NetworkRouter.getInstance().getServer().removeClient(clientId);
+                        NetworkRouter.getInstance().removeClient(clientId);
                         return;
                     } catch (IOException e) {
                         e.printStackTrace();

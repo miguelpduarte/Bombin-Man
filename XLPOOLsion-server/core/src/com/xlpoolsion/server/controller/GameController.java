@@ -74,6 +74,10 @@ public class GameController {
         currentState = STATE.LOBBY;
     }
 
+    public boolean[] getConnectedClients() {
+        return NetworkRouter.getInstance().getConnectedClients();
+    }
+
     public enum STATE {LOBBY, PLAYING, PLAYER_WON_GAME};
 
     private STATE currentState;
@@ -147,12 +151,12 @@ public class GameController {
     public static final int MIN_CONNECTED_CLIENTS = 2;
 
     public void startGame(int level) {
-        if(NetworkRouter.getInstance().getServer().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {
+        if(NetworkRouter.getInstance().getNConnectedClients() < MIN_CONNECTED_CLIENTS) {
             System.out.println("Can't start the game without at least " + MIN_CONNECTED_CLIENTS + " clients");
             return;
         } else {
             //This will in fact be another thing, as this will be abstract
-            currentLevelController = new SimpleLevelController(NetworkRouter.getInstance().getServer().getConnectedClients());
+            currentLevelController = new SimpleLevelController(NetworkRouter.getInstance().getConnectedClients());
             NetworkRouter.getInstance().sendToAll(new ServerToClientMessage(ServerToClientMessage.MessageType.START_GAME));
             currentState = STATE.PLAYING;
         }
