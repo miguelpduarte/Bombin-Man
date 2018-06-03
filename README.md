@@ -1,37 +1,29 @@
 # Bombin' Man
 Second project developed in the LPOO course unit.
 
-# Architecture Design
+## Full project source-code, including unit tests
+The source code is in this repository, under the XLPOOLsion-client and XLPOOLsion-server directories.
 
-## Package and class diagram
-![Link to UML](other/UML/UMLLPOO.jpg "Packages and Class UML")
-## Predicted server-client interactions
-![Link to UML](other/UML/DesignUML.jpg "Server-Client interactions UML")
+## Platform-specific executable file
+* Android: ![Android APK](deliverables/executables/Bombin' Man.apk?raw=true "Android APK")
+* Desktop: There were problems with building, as explained in a previously sent e-mail
 
-## Expected Design Patterns
-![Link to PDF](other/latex-pdfs/design_patterns.pdf "Expected Design Patterns PDF")
+## Javadoc documentation files
+https://web.fe.up.pt/~up201606298/LPOO_second_delivery/
 
+## Setup/Installation procedure
+1. Open the BombingMan_server.jar file to start running the server
+2. Install the app in the mobile clients using the provided apk
+3. Connect to the shown IP using the mobile client (enter the connect screen and enter the IP, zero padded to the left)
+	a. For example, 192.168.1.5 would be 192168001005
+	b. After entering the IP using the keypad, press Connect
+	c. Verify that you are connected by observing the screen change in mobile and the player state indication in the desktop app
+4. Press the play button in the server application (minimum of 2 players connected for the game to start)
+5. Control the characters using the mobile app as a controller
+6. Have fun!
 
-# GUI
-## Listing of main functionalities:
-* Client:
-  * Connection to remote server via abstracted game code representing server IP adress
-  * Controls screen that allows the user to control its respective character
-  * Instructions screen with information about how to play the game
-* Server:
-  * Lobby screen that shows the game code while waiting for the players to connect
-  * Game screen that shows all the participating players and the game world
-  * End game screen that shows the winning player and statistics on the game
+## Development documentation
+![Link to Development Documentation](deliverables/Development_Documentation.pdf "Development Documentation")
 
-## Mockups:
-
-### Mobile Client Mockup
-![Mobile Client Mockup](other/mockups/client/mobile_client_full_mockup.png?raw=true "Mobile Client Mockup")
-
-
-### Desktop Server Mockup
-![Desktop Server Mockup](other/mockups/server/desktop_server_full_mockup.png?raw=true "Desktop Server Mockup")
-
-# Test Design
-## Expected test cases
-![Link to PDF](other/latex-pdfs/test_cases.pdf "Expected Test Cases PDF")
+## User Manual
+![Link to User Manual](deliverables/User Manual.pdf "User Manual PDF")
