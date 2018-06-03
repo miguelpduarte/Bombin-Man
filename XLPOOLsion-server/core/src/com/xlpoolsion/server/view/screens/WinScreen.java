@@ -195,7 +195,7 @@ public class WinScreen extends BaseScreen {
         int id = 0;
         int maxRadius = Integer.MIN_VALUE;
         for (PlayerModel player : playersLastInfo) {
-            if (player.getSpeedChanger() > maxRadius) {
+            if (player.getExplosionChanger() > maxRadius) {
                 id = player.getId();
                 maxRadius = player.getExplosionChanger();
             }
@@ -207,7 +207,7 @@ public class WinScreen extends BaseScreen {
         int id = 0;
         int minRadius = Integer.MAX_VALUE;
         for (PlayerModel player : playersLastInfo) {
-            if (player.getSpeedChanger() < minRadius) {
+            if (player.getExplosionChanger() < minRadius) {
                 id = player.getId();
                 minRadius = player.getExplosionChanger();
             }
@@ -219,7 +219,7 @@ public class WinScreen extends BaseScreen {
         int id = 0;
         int maxBombs = Integer.MIN_VALUE;
         for (PlayerModel player : playersLastInfo) {
-            if (player.getSpeedChanger() > maxBombs) {
+            if (player.getAllowedBombsChanger() > maxBombs) {
                 id = player.getId();
                 maxBombs = player.getAllowedBombsChanger();
             }
@@ -230,7 +230,7 @@ public class WinScreen extends BaseScreen {
         int id = 0;
         int minBombs = Integer.MAX_VALUE;
         for (PlayerModel player : playersLastInfo) {
-            if (player.getSpeedChanger() < minBombs) {
+            if (player.getAllowedBombsChanger() < minBombs) {
                 id = player.getId();
                 minBombs = player.getAllowedBombsChanger();
             }
