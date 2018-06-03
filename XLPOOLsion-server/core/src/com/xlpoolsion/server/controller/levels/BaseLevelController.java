@@ -15,6 +15,9 @@ import java.util.List;
 import static com.xlpoolsion.server.controller.GameController.MAX_PLAYERS;
 import static com.xlpoolsion.server.controller.GameController.MIN_CONNECTED_CLIENTS;
 
+/**
+ * Controls the creation and deletion of bodies in the level
+ */
 public abstract class BaseLevelController {
     /**
      * The level width in bricks
@@ -33,11 +36,24 @@ public abstract class BaseLevelController {
      * The level height in meters
      */
     public static final float LEVEL_HEIGHT = LEVEL_HEIGHT_BRICKS * BrickModel.HEIGHT;
-
+    /**
+     * The physics world controlled by this controller.
+     */
     private final World world;
+    /**
+     * The players alive in level
+     */
     private PlayerBody[] players = new PlayerBody[MAX_PLAYERS];
+    /**
+     * The model of the level
+     */
     private BaseLevelModel levelModel;
 
+    /**
+     * Creates a new BaseLevelController that controls the creation and deletion of bodies of the level
+     * @param connectedPlayers Array of the players connected
+     * @param levelModel Type of level
+     */
     BaseLevelController(boolean[] connectedPlayers, BaseLevelModel levelModel) {
         world = new World(new Vector2(0, 0), true);
         this.levelModel = levelModel;
@@ -133,7 +149,11 @@ public abstract class BaseLevelController {
             body.setTransform(body.getPosition().x, LEVEL_HEIGHT, body.getAngle());
     }
 
-
+    /**
+     * Deals with the movement of the player
+     * @param playerId Player that will move
+     * @param move_direction vector of the direction that the player will be moved
+     */
     public void movePlayer(int playerId, Vector2 move_direction) {
         if(move_direction.isZero() || levelModel.getPlayer(playerId).isStunned()) {
             stopPlayerX(playerId);
@@ -193,6 +213,10 @@ public abstract class BaseLevelController {
         ((PlayerModel) players[playerId].getUserData()).setMoving(isMoving);
     }
 
+    /**
+     * Places a bomb in the players location
+     * @param playerId The player who placed the bomb
+     */
     public void placeBomb(int playerId) {
         PlayerModel player = levelModel.getPlayer(playerId);
 
@@ -205,6 +229,9 @@ public abstract class BaseLevelController {
         }
     }
 
+    /**
+     * Delete the bodys flagged for removal
+     */
     public void removeFlagged() {
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);

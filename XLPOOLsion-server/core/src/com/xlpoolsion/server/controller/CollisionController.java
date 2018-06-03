@@ -4,12 +4,19 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.xlpoolsion.server.model.entities.*;
 
+/**
+ * Controls the Collision aspect of the game
+ */
 public class CollisionController implements ContactListener {
     private static CollisionController instance = null;
 
     private CollisionController() {
     }
 
+    /**
+     * Returns a singleton instance of a collision controller
+     * @return The Singleton instance
+     */
     public static CollisionController getInstance() {
         if(instance == null) {
             instance = new CollisionController();
@@ -18,6 +25,10 @@ public class CollisionController implements ContactListener {
         return instance;
     }
 
+    /**
+     * A contact between two objects was detected
+     * @param contact The contact detected
+     */
     @Override
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
@@ -145,6 +156,10 @@ public class CollisionController implements ContactListener {
         }
     }
 
+    /**
+     * The end of the contact was detected
+     * @param contact The contact detected
+     */
     @Override
     public void endContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();

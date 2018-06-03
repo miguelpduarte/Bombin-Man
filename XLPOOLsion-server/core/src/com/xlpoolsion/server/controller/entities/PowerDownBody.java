@@ -7,6 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.PowerDownModel;
 
+/**
+ * A concrete representation of an EntityBody representing a PowerDown
+ */
 public class PowerDownBody extends EntityBody{
     public PowerDownBody(World world, EntityModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);

@@ -7,6 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.ExplosionModel;
 
+/**
+ * A concrete representation of an EntityBody representing an Explosion
+ */
 public class ExplosionBody extends EntityBody {
     public ExplosionBody(World world, EntityModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);

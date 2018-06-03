@@ -7,6 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.EntityModel;
 import com.xlpoolsion.server.model.entities.PowerUpModel;
 
+/**
+ * A concrete representation of an EntityBody representing a PowerUp
+ */
 public class PowerUpBody extends EntityBody{
     public PowerUpBody(World world, EntityModel model) {
         super(world, model, BodyDef.BodyType.DynamicBody);

@@ -3,6 +3,9 @@ package com.xlpoolsion.server.controller.entities;
 import com.badlogic.gdx.physics.box2d.*;
 import com.xlpoolsion.server.model.entities.BombModel;
 
+/**
+ *  A concrete representation of an EntityBody representing a bomb.
+ */
 public class BombBody extends EntityBody {
 
     public BombBody(World world, BombModel model) {

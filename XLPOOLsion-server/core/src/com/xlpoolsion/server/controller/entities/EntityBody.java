@@ -5,6 +5,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.EntityModel;
 
+/**
+ * Wrapper class that represents an abstract physical
+ * body supported by a Box2D body.
+ */
 public class EntityBody {
 
     /**

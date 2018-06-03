@@ -5,7 +5,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.BreakableBrickModel;
-
+/**
+ * A concrete representation of an EntityBody representing a Breakable Brick.
+ */
 public class BreakableBrickBody extends EntityBody {
     public BreakableBrickBody(World world, BreakableBrickModel model) {
         super(world, model, BodyDef.BodyType.StaticBody);

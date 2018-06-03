@@ -6,6 +6,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.BrickModel;
 
+/**
+ * A concrete representation of an EntityBody representing a Solid Brick.
+ */
 public class BrickBody extends  EntityBody {
 
 

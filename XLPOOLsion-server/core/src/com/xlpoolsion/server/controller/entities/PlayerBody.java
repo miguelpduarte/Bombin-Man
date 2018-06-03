@@ -7,6 +7,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xlpoolsion.server.model.entities.PlayerModel;
 
+/**
+ * A concrete representation of an EntityBody representing a Player.
+ */
 public class PlayerBody extends EntityBody {
 
     public PlayerBody(World world, PlayerModel model) {
@@ -32,26 +35,48 @@ public class PlayerBody extends EntityBody {
         polyShape.dispose();
     }
 
+    /**
+     * Makes the player move up by changing its vertical velocity
+     * @param speedFactor
+     */
     public void moveUp(float speedFactor) {
         body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor);
     }
 
+    /**
+     * Makes the player move down by changing its vertical velocity
+     * @param speedFactor
+     */
     public void moveDown(float speedFactor) {
         body.setLinearVelocity(body.getLinearVelocity().x, ((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor);
     }
 
+    /**
+     * Makes the player move left by changing its horizontal velocity
+     * @param speedFactor
+     */
     public void moveLeft(float speedFactor) {
         body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor, body.getLinearVelocity().y);
     }
 
+    /**
+     * Makes the player move right by changing its horizontal velocity
+     * @param speedFactor
+     */
     public void moveRight(float speedFactor) {
         body.setLinearVelocity(((PlayerModel) body.getUserData()).getCurrentSpeed() * speedFactor, body.getLinearVelocity().y);
     }
 
+    /**
+     * Stops the player's horizontal movement by changing its x velocity to 0
+     */
     public void stopX() {
         body.setLinearVelocity(0, body.getLinearVelocity().y);
     }
 
+    /**
+     * Stops the player's vertical movement by changing its y velocity to 0
+     */
     public void stopY() {
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
     }
