@@ -1,0 +1,12 @@
+com.xlpoolsion.common
+com.xlpoolsion.server
+com.xlpoolsion.server.controller
+com.xlpoolsion.server.controller.entities
+com.xlpoolsion.server.controller.levels
+com.xlpoolsion.server.desktop
+com.xlpoolsion.server.model.entities
+com.xlpoolsion.server.model.levels
+com.xlpoolsion.server.networking
+com.xlpoolsion.server.view
+com.xlpoolsion.server.view.entities
+com.xlpoolsion.server.view.screens
