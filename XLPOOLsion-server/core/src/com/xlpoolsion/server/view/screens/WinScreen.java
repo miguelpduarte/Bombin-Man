@@ -70,9 +70,19 @@ public class WinScreen extends BaseScreen {
         createMostSpeedLabelText();
         createMostBombsLabelText();
         createMostRadiusLabelText();
-        createMinRadiusLabelText();
         createMinBombsLabelText();
+        createMinRadiusLabelText();
         createMinSpeedLabelText();
+    }
+
+    private void createMinRadiusLabelText() {
+        Label minRadius;
+        Label.LabelStyle lb_style = new Label.LabelStyle();
+        lb_style.font = main_size30;
+        lb_style.fontColor = Color.WHITE;
+        minRadius = new Label("Player " + getMinRadiusPlayer() + " doesnt think size matters so he only caught " + playersLastInfo.get(getMinRadiusPlayer()).getExplosionChanger() + " fire powerUps ", lb_style);
+        minRadius.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 5* Y_GAP, Align.left);
+        stage.addActor(minRadius);
     }
 
     private void createMinBombsLabelText() {
@@ -80,19 +90,9 @@ public class WinScreen extends BaseScreen {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
         lb_style.fontColor = Color.WHITE;
-        minBombsLabel = new Label("Player " + getMinRadiusPlayer() + " doesnt think size matters so he only caught " + playersLastInfo.get(getMinRadiusPlayer()).getExplosionChanger() + " fire powerUps ", lb_style);
-        minBombsLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 5* Y_GAP, Align.left);
+        minBombsLabel = new Label("Player " + getMinBombsPlayer() + " keeps it short and simple he only needed " + playersLastInfo.get(getMinBombsPlayer()).getAllowedBombsChanger() + " BombsUp powerUps ", lb_style);
+        minBombsLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 4* Y_GAP, Align.left);
         stage.addActor(minBombsLabel);
-    }
-
-    private void createMinRadiusLabelText() {
-        Label minRadiusLabel;
-        Label.LabelStyle lb_style = new Label.LabelStyle();
-        lb_style.font = main_size30;
-        lb_style.fontColor = Color.WHITE;
-        minRadiusLabel = new Label("Player " + getMinBombsPlayer() + " keeps it short and simple he only needed " + playersLastInfo.get(getMinBombsPlayer()).getAllowedBombsChanger() + " BombsUp powerUps ", lb_style);
-        minRadiusLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 4* Y_GAP, Align.left);
-        stage.addActor(minRadiusLabel);
     }
 
     private void createMinSpeedLabelText() {
