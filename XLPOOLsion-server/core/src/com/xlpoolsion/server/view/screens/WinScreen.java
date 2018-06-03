@@ -27,9 +27,7 @@ public class WinScreen extends BaseScreen {
     private BitmapFont main_size30;
     private Label winnerLabelText;
 
-    public static final float FIRST_ACHIEVEMENT_X = Gdx.graphics.getWidth()/2 - 200;
-    public static final float FIRST_ACHIEVEMENT_Y = Gdx.graphics.getHeight()/2 + 200;
-    public static final float Y_GAP = 100;
+    public static final float Y_GAP = 99;
 
     public WinScreen(XLPOOLsionServer xlpooLsionServer, ArrayList<PlayerModel> playersLastInfo) {
         super(xlpooLsionServer, Type.Win_Screen);
@@ -69,7 +67,74 @@ public class WinScreen extends BaseScreen {
 
     private void createAcheievmentsLabel() {
         createWinnerLabelText();
+        createMostSpeedLabelText();
+        createMostBombsLabelText();
+        createMostRadiusLabelText();
+        createMinRadiusLabelText();
+        createMinBombsLabelText();
+        createMinSpeedLabelText();
     }
+
+    private void createMinBombsLabelText() {
+        Label minBombsLabel;
+        Label.LabelStyle lb_style = new Label.LabelStyle();
+        lb_style.font = main_size30;
+        lb_style.fontColor = Color.WHITE;
+        minBombsLabel = new Label("Player " + getMinRadiusPlayer() + " doesnt think size matters so he only caught " + playersLastInfo.get(getMinRadiusPlayer()).getExplosionChanger() + " fire powerUps ", lb_style);
+        minBombsLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 5* Y_GAP, Align.left);
+        stage.addActor(minBombsLabel);
+    }
+
+    private void createMinRadiusLabelText() {
+        Label minRadiusLabel;
+        Label.LabelStyle lb_style = new Label.LabelStyle();
+        lb_style.font = main_size30;
+        lb_style.fontColor = Color.WHITE;
+        minRadiusLabel = new Label("Player " + getMinBombsPlayer() + " keeps it short and simple he only needed " + playersLastInfo.get(getMinBombsPlayer()).getAllowedBombsChanger() + " BombsUp powerUps ", lb_style);
+        minRadiusLabel.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 4* Y_GAP, Align.left);
+        stage.addActor(minRadiusLabel);
+    }
+
+    private void createMinSpeedLabelText() {
+        Label minSpeed;
+        Label.LabelStyle lb_style = new Label.LabelStyle();
+        lb_style.font = main_size30;
+        lb_style.fontColor = Color.WHITE;
+        minSpeed = new Label("Player " + getMinSpeedPlayer() + " likes to take it slow with only " + playersLastInfo.get(getMinSpeedPlayer()).getSpeedChanger() + " speed PowerUps.", lb_style);
+        minSpeed.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 6* Y_GAP, Align.left);
+        stage.addActor(minSpeed);
+    }
+
+    private void createMostRadiusLabelText() {
+        Label mostRadiusLabelText;
+        Label.LabelStyle lb_style = new Label.LabelStyle();
+        lb_style.font = main_size30;
+        lb_style.fontColor = Color.WHITE;
+        mostRadiusLabelText = new Label("Player " + getMostRadiusPlayer() + " is on fire with " + playersLastInfo.get(getMostRadiusPlayer()).getExplosionChanger() + " BombsUp PowerUps.", lb_style);
+        mostRadiusLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 3* Y_GAP, Align.left);
+        stage.addActor(mostRadiusLabelText);
+    }
+
+    private void createMostBombsLabelText() {
+        Label mostBombsLabelText;
+        Label.LabelStyle lb_style = new Label.LabelStyle();
+        lb_style.font = main_size30;
+        lb_style.fontColor = Color.WHITE;
+        mostBombsLabelText = new Label("Player " + getMostBombsPlayer() + " preferes quantity over quality with " + playersLastInfo.get(getMostBombsPlayer()).getAllowedBombsChanger() + " BombsUp PowerUps.", lb_style);
+        mostBombsLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - 2* Y_GAP, Align.left);
+        stage.addActor(mostBombsLabelText);
+    }
+
+    private void createMostSpeedLabelText() {
+        Label mostSpeedLabelText;
+        Label.LabelStyle lb_style = new Label.LabelStyle();
+        lb_style.font = main_size30;
+        lb_style.fontColor = Color.WHITE;
+        mostSpeedLabelText = new Label("Player " + getMostSpeedPlayer() + " loves speed and collected " + playersLastInfo.get(getMostSpeedPlayer()).getSpeedChanger() + " Speed PowerUps.", lb_style);
+        mostSpeedLabelText.setPosition(stage.getWidth() * 0.31f, stage.getHeight() * 0.66f - Y_GAP, Align.left);
+        stage.addActor(mostSpeedLabelText);
+    }
+
     private void createWinnerLabelText() {
         Label.LabelStyle lb_style = new Label.LabelStyle();
         lb_style.font = main_size30;
@@ -82,6 +147,76 @@ public class WinScreen extends BaseScreen {
         return "Player " + playersLastInfo.get(0).getId() + " is the Winner Congratulations!";
     }
 
+    private int getMostSpeedPlayer() {
+        int id = 0;
+        int maxSpeed = Integer.MIN_VALUE;
+        for (PlayerModel player : playersLastInfo) {
+            if (player.getSpeedChanger() > maxSpeed) {
+                id = player.getId();
+                maxSpeed = player.getSpeedChanger();
+            }
+        }
+        return id;
+    }
+
+    private int getMinSpeedPlayer() {
+        int id = 0;
+        int minSpeed = Integer.MAX_VALUE;
+        for (PlayerModel player : playersLastInfo) {
+            if (player.getSpeedChanger() < minSpeed) {
+                id = player.getId();
+                minSpeed = player.getSpeedChanger();
+            }
+        }
+        return id;
+    }
+
+    private int getMostRadiusPlayer() {
+        int id = 0;
+        int maxRadius = Integer.MIN_VALUE;
+        for (PlayerModel player : playersLastInfo) {
+            if (player.getSpeedChanger() > maxRadius) {
+                id = player.getId();
+                maxRadius = player.getExplosionChanger();
+            }
+        }
+        return id;
+    }
+
+    private int getMinRadiusPlayer() {
+        int id = 0;
+        int minRadius = Integer.MAX_VALUE;
+        for (PlayerModel player : playersLastInfo) {
+            if (player.getSpeedChanger() < minRadius) {
+                id = player.getId();
+                minRadius = player.getExplosionChanger();
+            }
+        }
+        return id;
+    }
+
+    private int getMostBombsPlayer() {
+        int id = 0;
+        int maxBombs = Integer.MIN_VALUE;
+        for (PlayerModel player : playersLastInfo) {
+            if (player.getSpeedChanger() > maxBombs) {
+                id = player.getId();
+                maxBombs = player.getAllowedBombsChanger();
+            }
+        }
+        return id;
+    }
+    private int getMinBombsPlayer() {
+        int id = 0;
+        int minBombs = Integer.MAX_VALUE;
+        for (PlayerModel player : playersLastInfo) {
+            if (player.getSpeedChanger() < minBombs) {
+                id = player.getId();
+                minBombs = player.getAllowedBombsChanger();
+            }
+        }
+        return id;
+    }
 
     private void setWinnerAnimation() {
         switch (playersLastInfo.get(0).getId()) {
