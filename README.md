@@ -11,7 +11,7 @@ The source code is in this repository, under the XLPOOLsion-client and XLPOOLsio
 
 ## Platform-specific executable file
 * Android: ![Android APK](deliverables/executables/Bombin'_Man.apk?raw=true "Android APK")
-* Desktop: There were problems with building, as explained in a previously sent e-mail
+* Desktop: ![Recompiled jar in a new project](deliverables/executables/Bombin'_Man_Server.jar?raw=true "Server JAR")
 
 ## Javadoc documentation files
 https://web.fe.up.pt/~up201606298/LPOO_second_delivery/
