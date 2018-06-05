@@ -58,11 +58,16 @@ class ClientManager {
 
                     } catch (SocketException e) {
                         //Socket was closed but thread is still running, terminate it
+                        //Just in case remove from the router data and inform disconnection
+                        System.out.println("Client " + clientId + " disconnected!");
+                        NetworkRouter.getInstance().informPlayerDisconnect(clientId);
+                        closeSocket();
+                        NetworkRouter.getInstance().removeClient(clientId);
                         return;
                     } catch (EOFException e) {
                         System.out.println("Client " + clientId + " disconnected");
                         NetworkRouter.getInstance().informPlayerDisconnect(clientId);
-                        closeConnection();
+                        closeSocket();
                         NetworkRouter.getInstance().removeClient(clientId);
                         return;
                     } catch (IOException e) {
