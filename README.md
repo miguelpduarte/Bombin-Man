@@ -1,5 +1,6 @@
 # Bombin' Man
 Second project developed in the LPOO course unit.
+
 **Contributors:**
 * Miguel Duarte, up201606298, [@miguelpduarte](https://github.com/miguelpduarte)
 * António Cruz, up201603526, [@AntoniooCruz](https://github.com/AntoniooCruz)
