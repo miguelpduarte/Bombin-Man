@@ -1,10 +1,15 @@
 # Bombin' Man
 Second project developed in the LPOO course unit.
-
 **Contributors:**
-* Miguel Duarte, up201606298, @miguelpduarte
-* António Cruz, up201603526, @AntoniooCruz
+* Miguel Duarte, up201606298, [@miguelpduarte](https://github.com/miguelpduarte)
+* António Cruz, up201603526, [@AntoniooCruz](https://github.com/AntoniooCruz)
 * Group 4 of Class 1
+
+## Course unit info
+* **Date:** 2nd Year, 2nd Semester, 2017/2018
+* **Topic:** Final project for the course
+* **Course:** Laboratório de Programação Orientada a Objectos (LPOO) | OOP Lab
+* **Course Link:** https://sigarra.up.pt/feup/pt/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=399895
 
 ## Full project source-code, including unit tests
 The source code is in this repository, under the XLPOOLsion-client and XLPOOLsion-server directories.
